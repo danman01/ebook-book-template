@@ -13,14 +13,6 @@ The larger orgs will be trying to optimize for multiple use cases. However, part
 My takeaway on people having production problems with Spark is that many tend to think of it as something else with which they're familiar... then don't bother to drill down into the details of the UI, resource usage, etc. They may be thinking like a DBA about SQL queries in Oracle, without understanding that repartitioning and serialization are big big concerns. Or they may be thinking about M/R in Hadoop, without understanding functional programming, lazy evaluation, how to leverage type safety for optimization, etc.  Or they are used to doing Python analytics and have no idea about predicate movement, column pruning, filter-scans, etc., for queries at scale.
 
 
-## Teradata Use Case
+## Teradata use case
 
-Within a chapter, the first and highest heading level uses two pound signs.
-
-### Second-Level Heading
-
-The second-level heading uses three pound signs.
-
-#### Third-level heading
-
-The third-level heading uses four pound signs.
+## Some other use case
