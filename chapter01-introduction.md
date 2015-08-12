@@ -9,9 +9,9 @@ In this report, we introduce Spark and explore some of the areas in which its pa
 
 ## What is Spark?
 
-**add details about spark starting from mesos**
+The story most people here is that Spark began life in 2009 as a project within AMPLab at the University of California, Berkeley. More specifically it was born out of the necessity to prove out the concept of Mesos, which was also created in the AMPLab. Spark was first discussed in the Mesos white paper written-most notably-by Benjamin Hindman, and Matei Zaharia.
 
-Spark began life in 2009 as a project within AMPLab at the University of California, Berkeley. From the beginning, Spark was optimized to run in-memory, helping it process data far more quickly than alternative approaches like Hadoop’s MapReduce, which tend to write data to and from computer hard drives between each stage of processing. Its backers claim that Spark running in memory can be 100 times faster than Hadoop MapReduce, but also 10 times faster when processing disk-based data in a similar way to Hadoop MapReduce itself. This comparison is not entirely fair, not least because raw speed tends to be more important to Spark’s typical use cases than it is in the batch processing at which MapReduce-like solutions still excel.
+From the beginning, Spark was optimized to run in-memory, helping it process data far more quickly than alternative approaches like Hadoop’s MapReduce, which tend to write data to and from computer hard drives between each stage of processing. Its backers claim that Spark running in memory can be 100 times faster than Hadoop MapReduce, but also 10 times faster when processing disk-based data in a similar way to Hadoop MapReduce itself. This comparison is not entirely fair, not least because raw speed tends to be more important to Spark’s typical use cases than it is in the batch processing at which MapReduce-like solutions still excel.
 
 Spark became an incubated project of the Apache Software Foundation in 2013, and early in 2014 Apache Spark was promoted to become one of the Foundation’s top-level projects. Spark is currently one of the most active projects managed by the Foundation, and the community that has grown up around the project includes both prolific individual contributors and well-funded corporate backers such as Databricks, IBM and China’s Huawei.
 
