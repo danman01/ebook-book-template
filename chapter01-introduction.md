@@ -6,7 +6,6 @@ A new name has entered many of the conversations around big data, recently. Some
 
 In this report, we introduce Spark and explore some of the areas in which its particular set of capabilities show most promise. We discuss the relationship to Hadoop and other key technologies, and provide some accessible pointers so that you can try Spark for yourself. 
 
-
 ## What is Spark?
 
 The story most people here is that Spark began life in 2009 as a project within AMPLab at the University of California, Berkeley. More specifically it was born out of the necessity to prove out the concept of Mesos, which was also created in the AMPLab. Spark was first discussed in the Mesos white paper written-most notably-by Benjamin Hindman, and Matei Zaharia.
@@ -52,7 +51,7 @@ Spark can run on top of Hadoop, benefiting from Hadoop’s cluster manager (YARN
 
 Hadoop’s relationship to Spark is discussed in more detail, later in the book.
 
-Much of the confusion around Spark’s relationship to Hadoop dates back to the early years of Spark’s development. At this time, Hadoop relied upon MapReduce for the bulk of its data processing. Hadoop MapReduce also managed scheduling and task allocation processes within the cluster: even workloads that were not best suited to batch processing were passed through Hadoop’s MapReduce engine, adding complexity and reducing performance. 
+Much of the confusion around Spark’s relationship to Hadoop dates back to the early years of Spark’s development. At this time, Hadoop relied upon MapReduce for the bulk of its data processing. Hadoop MapReduce also managed scheduling and task allocation processes within the cluster: even workloads that were not best suited to batch processing were passed through Hadoop’s MapReduce engine, adding complexity and reducing performance.
 
 Spark offered (and still offers) a far faster way to process data than passing it through unnecessary Hadoop MapReduce processes. But Hadoop has moved on, with development of the YARN cluster manager freeing the project from its early dependence upon MapReduce. Hadoop MapReduce is still available within Hadoop, but need only be used when working with the types of data – log files, static batch processes, etc. – for which MapReduce is appropriate. Other data processing tasks can be assigned to different processing engines (including Spark), with YARN handling the management and allocation of cluster resources.
 
@@ -83,13 +82,11 @@ A series of messages will scroll past, as Spark and Hadoop are configured. Once 
 
     scala> val data = 1 to 50000
 
-**Now, let’s place these 50,000 numbers into a Resilient Distributed Dataset (RDD) which we’ll call sparkSample. It is this RDD upon which we can have Spark perform analysis.
-**
+**Now, let’s place these 50,000 numbers into a Resilient Distributed Dataset (RDD) which we’ll call sparkSample. It is this RDD upon which we can have Spark perform analysis.**
 
     scala> val sparkSample = sc.parallelize(data)
 
-**Now we can filter the data in the RDD, to find any values of less than 10.
-**
+**Now we can filter the data in the RDD, to find any values of less than 10.**
 
     scala> sparkSample.filter(_ < 10).collect()
 
