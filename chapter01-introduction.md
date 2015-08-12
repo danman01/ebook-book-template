@@ -67,7 +67,7 @@ Apache Spark is open source software, and can be freely [downloaded](https://spa
 The following steps are all that’s needed to download Java, Spark and Hadoop and get them running on a laptop, in this case one running Mac OS X.
 If you do not currently have the [Java JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (version 7 or higher) installed, download it and follow the steps to install it for your operating system.
 
-![Figure 1: Apache Spark download page, with a pre-built package selected for download](images/download-spark.png)
+![Figure 1: Apache Spark download page, with a pre-built package selected for download](images/download-spark.png =300x)
 
 Visit the [Spark downloads page](https://spark.apache.org/downloads.html), select a pre-built package, and download Spark. Double-click the archive file, to expand its contents ready for use.
 
