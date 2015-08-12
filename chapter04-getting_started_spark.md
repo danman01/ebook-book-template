@@ -1,15 +1,11 @@
-# Chapter Title
+# Getting started with Spark
 
-Chapter text begins here.
+Although cluster-based installations of Spark can become large and relatively complex, integrated with Mesos, Hadoop, Cassandra, or other systems, it is straightforward to download Spark and configure it in standalone mode on a laptop or server for learning and exploration. This low barrier to entry makes it relatively easy for individual developers to get started with Spark, and for businesses to launch pilot projects that do not require complex re-tooling of or interference with production systems.
 
-## Top-Level Heading
+Apache Spark is available for download from the Apache Software Foundation; https://spark.apache.org/downloads.html. Spark requires at least version 6 of Java and at least version 3.0.4 of Maven. Other dependencies, such as Scala and Zinc, are automatically installed and configured as part of the installation process. [Build options](http://spark.apache.org/docs/latest/building-spark.html), including optional links to data storage systems such as Hadoop’s HDFS or Hive, are discussed in more detail in Spark’s online documentation. MapR also offers a [Quick Start guide](https://www.mapr.com/products/mapr-sandbox-hadoop/tutorials/spark-tutorial), describing the steps required to install and configure a standalone version of Spark on top of the company’s Hadoop distribution.
 
-Within a chapter, the first and highest heading level uses two pound signs.
 
-### Second-Level Heading
+## The power of data pipelines
 
-The second-level heading uses three pound signs.
-
-#### Third-level heading
-
-The third-level heading uses four pound signs.
+** It would be great to offer up a little more detail to really hammer the point. Like, performing ETL requires chaining together of processes, or complex tools that require special training. **
+Much of Spark’s power lies in its ability to combine very different techniques and processes together into a single, coherent, whole. Outside Spark, the discrete tasks of selecting data, transforming that data in various ways, and then analyzing the transformed result in some way might easily require a series of separate processing frameworks such as Oozie. Spark, on the other hand, offers the ability to combine these together, crossing boundaries between batch, streaming and interactive workflows in ways that make the user more productive. Spark simplifies the management of these disparate processes, offering an integrated whole – a data pipeline – that is easier to configure, easier to run, and easier to maintain. In use cases such as ETL these pipelines can become extremely rich and complex, combining large numbers of inputs and a wide range of processing steps into a unified whole that consistently delivers the desired result.
