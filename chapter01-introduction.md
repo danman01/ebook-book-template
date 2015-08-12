@@ -2,7 +2,7 @@
 
 A new name has entered many of the conversations around big data, recently. Some see popular newcomer Spark as a more accessible and more powerful replacement for big data’s original technology of choice, Hadoop. Others recognize Spark as a powerful complement to Hadoop and other more established technologies, with its own set of strengths and its own quirks and limitations. 
 
-__*Spark, like other big data tools, is powerful, capable, and well-suited to tackling a range of data challenges. Spark, like other big data technologies, is not necessarily the best choice for every data processing task.*__
+***Spark, like other big data tools, is powerful, capable, and well-suited to tackling a range of data challenges. Spark, like other big data technologies, is not necessarily the best choice for every data processing task.***
 
 In this report, we introduce Spark and explore some of the areas in which its particular set of capabilities show most promise. We discuss the relationship to Hadoop and other key technologies, and provide some accessible pointers so that you can try Spark for yourself. 
 
@@ -10,6 +10,7 @@ In this report, we introduce Spark and explore some of the areas in which its pa
 ## What is Spark?
 
 **add details about spark starting from mesos**
+
 Spark began life in 2009 as a project within AMPLab at the University of California, Berkeley. From the beginning, Spark was optimized to run in-memory, helping it process data far more quickly than alternative approaches like Hadoop’s MapReduce, which tend to write data to and from computer hard drives between each stage of processing. Its backers claim that Spark running in memory can be 100 times faster than Hadoop MapReduce, but also 10 times faster when processing disk-based data in a similar way to Hadoop MapReduce itself. This comparison is not entirely fair, not least because raw speed tends to be more important to Spark’s typical use cases than it is in the batch processing at which MapReduce-like solutions still excel.
 
 Spark became an incubated project of the Apache Software Foundation in 2013, and early in 2014 Apache Spark was promoted to become one of the Foundation’s top-level projects. Spark is currently one of the most active projects managed by the Foundation, and the community that has grown up around the project includes both prolific individual contributors and well-funded corporate backers such as Databricks, IBM and China’s Huawei.
@@ -38,10 +39,10 @@ Away from the domain of web-based giants, pharmaceutical company Novartis depend
 ## What is Spark used for?
 
 Spark is a general-purpose data processing engine, an API-powered toolkit which data scientists and application developers incorporate into their applications to rapidly query, analyze and transform data at scale. Spark’s flexibility makes it well-suited to tackling a range of use cases, and it is capable of handling several petabytes of data at a time, distributed across a cluster of thousands of cooperating physical or virtual servers. Typical use cases include:
-* __Stream processing__: From log files to sensor data, application developers increasingly have to cope with ‘streams’ of data. Data arrives in a steady stream, often from multiple sources simultaneously. While it is certainly feasible to allow these data streams to be stored on disk and analyzed retrospectively, it can sometimes be sensible or important to process and act upon the data as it arrives. Streams of data related to financial transactions, for example, can be processed in real-time to identify – and refuse – potentially fraudulent transactions. 
-* __Machine learning__: As data volumes grow, machine learning approaches become increasingly feasible, and increasingly accurate. Software can be trained to identify and act upon triggers within well-understood data sets, before applying the same solutions to new and unknown data. Spark’s ability to store data in memory and rapidly run repeated queries makes it well-suited to training machine learning algorithms. Running broadly similar queries again and again, at scale, significantly reduces the time required to iterate through a set of possible solutions in order to find the most efficient algorithms.
-* __Interactive analytics__: Rather than running pre-defined queries to create static dashboards of sales or production line productivity or stock prices, business analysts and data scientists increasingly want to explore their data, asking a question, viewing the result, and then either altering the initial question slightly or drilling deeper into results. This interactive query process requires systems – like Spark – that are able to respond and adapt quickly.
-* __Data integration__: Data produced by different systems across a business is rarely clean or consistent enough to simply and easily be combined for reporting or analysis. Extract Transform Load (ETL) processes are often used to pull data from different systems, clean and standardize it, and then load it into a separate system for analysis. Spark (and Hadoop) are increasingly being used to reduce the cost and time required for this ETL process.
+* **Stream processing**: From log files to sensor data, application developers increasingly have to cope with ‘streams’ of data. Data arrives in a steady stream, often from multiple sources simultaneously. While it is certainly feasible to allow these data streams to be stored on disk and analyzed retrospectively, it can sometimes be sensible or important to process and act upon the data as it arrives. Streams of data related to financial transactions, for example, can be processed in real-time to identify – and refuse – potentially fraudulent transactions. 
+* **Machine learning**: As data volumes grow, machine learning approaches become increasingly feasible, and increasingly accurate. Software can be trained to identify and act upon triggers within well-understood data sets, before applying the same solutions to new and unknown data. Spark’s ability to store data in memory and rapidly run repeated queries makes it well-suited to training machine learning algorithms. Running broadly similar queries again and again, at scale, significantly reduces the time required to iterate through a set of possible solutions in order to find the most efficient algorithms.
+* **Interactive analytics**: Rather than running pre-defined queries to create static dashboards of sales or production line productivity or stock prices, business analysts and data scientists increasingly want to explore their data, asking a question, viewing the result, and then either altering the initial question slightly or drilling deeper into results. This interactive query process requires systems – like Spark – that are able to respond and adapt quickly.
+* **Data integration**: Data produced by different systems across a business is rarely clean or consistent enough to simply and easily be combined for reporting or analysis. Extract Transform Load (ETL) processes are often used to pull data from different systems, clean and standardize it, and then load it into a separate system for analysis. Spark (and Hadoop) are increasingly being used to reduce the cost and time required for this ETL process.
 
 ## Hadoop v Spark – an answer to the wrong question
 
@@ -67,6 +68,7 @@ The following steps are all that’s needed to download Java, Spark and Hadoop a
 If you do not currently have the [Java JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (version 7 or higher) installed, download it and follow the steps to install it for your operating system.
 
 ![Figure 1: Apache Spark download page, with a pre-built package selected for download](images/download-spark.png)
+
 Visit the [Spark downloads page](https://spark.apache.org/downloads.html), select a pre-built package, and download Spark. Double-click the archive file, to expand its contents ready for use.
 
 Open a text console, and navigate to the newly created directory. Start Spark’s interactive shell:
@@ -76,6 +78,7 @@ Open a text console, and navigate to the newly created directory. Start Spark’
 A series of messages will scroll past, as Spark and Hadoop are configured. Once the scrolling stops, you should see a simple prompt.
 
 ![Figure 2: A Terminal window, once Spark starts running for the first time](images/console-messages.png)
+
 **At this prompt, let’s create some data; a simple sequence of numbers from 1 to 50,000.**
 
     scala> val data = 1 to 50000
@@ -91,4 +94,5 @@ A series of messages will scroll past, as Spark and Hadoop are configured. Once 
     scala> sparkSample.filter(_ < 10).collect()
 
 ![Figure 3: Values less than 10, selected from a set of 50,000 numbers](images/console-result.png)
+
 **Spark should report the result, with an array containing any values less than 10. Richer and more complex examples are available in resources mentioned elsewhere in this guide.**
