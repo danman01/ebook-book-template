@@ -6,7 +6,7 @@ Other stream processing solutions exist, including projects like Apache Storm an
 
 Spark’s real and sustained advantage over these alternatives is this tight integration between its stream and batch processing capabilities. For workloads in which streamed data must be combined with data from other sources, Spark remains a strong and credible option.
 
-![Figure 5: Spark Streaming accepts data from a range of sources and is able to pass that data to various storage systems for safekeeping.](streaming-options.png)
+![Figure 5: Spark Streaming accepts data from a range of sources and is able to pass that data to various storage systems for safekeeping.](images/streaming-options.png)
 
 Spark Streaming supports the ingest of data from a wide range of data sources, including live streams from Apache Kafka, Apache Flume, AWS Kinesis, Twitter, or sensors and other devices connected via TCP sockets. Data can also be streamed out of storage services such as HDFS and AWS S3. Data is processed by Spark Streaming, using a range of algorithms and high-level data processing functions like *map*, *reduce*, *join* and *window*. Processed data can then be passed to a range of external file systems, or used to populate live dashboards.
 
@@ -20,7 +20,7 @@ The data processing capabilities in Spark Core and Spark’s other modules are a
 
 Spark Streaming itself supports commonly understood semantics for the processing of items in a data stream. These semantics ensure that the system is delivering dependable results, even in the event of individual node failures. Items in the stream are understood to be processed in one of the following ways:
 
-** Please elaboarate with the pros / cons of each of these models because this can impact performance and complexity. Also, please add a note describing the value of algorithms that are idempotent, because within streaming concepts this is HUGE to understand.**
+** Please elaborate with the pros / cons of each of these models because this can impact performance and complexity. Also, please add a note describing the value of algorithms that are idempotent, because within streaming concepts this is HUGE to understand.**
 
 * *At most once*: Each item will either be processed once or not at all;
 * *At least once*: Each item will be processed one or more times, increasing the likelihood that data will not be lost but also introducing the possibility that items may be duplicated;
@@ -30,15 +30,14 @@ Different input sources to Spark Streaming will offer different guarantees for t
 
 A basic RDD operation, *flatMap*, can be used to extract individual words from lines of text in an input source. When that input source is a data stream, *flatMap* simply works as it normally would, as shown below.
 
-![Figure 8: Individual words are extracted from an input stream, comprising lines of text.](images/streaming-dstream2.png)
+![Figure 8: Individual words are extracted from an input stream, comprising lines of text](images/streaming-dstream2.png)
 
 ## The Spark Driver
 
-![Figure 9: Components of a Spark cluster.](images/streaming-driver.png)
+![Figure 9: Components of a Spark cluster](images/streaming-driver.png)
 
 Activities within a Spark cluster are orchestrated by a driver program, SparkContext. This exploits the cluster management capabilities of an external tool like Mesos or Hadoop’s YARN to allocate resources to the Executor processes that actually manipulate data.
 
 In a distributed and generally fault-tolerant cluster architecture the driver is a potential point of failure, and a heavy load on cluster resources.
 
-Particularly in the case of stream-based applications, there is an expectation and requirement that the cluster will be available and performing at all times. Potential failures in the Spark driver must therefore be mitigated, wherever possible. Spark Streaming introduces the practice of checkpointing, to ensure that data and metadata associated with RDDs containing parts of a stream are routinely replicated to some form of fault-tolerant storage. This makes it feasible to recover data and restart processing in the event of a driver failure. 
-
+Particularly in the case of stream-based applications, there is an expectation and requirement that the cluster will be available and performing at all times. Potential failures in the Spark driver must therefore be mitigated, wherever possible. Spark Streaming introduces the practice of checkpointing, to ensure that data and metadata associated with RDDs containing parts of a stream are routinely replicated to some form of fault-tolerant storage. This makes it feasible to recover data and restart processing in the event of a driver failure.

@@ -4,7 +4,19 @@ Spark is a general-purpose data processing engine, suitable for use in a wide ra
 
 Rather than invest effort in building these capabilities into Spark the project currently leverages the strengths of other open source projects, relying upon them for everything from cluster management and data persistence to disaster recovery and compliance.
 
-Projects like Apache Mesos offer a powerful – and growing – set of capabilities around distributed cluster management, but most Spark deployments today still tend to select Apache Hadoop and its associated projects to fulfill these requirements.
+Projects like Apache Mesos offer a powerful-and growing-set of capabilities around distributed cluster management, but most Spark deployments today still tend to select Apache Hadoop and its associated projects to fulfill these requirements.
+
+## Hadoop v Spark - an answer to the wrong question
+
+Spark is not, despite the hype, a replacement for Hadoop.
+
+Spark can run on top of Hadoop, benefiting from Hadoop’s cluster manager (YARN) and underlying storage (HDFS, HBase, etc.). Spark can also run completely separately from Hadoop, integrating with alternative cluster managers like Mesos and alternative storage platforms like Cassandra and Amazon S3.
+
+Much of the confusion around Spark’s relationship to Hadoop dates back to the early years of Spark’s development. At this time, Hadoop relied upon MapReduce for the bulk of its data processing. Hadoop MapReduce also managed scheduling and task allocation processes within the cluster: even workloads that were not best suited to batch processing were passed through Hadoop’s MapReduce engine, adding complexity and reducing performance.
+
+Spark offered (and still offers) a far faster way to process data than passing it through unnecessary Hadoop MapReduce processes. But Hadoop has moved on, with development of the YARN cluster manager freeing the project from its early dependence upon MapReduce. Hadoop MapReduce is still available within Hadoop, but need only be used when working with the types of data – log files, static batch processes, etc. – for which MapReduce is appropriate. Other data processing tasks can be assigned to different processing engines (including Spark), with YARN handling the management and allocation of cluster resources.
+
+Spark is a viable alternative to Hadoop MapReduce in a range of circumstances. Spark is a useful adjunct to a modern Hadoop cluster deployment, once the dependence upon Hadoop MapReduce has been removed by YARN.
 
 ## What Hadoop gives Spark
 
@@ -21,16 +33,4 @@ Hadoop has come a long way since its early versions, which were essentially conc
 
 Spark is able to contribute, via YARN, to Hadoop-based jobs. In particular, Spark’s machine learning module delivers capabilities not easily exploited in Hadoop without the use of Spark. Spark’s original design goal, to enable rapid in-memory processing of sizeable data volumes, also remains an important contribution to the capabilities of a Hadoop cluster.
 
-In certain circumstances, Spark’s SQL capabilities, streaming capabilities (otherwise available to Hadoop through Storm, for example) and graph processing capabilities (otherwise available to Hadoop through Neo4J or Giraph) may also prove to be of value. 
-
-## Planning the coexistence of Spark and Hadoop
-
-As discussed earlier, Spark can run on its own. It is more commonly deployed as part of a cluster, managed by Mesos or (more often) the YARN resource manager within Hadoop.
-
-**this section needs to be spruced up since we are not linking out to the spark site**
-Issues to consider in specifying hardware for the cluster on which Spark will run will be covered later in this book. Key points include:
-* Run Spark as close to the cluster’s storage nodes as possible;
-* Allocate local storage as well, ideally 4-8 disks per node;
-* Ensure that nodes are connected with network speeds of 10 Gigabits or more, to minimize latency;
-* Allocate no more than 75% of available RAM to Spark, leaving the rest for the operating system and the cache.
-
+In certain circumstances, Spark’s SQL capabilities, streaming capabilities (otherwise available to Hadoop through Storm, for example) and graph processing capabilities (otherwise available to Hadoop through Neo4J or Giraph) may also prove to be of value in enterprise use cases.

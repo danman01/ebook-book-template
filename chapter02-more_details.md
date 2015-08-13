@@ -1,8 +1,8 @@
 # Spark in more detail
 
-The open source Spark is a top-level project of the Apache Software Foundation, designed to be used with a range of programming languages and on a variety of architectures. Spark’s speed, simplicity, and broad support for existing development environments and storage systems make it increasingly popular with a wide range of developers, and relatively accessible to those learning to work with it for the first time. The project supporting Spark’s ongoing development is one of Apache’s largest and most vibrant, with over 500 contributors from more than 200 organizations responsible for code in the current software release. 
+The open source Spark is a top-level project of the Apache Software Foundation, designed to be used with a range of programming languages and on a variety of architectures. Spark’s speed, simplicity, and broad support for existing development environments and storage systems make it increasingly popular with a wide range of developers, and relatively accessible to those learning to work with it for the first time. The project supporting Spark’s ongoing development is one of Apache’s largest and most vibrant, with over 500 contributors from more than 200 organizations responsible for code in the current software release.
 
-## Support for development languages
+## Development Language Support
 
 Comprehensive support for the development languages with which developers are already familiar is important in ensuring that Spark may be learned relatively easily, and incorporated into existing applications as straightforwardly as possible. Programming languages supported by Spark include:
 * [Java](https://spark.apache.org/docs/latest/api/java/index.html)
@@ -11,9 +11,9 @@ Comprehensive support for the development languages with which developers are al
 * [SQL](https://spark.apache.org/docs/latest/sql-programming-guide.html)
 * [R](https://spark.apache.org/docs/latest/api/R/index.html)
 
-Languages like Python are often considered to perform poorly, especially in relation to alternatives such as Java. Although this concern is justified in some development environments, it is less significant in the distributed cluster model in which Spark will typically be deployed. Any slight loss of performance introduced by use of Python can be compensated for elsewhere in the design and operation of the cluster. Familiarity with your chosen language is likely to be far more important than the raw speed of code prepared in that language. 
+Languages like Python are often considered to perform poorly, especially in relation to alternatives such as Java. Although this concern is justified in some development environments, it is less significant in the distributed cluster model in which Spark will typically be deployed. Any slight loss of performance introduced by use of Python can be compensated for elsewhere in the design and operation of the cluster. Familiarity with your chosen language is likely to be far more important than the raw speed of code prepared in that language.
 
-Extensive examples and tutorials exist for Spark in a number of places, including the [Apache Spark project website](https://spark.apache.org/examples.html) itself. These tutorials normally include code snippets in Java, Python and Scala. 
+Extensive examples and tutorials exist for Spark in a number of places, including the [Apache Spark project website](https://spark.apache.org/examples.html) itself. These tutorials normally include code snippets in Java, Python and Scala.
 
 The Structured Query Language, SQL, is widely used in relational databases, and simple SQL queries are normally well-understood by developers, data scientists and other knowledge workers familiar with asking questions of any data storage system. The Apache Spark module, Spark SQL, offers native support for SQL and simplifies the process of querying data stored in Spark’s own Resilient Distributed Dataset model alongside data from external sources such as relational databases and data warehouses.
 
@@ -21,15 +21,15 @@ Support for the data science package, R, is more recent. The SparkR package firs
 
 ## Standalone, or part of a cluster
 
-As we saw above, for developers looking to get started with Spark, it’s easy to download and install on a laptop or virtual machine. 
+As we saw above, for developers looking to get started with Spark, it’s easy to download and install on a laptop or virtual machine.
 
-But for production workloads, operating at scale, a single laptop or virtual machine is unlikely to be sufficient. In these circumstances Spark will normally run on an existing big data cluster. These clusters are often also used for Hadoop jobs, and Hadoop’s YARN resource manager will typically then be used to manage the whole cluster (including Spark). [Running Spark on YARN](https://spark.apache.org/docs/latest/running-on-yarn.html), from the Apache Spark project, provides more configuration details. 
+But for production workloads, operating at scale, a single laptop or virtual machine is unlikely to be sufficient. In these circumstances Spark will normally run on an existing big data cluster. These clusters are often also used for Hadoop jobs, and Hadoop’s YARN resource manager will typically then be used to manage the whole cluster (including Spark). [Running Spark on YARN](https://spark.apache.org/docs/latest/running-on-yarn.html), from the Apache Spark project, provides more configuration details.
 
 For those who prefer alternative resource managers, Spark can also run just as easily on clusters controlled by Apache Mesos. [Running Spark on Mesos](https://spark.apache.org/docs/latest/running-on-mesos.html), from the Apache Spark project, provides more configuration details.
 
 A series of scripts bundled with current releases of Spark simplify the process of launching Spark on Amazon Web Services’ Elastic Compute Cloud (EC2). [Running Spark on EC2](https://spark.apache.org/docs/latest/ec2-scripts.html), from the Apache Spark project, provides more configuration details.
 
-## Storage options
+## Storage Options
 
 Although often linked with the Hadoop file system, HDFS, Spark can integrate with a range of commercial or open source third-party data storage systems including:
 * Amazon S3
@@ -41,7 +41,7 @@ Although often linked with the Hadoop file system, HDFS, Spark can integrate wit
 
 Developers are likely to simply choose the data storage system they are already using elsewhere in their workflow.
 
-## The Spark stack
+## The Spark Stack
 
 ![Figure 4: The Spark Stack](images/spark-stack-diagram.png)
 
@@ -80,3 +80,8 @@ An additional DataFrames API was added to Spark in 2015. DataFrames [offers](htt
 
 For new users familiar with data frames in other programming languages, this API should make them feel at home. For existing Spark users, this extended API will make Spark easier to program, and at the same time improve performance through intelligent optimizations and code-generation.
 
+## The Power of Data Pipelines
+
+** It would be great to offer up a little more detail to really hammer the point. Like, performing ETL requires chaining together of processes, or complex tools that require special training. **
+
+Much of Spark’s power lies in its ability to combine very different techniques and processes together into a single, coherent, whole. Outside Spark, the discrete tasks of selecting data, transforming that data in various ways, and then analyzing the transformed result in some way might easily require a series of separate processing frameworks such as Oozie. Spark, on the other hand, offers the ability to combine these together, crossing boundaries between batch, streaming and interactive workflows in ways that make the user more productive. Spark simplifies the management of these disparate processes, offering an integrated whole – a data pipeline – that is easier to configure, easier to run, and easier to maintain. In use cases such as ETL these pipelines can become extremely rich and complex, combining large numbers of inputs and a wide range of processing steps into a unified whole that consistently delivers the desired result.
