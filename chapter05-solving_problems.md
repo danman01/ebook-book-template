@@ -1,0 +1,3 @@
+# Solving a Business Problem
+
+Short recap - now that you have learned how to install, run and configure spark...
