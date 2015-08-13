@@ -1,4 +1,4 @@
-# Spark in more detail
+# Diving into Spark
 
 The open source Spark is a top-level project of the Apache Software Foundation, designed to be used with a range of programming languages and on a variety of architectures. Spark’s speed, simplicity, and broad support for existing development environments and storage systems make it increasingly popular with a wide range of developers, and relatively accessible to those learning to work with it for the first time. The project supporting Spark’s ongoing development is one of Apache’s largest and most vibrant, with over 500 contributors from more than 200 organizations responsible for code in the current software release.
 
@@ -19,11 +19,11 @@ The Structured Query Language, SQL, is widely used in relational databases, and 
 
 Support for the data science package, R, is more recent. The SparkR package first appeared in release 1.4 of Apache Spark (June 2015), but given the popularity of R amongst data scientists and statisticians, it is likely to prove an important addition to Spark’s set of supported languages.
 
-## Standalone, or part of a cluster
+## Deployment Options
 
-As we saw above, for developers looking to get started with Spark, it’s easy to download and install on a laptop or virtual machine.
+As we saw in the previous chapter, for developers looking to get started with Spark, it’s easy to download and install on a laptop or virtual machine. Spark was built to be able to run in a couple different ways: standalone, or part of a cluster.
 
-But for production workloads, operating at scale, a single laptop or virtual machine is unlikely to be sufficient. In these circumstances Spark will normally run on an existing big data cluster. These clusters are often also used for Hadoop jobs, and Hadoop’s YARN resource manager will typically then be used to manage the whole cluster (including Spark). [Running Spark on YARN](https://spark.apache.org/docs/latest/running-on-yarn.html), from the Apache Spark project, provides more configuration details.
+But for production workloads-operating at scale-a single laptop or virtual machine is unlikely to be sufficient. In these circumstances Spark will normally run on an existing big data cluster. These clusters are often also used for Hadoop jobs, and Hadoop’s YARN resource manager will generally be used to manage that Hadoop cluster (including Spark). [Running Spark on YARN](https://spark.apache.org/docs/latest/running-on-yarn.html), from the Apache Spark project, provides more configuration details.
 
 For those who prefer alternative resource managers, Spark can also run just as easily on clusters controlled by Apache Mesos. [Running Spark on Mesos](https://spark.apache.org/docs/latest/running-on-mesos.html), from the Apache Spark project, provides more configuration details.
 
@@ -31,7 +31,9 @@ A series of scripts bundled with current releases of Spark simplify the process 
 
 ## Storage Options
 
-Although often linked with the Hadoop file system, HDFS, Spark can integrate with a range of commercial or open source third-party data storage systems including:
+Although often linked with the Hadoop Distributed File System (HDFS) Spark can integrate with a range of commercial or open source third-party data storage systems including:
+* MapR (file system and database)
+* Google Cloud
 * Amazon S3
 * Apache Cassandra
 * Apache Hadoop (HDFS)
@@ -71,14 +73,14 @@ Where possible, these RDDs remain in memory, greatly increasing the performance 
 Spark’s capabilities can all be accessed and controlled using a rich API. This supports Spark’s four principal development environments ([Scala](https://spark.apache.org/docs/latest/api/scala/index.html), [Java](https://spark.apache.org/docs/latest/api/java/index.html),  [Python](https://spark.apache.org/docs/latest/api/python/index.html), [R](https://spark.apache.org/docs/latest/api/R/index.html)), and extensive documentation is provided regarding the API’s instantiation in each of these languages. The [Spark Programming Guide](http://spark.apache.org/docs/latest/programming-guide.html) provides further detail, with comprehensive code snippets in Scala, Java and Python.
 The Spark API was optimized for manipulating data, with a design that reduced common data science tasks from hundreds or thousands of lines of code to only a few.
 
-An additional DataFrames API was added to Spark in 2015. DataFrames [offers](https://databricks.com/blog/2015/02/17/introducing-dataframes-in-spark-for-large-scale-data-science.html):
+An additional DataFrames API was added to Spark in 2015. DataFrames [offer](https://databricks.com/blog/2015/02/17/introducing-dataframes-in-spark-for-large-scale-data-science.html):
 * Ability to scale from kilobytes of data on a single laptop to petabytes on a large cluster
 * Support for a wide array of data formats and storage systems
 * State-of-the-art optimization and code generation through the Spark SQL Catalyst optimizer
 * Seamless integration with all big data tooling and infrastructure via Spark
 * APIs for Python, Java, Scala, and R
 
-For new users familiar with data frames in other programming languages, this API should make them feel at home. For existing Spark users, this extended API will make Spark easier to program, and at the same time improve performance through intelligent optimizations and code-generation.
+For new users familiar with dataframes in other programming languages, this API should make them feel at home. For existing Spark users, this extended API will make Spark easier to program, and at the same time improve performance through intelligent optimizations and code-generation.
 
 ## The Power of Data Pipelines
 

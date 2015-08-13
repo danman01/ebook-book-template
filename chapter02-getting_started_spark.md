@@ -1,4 +1,4 @@
-# Getting started with Spark
+# Getting Started with Spark
 
 Although cluster-based installations of Spark can become large and relatively complex, integrated with Mesos, Hadoop, Cassandra, or other systems, it is straightforward to download Spark and configure it in standalone mode on a laptop or server for learning and exploration. This low barrier to entry makes it relatively easy for individual developers, or data scientists to get started with Spark, and for businesses to launch pilot projects that do not require complex re-tooling or interference with production systems.
 
@@ -6,11 +6,9 @@ Apache Spark is open source software, and can be freely [downloaded](https://spa
 
 [Build options](http://spark.apache.org/docs/latest/building-spark.html), including optional links to data storage systems such as Hadoop’s HDFS or Hive, are discussed in more detail in Spark’s online documentation.
 
-## Getting started with Spark
-
 A [Quick Start](https://spark.apache.org/docs/1.4.1/quick-start.html) guide, optimized for developers familiar with either Python or Scala, provides an accessible introduction to working with Spark. MapR also provide a [tutorial](https://www.mapr.com/products/mapr-sandbox-hadoop/tutorials/spark-tutorial) linked to their simplified deployment of Hadoop, the [MapR Sandbox](https://www.mapr.com/products/mapr-sandbox-hadoop).
 
-### A very simple Spark installation
+## A very simple Spark installation
 
 The following steps are all that’s needed to download Java, Spark and Hadoop and get them running on a laptop, in this case one running Mac OS X.
 If you do not currently have the [Java JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (version 7 or higher) installed, download it and follow the steps to install it for your operating system.
@@ -45,3 +43,5 @@ A series of messages will scroll past, as Spark and Hadoop are configured. Once 
 <!--![Figure 3: Values less than 10, selected from a set of 50,000 numbers](images/console-result.png)-->
 
 **Spark should report the result, with an array containing any values less than 10. Richer and more complex examples are available in resources mentioned elsewhere in this guide.**
+
+Spark has a very low barrier to entry to get started, which eases the burden of learning a new toolset. Barrier to entry should always be a consideration for any new technology a company evaluates for enterprise use.

@@ -1,4 +1,4 @@
-# Streaming framework
+# Streaming Framework
 
 Although now considered a key element of Spark, streaming capabilities were only introduced to the project with its 0.7 release (February 2013), emerging from the alpha testing phase with the 0.9 release (February 2014). Rather than being integral to the design of Spark, stream processing is a capability that has been added alongside Spark Core and its original design goal of rapid in-memory data processing.
 
@@ -20,6 +20,7 @@ The data processing capabilities in Spark Core and Spark’s other modules are a
 
 Spark Streaming itself supports commonly understood semantics for the processing of items in a data stream. These semantics ensure that the system is delivering dependable results, even in the event of individual node failures. Items in the stream are understood to be processed in one of the following ways:
 
+## Processing Models
 ** Please elaborate with the pros / cons of each of these models because this can impact performance and complexity. Also, please add a note describing the value of algorithms that are idempotent, because within streaming concepts this is HUGE to understand.**
 
 * *At most once*: Each item will either be processed once or not at all;
@@ -41,3 +42,7 @@ Activities within a Spark cluster are orchestrated by a driver program, SparkCon
 In a distributed and generally fault-tolerant cluster architecture the driver is a potential point of failure, and a heavy load on cluster resources.
 
 Particularly in the case of stream-based applications, there is an expectation and requirement that the cluster will be available and performing at all times. Potential failures in the Spark driver must therefore be mitigated, wherever possible. Spark Streaming introduces the practice of checkpointing, to ensure that data and metadata associated with RDDs containing parts of a stream are routinely replicated to some form of fault-tolerant storage. This makes it feasible to recover data and restart processing in the event of a driver failure.
+
+## Microbatch
+
+blah blah blah
