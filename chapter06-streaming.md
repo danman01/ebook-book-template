@@ -38,8 +38,6 @@ Particularly in the case of stream-based applications, there is an expectation a
 
 ## Processing Models
 
-** Please elaborate with the pros / cons of each of these models because this can impact performance and complexity. Also, please add a note describing the value of algorithms that are idempotent, because within streaming concepts this is HUGE to understand.**
-
 Spark Streaming itself supports commonly understood semantics for the processing of items in a data stream. These semantics ensure that the system is delivering dependable results, even in the event of individual node failures. Items in the stream are understood to be processed in one of the following ways:
 
 * *At most once*: Each item will either be processed once or not at all;
@@ -47,6 +45,41 @@ Spark Streaming itself supports commonly understood semantics for the processing
 * *Exactly once*: Each item will be processed exactly once.
 
 Different input sources to Spark Streaming will offer different guarantees for the manner in which data will be processed. With version 1.3 of Spark, a new API enables *exactly once* ingest of data from Apache Kafka, improving data quality throughout the workflow. This is discussed in more detail in an [Integration Guide](http://spark.apache.org/docs/latest/streaming-kafka-integration.html).
+
+### Picking a Processing Model
+
+From a stream processing stand point *at most once* is the easiest to build. This is due to the nature that the stream is "ok" with knowing that some data could be lost. Most people would think there would never be a use case which would tolerate *at most once*. Consider a use case of a media streaming service. Lets say a customer of a movie streaming service is watching a movie and the movie player emits checkpoints every couple seconds back to the media streaming service detailing the current point in the movie. This checkpoint would be used in case the movie player crashes and the user needs to start where they left off. With *at most once* processing, if the checkpoint is missed the worst case is that the user may have to rewatch a few additional seconds of the movie from the most recent checkpoint that was created. This would have a very minimal impact on a user of the system. The message might look something like:
+
+```javascript
+{
+  "chekpoint": {
+    "user": "xyz123",
+    "movie": "The Avengers",
+    "time": "1:23:50"
+  }
+}
+```
+
+*At least once* will guarantee that none of those checkpoints will be lost. The same case with *at least once* processing would change in that the same checkpoint could potentially be replayed multiple times. If the stream processor handling a checkpoint saved the checkpoint, then crashed before it could be acknowledged, the checkpoint would be replayed when the server comes back online.
+
+This brings up an important note about replaying the same request multiple times. *At least once* guarantees every request will be processed one or more times, so there should be special considerations for creating code functions that are idempotent. This means that an action can be repeated multiple times and never produce a different result.
+
+```javascript
+x = 4 // This is idempotent
+x++ // This is NOT idempotent
+```
+
+If *at least once* was the requirement for this media streaming example, we could add a field to the checkpoint to enable a different way of acting upon the checkpoint:
+
+```javascript
+"usersTime": "20150519T13:15:14"
+```
+
+With that extra piece of information, the function that persists the checkpoint could check to see if usersTime is less than the latest checkpoint. This would prevent overwriting a newer value and would cause the code function to be idempotent.
+
+Within the world of streaming it is important to understand these concepts and when they should matter for a streaming implementation.
+
+*Exactly once* is the most costly model to implement. It requires special write-ahead logs to be implemented to ensure that no datum is lost and that it was acted upon exactly one-time, no-more, no-less. This model has a drastic impact on throughput and performance in a computing system because of the guarantees that it makes. *Exactly once* sounds nice and even makes people feel all warm and fuzzy because everyone understands what they end result will be. The trade-offs must be weighed before going down this route. If code functions can be made to be idempotent then there is ***NO VALUE*** in *exactly once* processing. Generally, implementing *at least once* with idempotent functions should be the goal of any stream processing system. Functions which cannot be made to be idempotent and still require such a guarantee have little choice but to implement *exactly once* processing.
 
 ## Spark Streaming v Others
 
@@ -66,8 +99,8 @@ Spark Streaming is fast, but to make comparisons between Spark Streaming and oth
 
 ## Current Limitations
 
-Two of the biggest complaints about running Spark Streaming in production are backpressure and dynamic scaling.
+Two of the biggest complaints about running Spark Streaming in production are back pressure and out-of-order data.
 
-Back pressure occurs when the volume of events coming across a stream is more than a stream processing can handle. There are changes that will show up in version 1.5 of Spark to enable more dynamic ingestion rate capabilities.
+Back pressure occurs when the volume of events coming across a stream is more than the stream processing engine can handle. There are changes that will show up in version 1.5 of Spark to enable more dynamic ingestion rate capabilities to make back pressure be less of an issue.
 
-Dynamic scaling is important in long running streaming applications. Sometimes scaling the ingestion rate isn't enough, like when there is a need to add more more compute to the cluster to enable processing the data. Spark Streaming is already architected in such a way that it supports processing small units of work which are well distributed. It is not currently considered easy to scale up and down. Because this is such an important thing, it is expected that more will be done to
+More work is being performed to enable user-defined time extraction functions. This will enable developers to check event time against events already processed. Work in this area is expected in a future release of Spark.
