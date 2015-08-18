@@ -21,7 +21,7 @@ ALS approximates the sparse user item rating matrix of dimension K as the produc
 
 ALS is an *iterative algorithm*. In each iteration, the algorithm alternatively fixes one factor matrix and solves for the other, and this process continues until it converges. This alternation between which matrix to optimize is where the "alternating" in the name comes from.
 
-Typical Machine Learning Workflow
+## Typical Machine Learning Workflow
 
 A typical machine learning workflow is shown below.
 
@@ -36,15 +36,19 @@ This code will perform the following steps:
 5. Make predictions with the training data and observe the results.
 6. Test the model with the test data.
 
-The Sample set
+## The Sample Set
 
 The table below shows the Rating data fields with some sample data:
 
-![](images/mllib_rec_engine_image008.png)
+|user id|movie id|rating|
+|-------|--------|------|
+|1      |1193    |4     |
 
 The table below shows the Movie data fields with some sample data:
 
-![](images/mllib_rec_engine_image009.png)
+|movie id|title     |genre     |
+|--------|----------|----------|
+|1       |Toy Story |animation |
 
 First let's explore the data using Spark Dataframes with questions like:
 
