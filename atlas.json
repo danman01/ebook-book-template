@@ -41,7 +41,7 @@
     "html": {
       "toc": true,
       "index": true,
-      "syntaxhighlighting": true,
+      "syntaxhighlighting": false,
       "show_comments": false,
       "consolidated": false
     }
