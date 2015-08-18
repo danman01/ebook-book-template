@@ -6,7 +6,7 @@ Other stream processing solutions exist, including projects like Apache Storm an
 
 ## The Details of Spark Streaming
 
-Spark’s real and sustained advantage over these alternatives is this tight integration between its stream and batch processing capabilities. For workloads in which streamed data must be combined with data from other sources, Spark remains a strong and credible option.
+Spark’s real and sustained advantage over these alternatives is this tight integration between its stream and batch processing capabilities. Running in a production environment, Spark Streaming will normally rely upon capabilities from external projects like ZooKeeper and HDFS to deliver resilient scalability. In real-world application scenarios, where observation of historical trends often augments stream-based analysis of current events, this capability is of great value in streamlining the development process. For workloads in which streamed data must be combined with data from other sources, Spark remains a strong and credible option.
 
 ![Figure 5: Spark Streaming accepts data from a range of sources and is able to pass that data to various storage systems for safekeeping.](images/streaming-options.png)
 
