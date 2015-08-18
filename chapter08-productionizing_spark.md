@@ -37,7 +37,7 @@ Spark should always run as close to the cluster's storage nodes as possible. Muc
 
 ## Production Spark Use Cases
 
-The generalized producction use cases documented here are intended to offer ideas on how to take Spark into production to solve real business problems. Any particular business can benefit from utilizing Spark to solve problems, sometimes people just need a little motivation. With any luck, these cases will serve to be that motivation.
+The generalized production use cases documented here are intended to offer ideas on how to take Spark into production to solve real business problems. Any particular business can benefit from utilizing Spark to solve problems, sometimes people just need a little motivation. With any luck, these cases will serve to be that motivation.
 
 ### Teradata use case
 

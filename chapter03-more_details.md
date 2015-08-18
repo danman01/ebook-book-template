@@ -80,7 +80,7 @@ An additional DataFrames API was added to Spark in 2015. DataFrames [offer](http
 * Seamless integration with all big data tooling and infrastructure via Spark
 * APIs for Python, Java, Scala, and R
 
-For those familiar with a DataFrames API in other languages like R or Pandas in Python, this API will make them feel nearly as comfortable as being at home. For those not familiar with the API, but already familiar with Spark, this extended API will ease application development, while helping to improve performance via the optimizations and code-generation.
+For those familiar with a DataFrames API in other languages like R or Pandas in Python, this API will make them feel right at home. For those not familiar with the API, but already familiar with Spark, this extended API will ease application development, while helping to improve performance via the optimizations and code-generation.
 
 ## The Power of Data Pipelines
 
