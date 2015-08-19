@@ -14,8 +14,10 @@
     "chapter05-making_recommendations.md",
     "chapter05-user_profiles.md",
     "chapter06-streaming.md",
-    "chapter07-use_cases.md",
     "chapter08-productionizing_spark.md",
+    "chapter08-use_cases.md",
+    "chapter08-making_recommendations.md",
+    "chapter08-to_kill_a_mockingbird.md",
     "appendix.html",
     "appendix01-spark_cheat_sheet.md",
     "ix.html"
