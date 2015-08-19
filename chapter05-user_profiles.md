@@ -1,5 +1,3 @@
-<div class="pagebreak-before" />
-
 ## Computing User Profiles with Spark
 This use case will bring together the core concepts of Spark and use a large dataset to build a simple real-time dashboard giving us insight into customer behaviors.
 
