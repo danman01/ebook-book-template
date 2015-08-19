@@ -15,7 +15,7 @@
     "chapter05-user_profiles.md",
     "chapter06-streaming.md",
     "chapter08-productionizing_spark.md",
-    "chapter07-pepperdata.md",
+    "chapter07-pepperdata.html",
     "chapter08-use_cases.md",
     "chapter08-making_recommendations.md",
     "chapter08-to_kill_a_mockingbird.md",
@@ -29,7 +29,9 @@
       "toc": true,
       "index": true,
       "syntaxhighlighting": true,
-      "show_comments": false
+      "show_comments": false,
+      "colors": false,
+      "trim_size": "6inx9in"
     },
     "epub": {
       "toc": true,
@@ -53,5 +55,7 @@
     }
   },
   "theme": "oreillymedia/atlas_tech1c_theme",
-  "title": "Getting Started with Spark"
+  "title": "Getting Started with Spark",
+  "print_isbn13": "",
+  "lang": "en"
 }
