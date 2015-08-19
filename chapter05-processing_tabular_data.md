@@ -1,3 +1,5 @@
+<section data-type="sect1">
+
 # Processing Tabular Data
 The examples here will help you get started using Apache Spark DataFrames with Scala. The new Spark DataFrames API is designed to make big data processing on tabular data easier. A Spark DataFrame is a distributed collection of data organized into named columns that provides operations to _filter_, _group_, or _compute_ aggregates, and can be used with Spark SQL. DataFrames can be constructed from structured data files, existing RDDs, or external databases.
 
@@ -26,7 +28,7 @@ Using Spark DataFrames we will explore the eBay data with questions like:
 ## Loading Data into Spark DataFrames
 First, we will import some packages and instantiate a sqlContext, which is the entry point for working with structured data (rows and columns) in Spark and allows the creation of DataFrame objects.
 
-```Scala
+```scala
 //  SQLContext entry point for working with structured data
 val sqlContext = new org.apache.spark.sql.SQLContext(sc)
 
@@ -39,7 +41,7 @@ import org.apache.spark.sql._
 
 Start by loading the data from the ebay.csv file into a Resilient Distributed Dataset (RDD). RDDs have **transformations** and **actions**; the _first()_ **action** returns the first element in the RDD:
 
-```Scala
+```scala
 // load the data into a  new RDD
 val ebayText = sc.textFile("ebay.csv")
 
@@ -49,7 +51,7 @@ ebayText.first()
 
 Use a Scala _case class_ to define the Auction schema corresponding to the ebay.csv file. Then a _map()_ **transformation** is applied to each element of _ebayText_ to create the ebay RDD of Auction objects.
 
-```Scala
+```scala
 //define the schema using a case class
 case class Auction(auctionid: String, bid: Float, bidtime: Float, bidder: String, bidderrate: Integer, openbid: Float, price: Float, item: String, daystolive: Integer)
 
@@ -59,7 +61,7 @@ val ebay = ebayText.map(_.split(",")).map(p => Auction(p(0),p(1).toFloat,p(2).to
 
 Calling _first()_ **action** on the ebay RDD returns the first element in the RDD:
 
-```Scala
+```scala
 // Return the first element in this RDD
 ebay.first()
 
@@ -69,7 +71,7 @@ ebay.count()
 
 A DataFrame is a distributed collection of data organized into named columns. Spark SQL supports automatically converting an RDD containing case classes to a DataFrame with the method toDF():
 
-```Scala
+```scala
 // change ebay RDD of Auction objects to a DataFrame
 val auction = ebay.toDF()
 ```
@@ -77,21 +79,21 @@ val auction = ebay.toDF()
 ## Exploring and Querying the eBay Auction Data
 DataFrames provide a domain-specific language for structured data manipulation in Scala, Java, and Python; below are some examples with the auction DataFrame. The _show()_ **action** displays the top 20 rows in a tabular form:
 
-```Scala
+```scala
 // Display the top 20 rows of DataFrame
 auction.show()
 ```
 
 DataFrame _printSchema()_ displays the schema in a tree format:
 
-```Scala
+```scala
 // Return the schema of this DataFrame
 auction.printSchema()
 ```
 
 After a DataFrame is instantiated it can be queried. Here are some example using the Scala DataFrame API:
 
-```Scala
+```scala
 // How many auctions were held?
 auction.select("auctionid").distinct.count
 
@@ -110,7 +112,7 @@ highprice.show()
 
 A DataFrame can also be registered as a temporary table using a given name, which can then have SQL statements run against it using the methods provided by sqlContext. Here are some example queries using sqlContext:
 
-```Scala
+```scala
 // register the DataFrame as a temp table
 auction.registerTempTable("auction")
 
@@ -126,3 +128,5 @@ results.show()
 
 ## Summary
 You have now learned how to load data into Spark DataFrames, and explore tabular data with Spark SQL. These code examples can be reused as the foundation to solve any type of business problem.
+
+</section>

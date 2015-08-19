@@ -21,7 +21,7 @@ val tokens=Stemmer.tokenize(line)
 
 The Stemmer object that invokes the Lucene analyzer comes from an article on [classifying documents using Naive Bay on Apache Spark / MLlib](https://chimpler.wordpress.com/2014/06/11/classifiying-documents-using-naive-bayes-on-apache-spark-mllib/). Notice how the line describing the tranquility of the Radley house is affected. The punctuation and capitalization is removed, and words like "house" are stemmed, so tokens with the same root ("housing", "housed", etc.) will be considered equal. Next, we translate those tokens into numbers and count how often they appear in each line. Spark's HashingTF library performs both operations simultaneously.
 
-```Scala
+```scala
 import org.apache.spark.mllib.feature.HashingTF
 val tf = new HashingTF(10)
 
@@ -34,15 +34,14 @@ The default size of the resulting Vector of token frequencies is 1,000,000. The 
 
 The last step in the text-preparation process is to account for the rareness of words- we want to reward uncommon words such as "chifferobe" with more importance than frequent words such as "house" or "brother". This is referred to as TF-IDF transformation and is available as an (almost) one-liner in Spark.
 
-```Scala
+```scala
 import org.apache.spark.mllib.feature.IDF
 val idfModel = new IDF(minDocFreq = 3).fit(trainDocs)
 val idfs = idfModel.transform(hashed)
 ```
 
-The "fit" method of the IDF library examines the entire corpus to tabulate the document count for each word. On the second pass, Spark creates the TF-IDF for each non-zero element (tokeni) as the following:
-
-![](images/MockingBird-fig1.png)
+The "fit" method of the IDF library examines the entire corpus to tabulate the document count for each word. On the second pass, Spark creates the TF-IDF for each non-zero element (tokeni) as the following: <!--![](images/MockingBird-fig1.png)-->
+<p><span class="math-tex" data-type="tex"><span class="math-tex" data-type="tex">\\(TFIDF_i = {\\sqrt{TF} \*ln(doc\ count + 1/doc\ count_i + 1)}\\)</span></span></p>
 
 A corpus of many documents is needed to create an IDF dictionary, so in the example above, excerpts from both novels were fed into the fit method. The transform method was then used to convert individual passages to TF-IDF vectors.
 
@@ -55,7 +54,7 @@ During examination of the text it was noted that a few modifications should be m
 
 The parsed passages were combined, split into training and testing sets, and then transformed with the idfModel built on the training data using the code below:
 
-```Scala
+```scala
 val data = mockData.union(watchData)
 val splits = data.randomSplit(Array(0.7, 0.3))
 val trainDocs = splits(0).map{ x=>x.features}
@@ -73,7 +72,7 @@ Using randomly split data files for training and testing a model is standard pro
 
 The data are prepared for machine learning algorithms in Spark. Naïve Bayes is a reasonable first choice for document classification. The code below shows the training and evaluation of a Naïve Bayes model on the passages.
 
-```Scala
+```scala
 import org.apache.spark.mllib.classification.{NaiveBayes, NaiveBayesModel}
 val nbmodel = NaiveBayes.train(train, lambda = 1.0)
 val bayesTrain = train.map(p => (nbmodel.predict(p.features), p.label))
@@ -93,7 +92,7 @@ Currently, Spark does not support a user-supplied threshold for Naïve Bayes. On
 
 Given the number of features (a TF-IDF vector of size 10,000) and the nature of the data, Spark's tree-based ensemble methods are appropriate. Both Random Forest and Gradient Boosted Trees are available.
 
-```Scala
+```scala
 import org.apache.spark.mllib.tree.RandomForest
 import org.apache.spark.mllib.tree.model.RandomForestModel
 import org.apache.spark.mllib.tree.GradientBoostedTrees
@@ -124,7 +123,7 @@ The regression model options (estimating vs. classifying) will produce continuou
 
 The table below shows the commands to calculate the ROC (Receiver Operating Characteristic) for the Random Forest model--the ROC will tell the real story on the model performance.
 
-```Scala
+```scala
 //// Random forest model metrics on training data
 val trainScores = train.map { point =>
   val prediction = modelRF.predict(point.features)
@@ -143,7 +142,7 @@ metricsTrain.areaUnderROC()
 
 These are the training results.
 
-```Scala
+```scala
 //// Random forest model metrics on test data
 val testScores = test.map { point =>
   val prediction = modelRF.predict(point.features)

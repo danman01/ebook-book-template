@@ -51,7 +51,7 @@ First let's explore the data using Spark Dataframes with questions like:
 ## Loading Data into Spark Dataframes
 First we will import some packages and instantiate a sqlContext, which is the entry point for working with structured data (rows and columns) in Spark and allows the creation of DataFrame objects.
 
-```Scala
+```scala
 // SQLContext entry point for working with structured data
 val sqlContext = new org.apache.spark.sql.SQLContext(sc)
 // This is used to implicitly convert an RDD to a DataFrame.
@@ -64,7 +64,7 @@ import org.apache.spark.mllib.recommendation.{ALS, MatrixFactorizationModel, Rat
 
 Below we use Scala case classes to define the Movie and User schemas corresponding to the movies.dat, and users.dat files.
 
-```Scala
+```scala
 // input format MovieID::Title::Genres
 case class Movie(movieId: Int, title: String, genres: Seq[String])
 
@@ -74,7 +74,7 @@ case class User(userId: Int, gender: String, age: Int, occupation: Int, zip: Str
 
 The functions below parse a line from the movie.dat, user.dat, and rating.dat files into the corresponding Movie and User classes.
 
-```Scala
+```scala
 // function to parse input into Movie class
 def parseMovie(str: String): Movie = {
       val fields = str.split("::")
@@ -92,7 +92,7 @@ def parseUser(str: String): User = {
 
 Below we load the data from the ratings.dat file into a Resilient Distributed Dataset (RDD). RDDs can have **transformations** and **actions**.
 
-```Scala
+```scala
  // load the data into a  RDD
 val ratingText = sc.textFile("/user/user01/moviemed/ratings.dat")
 
@@ -106,7 +106,7 @@ We use the org.apache.spark.mllib.recommendation.Rating class for parsing the ra
 
 Then we use the map **transformation** on _ratingText_, which will apply the _parseRating_ function to each element in _ratingText_ and return a new RDD of Rating objects. We cache the ratings data, since we will use this data to build the matrix model. Then we get the counts for the number of ratings, movies and users.
 
-```Scala
+```scala
 // function to parse input UserID::MovieID::Rating
 //  Into org.apache.spark.mllib.recommendation.Rating class
 def parseRating(str: String): Rating= {
@@ -132,7 +132,7 @@ Spark SQL provides a programming abstraction called DataFrames. A Dataframe is a
 
 Below we load the data from the users and movies data files into an RDD, use the _map()_ **transformation** with the parse functions, and then call _toDF()_ which returns a DataFrame for the RDD. Then we register the Dataframes as temp tables so that we can use the tables in SQL statements.
 
-```Scala
+```scala
 // load the data into DataFrames
 val usersDF = sc.textFile("/user/user01/moviemed/users.dat").map(parseUser).toDF()
 val moviesDF = sc.textFile("/user/user01/moviemed/movies.dat").map(parseMovie).toDF()
@@ -148,7 +148,7 @@ usersDF.registerTempTable("users")
 
 DataFrame printSchema() Prints the schema to the console in a tree format.
 
-```Scala
+```scala
 usersDF.printSchema()
 
 moviesDF.printSchema()
@@ -158,7 +158,7 @@ ratingsDF.printSchema()
 
 Here are some example queries using Spark SQL with DataFrames on the Movie Lens data. The first query gets the maximum and minimum ratings along with the count of users who have rated a movie.
 
-```Scala
+```scala
 // Get the max, min ratings along with the count of users who have rated a movie.
 val results =sqlContext.sql("select movies.title, movierates.maxr, movierates.minr, movierates.cntu from(SELECT ratings.product, max(ratings.rating) as maxr, min(ratings.rating) as minr,count(distinct user) as cntu FROM ratings group by ratings.product ) movierates join movies on movierates.product=movies.movieId order by movierates.cntu desc ")
 
@@ -168,7 +168,7 @@ results.show()
 
 The query below finds the users who rated the most movies, then finds which movies the most active user rated higher than 4. We will get recommendations for this user later.
 
-```Scala
+```scala
 // Show the top 10 most-active users and how many times they rated a movie
 val mostActiveUsersSchemaRDD = sqlContext.sql("SELECT ratings.user, count(*) as ct from ratings group by ratings.user order by ct desc limit 10")
 
@@ -191,7 +191,7 @@ We run ALS on the input trainingRDD of **Rating** (user, product, rating) object
 
 The ALS run(trainingRDD) method will build and return a MatrixFactorizationModel, which can be used to make product predictions for users.
 
-```Scala
+```scala
 // Randomly split ratings RDD into training data RDD (80%) and test data RDD (20%)
 val splits = ratingsRDD.randomSplit(Array(0.8, 0.2), 0L)
 
@@ -209,7 +209,7 @@ val model = (new ALS().setRank(20).setIterations(10).run(trainingRatingsRDD))
 ## Making Predictions with the MatrixFactorizationModel
 Now we can use the MatrixFactorizationModel to make predictions. First we will get movie predictions for the most active user, 4169, with the recommendProducts() method, which takes as input the userid and the number of products to recommend. Then we print out the recommended movie titles.
 
-```Scala
+```scala
 // Get the top 4 movie predictions for user 4169
 val topRecsForUser = model.recommendProducts(4169, 5)
 // get movie titles to show with recommendations
@@ -221,7 +221,7 @@ topRecsForUser.map(rating => (movieTitles(rating.product), rating.rating)).forea
 ## Evaluating the Model
 Next we will compare predictions from the model with **actual** ratings in the _testRatingsRDD_. First we get the user product pairs from the _testRatingsRDD_ to pass to the MatrixFactorizationModel **predict**(user: Int, product: Int) method , which will return predictions as Rating (user, product, rating) objects.
 
-```Scala
+```scala
 // get user product pair from testRatings
 val testUserProductRDD = testRatingsRDD.map {
   case Rating(user, product, rating) => (user, product)
@@ -235,7 +235,7 @@ predictionsForTestRDD.take(10).mkString("\n")
 
 Now we will compare the test predictions to the actual test ratings. First we put the predictions and the test RDDs in this key, value pair format for joining: ((user, product), rating). Then we print out the (user, product), (test rating, predicted rating) for comparison.
 
-```Scala
+```scala
 // prepare  predictions for comparison
 val predictionsKeyedByUserProductRDD = predictionsForTestRDD.map{
   case Rating(user, product, rating) => ((user, product), rating)
@@ -255,7 +255,7 @@ testAndPredictionsJoinedRDD.take(3).mkString("\n")
 
 The example below finds false positives by finding predicted ratings which were >= 4 when the actual test rating was <= 1. There were 557 false positives out of 199,507 test ratings.
 
-```Scala
+```scala
 val falsePositives =(testAndPredictionsJoinedRDD.filter{
   case ((user, product), (ratingT, ratingP)) => (ratingT <= 1 && ratingP >=4)
   })
@@ -266,7 +266,7 @@ falsePositives.count
 
 Next we evaluate the model using Mean Absolute Error (**MAE**). MAE is the absolute differences between the predicted and actual targets.
 
-```Scala
+```scala
 //Evaluate the model using Mean Absolute Error (MAE) between test and predictions
 val meanAbsoluteError = testAndPredictionsJoinedRDD.map {
   case ((user, product), (testRating, predRating)) =>

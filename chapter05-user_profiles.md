@@ -1,3 +1,5 @@
+<section data-type="sect1">
+
 # Computing User Profiles with Spark
 This use case will bring together the core concepts of Spark and use a large dataset to build a simple real-time dashboard giving us insight into customer behaviors.
 
@@ -19,8 +21,8 @@ The data will be loaded directly from a CSV file. There are a couple of steps to
 ## Looking at the Data
 This service has users whom are continuously connecting to the service and listening to tracks. Customers listening to music from this streaming service generate events, over time they represent the highest level of detail about a customers behaviors.
 
-### Customer Events - Individual Tracks ([tracks.csv](data/tracks.csv))
-This dataset consists of a collection of events, one per line, where each event is a client listening to a track. This size is approximately 1M lines and contains simulated listener events over several months. Because this represents things that are happening at a very low level, this data has the potential to grow very large.
+### Customer Events - Individual Tracks
+This dataset ([tracks.csv](data/tracks.csv)) consists of a collection of events, one per line, where each event is a client listening to a track. This size is approximately 1M lines and contains simulated listener events over several months. Because this represents things that are happening at a very low level, this data has the potential to grow very large.
 
 Field Name  | Event ID      | Customer ID   | Track ID      | Datetime            | Mobile        | Listening Zip
 ----------- | ------------- | ------------- | ------------- | ------------------- | ------------- | -------------
@@ -29,7 +31,8 @@ Field Name  | Event ID      | Customer ID   | Track ID      | Datetime          
 
 The event, customer and track IDs show that a customer listened to a specific track. The other fields show associated information, like whether the customer was listening on a mobile device and a geo-location. This will serve as the input into the first Spark job.
 
-### Customer Information ([cust.csv](data/cust.csv))
+### Customer Information
+This dataset ([cust.csv](data/cust.csv)) consists of all statically known details about a user.
 
 Field Name  | Customer ID   | Name              | Gender        | Address              | Zip           | Sign Date    | Status        | Level         | Campaign      | Linked with apps?
 ----------- | ------------- | ----------------- | ------------- | -------------------- | ------------- | ------------ | ------------- | ------------- | ------------- | -----------------
@@ -58,7 +61,7 @@ All the right information is in place and a lot of micro-level detail is availab
 
 Step one in getting started is to initialize a Spark context. Additional parameters could be passed to the _SparkConf_ method to further configure the job, such as setting the master and the directory where the job executes.
 
-```Python
+```python
 from pyspark import SparkContext, SparkConf
 from pyspark.mllib.stat import Statistics
 import csv
@@ -69,7 +72,7 @@ sc = SparkContext(conf=conf)
 
 The next step will be to read the CSV records with the individual track events, and make a _PairRDD_ out of all of the rows. To convert each line of data into an array the _map()_ function will be used, and then _reduceByKey()_ is called to consolidate all of the arrays.
 
-```Python
+```python
 trackfile = sc.textFile('/tmp/data/tracks.csv')
 
 def make_tracks_kv(str):
@@ -87,7 +90,7 @@ The individual track events are now stored in a _PairRDD_, with the customer ID 
 
 By passing a function to _mapValues_, a high-level profile can be computed from the components. The summary data is now readily available to compute basic statistics that can be used for display, using the _colStats_ function from _pyspark.mllib.stat_.
 
-```Python
+```python
 def compute_stats_byuser(tracks):
     mcount = morn = aft = eve = night = 0
  tracklist = []
@@ -123,7 +126,7 @@ Calling _collect()_ on this RDD will persist the results back to a file. The res
 - _live_table.csv_ containing the latest calculations
 - _agg_table.csv_ containgin the aggregated data about all customers computed with _Statistics.colStats_
 
-```Python
+```python
 for k, v in custdata.collect():
     unique, morn, aft, eve, night, mobile = v
     tot = morn + aft + eve + night
@@ -148,3 +151,5 @@ After the job completes, a summary is displayed of what was written to the CSV t
 With just a few lines of code in Spark, a high-level customer behaviour view was created. All computed using a dataset with millions of rows that stays current with the latest information. Nearly any toolset that can utilize a CSV file can now leverage this dataset for visualization.
 
 This use case showcases how easy it is to work with Spark. Spark is a framework for ensuring that new capabilities can be delivered well into the future, as data volumes grow and become more complex.
+
+</section>
