@@ -79,13 +79,16 @@ Using randomly split data files for training and testing a model is standard pro
 The data are prepared for machine learning algorithms in Spark. Naïve Bayes is a reasonable first choice for document classification. The code below shows the training and evaluation of a Naïve Bayes model on the passages.
 
 ```scala
-import org.apache.spark.mllib.classification.{NaiveBayes, NaiveBayesModel}
+import org.apache.spark.mllib.classification.{NaiveBayes,
+  NaiveBayesModel}
 val nbmodel = NaiveBayes.train(train, lambda = 1.0)
 val bayesTrain = train.map(p => (nbmodel.predict(p.features), p.label))
 val bayesTest = test.map(p => (nbmodel.predict(p.features), p.label))
 println("Mean Naive Bayes performance")
-(bayesTrain.filter(x => x._1 == x._2).count() / bayesTrain.count().toDouble,
-bayesTest.filter(x => x._1 == x._2).count() / bayesTest.count().toDouble)
+(bayesTrain.filter(x => x._1 == x._2).count() /
+  bayesTrain.count().toDouble,
+  bayesTest.filter(x => x._1 == x._2).count() /
+  bayesTest.count().toDouble)
 ```
 
 Applying the Naïve Bayes algorithm in Spark gives a classification from which accuracy and a confusion matrix can be derived. The method makes the correct classification on 90.5% of the train records and 70.7% of the test records (performance on the training is almost always better than the test). The confusion matrix on the test data appears below:
@@ -113,8 +116,9 @@ val impurity = "variance"
 val maxDepth = 10
 val maxBins = 32
 val numTrees = 50
-val modelRF = RandomForest.trainRegressor(train, categoricalFeaturesInfo,
-  numTrees, featureSubsetStrategy, impurity, maxDepth, maxBins)
+val modelRF = RandomForest.trainRegressor(train,
+  categoricalFeaturesInfo, numTrees, featureSubsetStrategy,
+  impurity, maxDepth, maxBins)
 
 // GRADIENT BOOSTED TREES REGRESSION
 val boostingStrategy = BoostingStrategy.defaultParams("Regression")

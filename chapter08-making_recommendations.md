@@ -8,7 +8,7 @@ Recommendation systems help narrow your choices to those that best meet your par
 - Testing the results of the recommendations
 
 ### Collaborative Filtering with Spark
-**Collaborative filtering** algorithms recommend items (this is the _filtering_ part) based on preference information from many users (this is the _collaborative_ part). The collaborative filtering approach is based on similarity; the basic idea is people who liked similar items in the past will like similar items in the future. In the example below, Ted likes movies A, B, and C. Carol likes movies B and C. Bob likes movie B. To recommend a movie to Bob, we calculate that users who liked B also liked C, so C is a possible recommendation for Bob. Of course, this is a tiny example. In real situations, we would have much more data to work with.
+Collaborative filtering algorithms recommend items (this is the _filtering_ part) based on preference information from many users (this is the _collaborative_ part). The collaborative filtering approach is based on similarity; the basic idea is people who liked similar items in the past will like similar items in the future. In the example below, Ted likes movies A, B, and C. Carol likes movies B and C. Bob likes movie B. To recommend a movie to Bob, we calculate that users who liked B also liked C, so C is a possible recommendation for Bob. Of course, this is a tiny example. In real situations, we would have much more data to work with.
 
 ![](images/mllib_rec_engine_image004.jpg)
 
@@ -166,10 +166,11 @@ ratingsDF.printSchema()
 Here are some example queries using Spark SQL with DataFrames on the Movie Lens data. The first query gets the maximum and minimum ratings along with the count of users who have rated a movie.
 
 ```scala
-// Get the max, min ratings along with the count of users who have rated a movie.
+// Get the max, min ratings along with the count of users who have
+// rated a movie.
 val results = sqlContext.sql(
-  "select movies.title, movierates.maxr, movierates.minr, movierates.cntu from(
-    SELECT ratings.product, max(ratings.rating) as maxr,
+  "select movies.title, movierates.maxr, movierates.minr, movierates.cntu
+    from(SELECT ratings.product, max(ratings.rating) as maxr,
     min(ratings.rating) as minr,count(distinct user) as cntu
     FROM ratings group by ratings.product ) movierates
     join movies on movierates.product=movies.movieId
@@ -182,7 +183,8 @@ results.show()
 The query below finds the users who rated the most movies, then finds which movies the most active user rated higher than 4. We will get recommendations for this user later.
 
 ```scala
-// Show the top 10 most-active users and how many times they rated a movie
+// Show the top 10 most-active users and how many times they rated
+// a movie
 val mostActiveUsersSchemaRDD = sqlContext.sql(
   "SELECT ratings.user, count(*) as ct from ratings group by
   ratings.user order by ct desc limit 10")
@@ -210,7 +212,8 @@ We run ALS on the input trainingRDD of **Rating** (user, product, rating) object
 The ALS run(trainingRDD) method will build and return a MatrixFactorizationModel, which can be used to make product predictions for users.
 
 ```scala
-// Randomly split ratings RDD into training data RDD (80%) and test data RDD (20%)
+// Randomly split ratings RDD into training  
+// data RDD (80%) and test data RDD (20%)
 val splits = ratingsRDD.randomSplit(Array(0.8, 0.2), 0L)
 
 val trainingRatingsRDD = splits(0).cache()
@@ -221,7 +224,8 @@ val numTest = testRatingsRDD.count()
 println(s"Training: $numTraining, test: $numTest.")
 
 // build a ALS user product matrix model with rank=20, iterations=10
-val model = (new ALS().setRank(20).setIterations(10).run(trainingRatingsRDD))
+val model = (new ALS().setRank(20).setIterations(10)
+  .run(trainingRatingsRDD))
 ```
 
 ### Making Predictions
@@ -236,8 +240,8 @@ val movieTitles=moviesDF.map(array => (array(0), array(1)))
   .collectAsMap()
 
 // print out top recommendations for user 4169 with titles
-topRecsForUser.map(rating => (movieTitles(rating.product), rating.rating))
-  .foreach(println)
+topRecsForUser.map(rating => (movieTitles(
+  rating.product), rating.rating)).foreach(println)
 ```
 
 ### Evaluating the Model

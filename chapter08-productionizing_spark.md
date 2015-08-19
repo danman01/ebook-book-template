@@ -28,5 +28,5 @@ As discussed earlier, Spark can run on its own. It is more commonly deployed as 
 
 Spark should always run as close to the cluster's storage nodes as possible. Much like configuring Hadoop, network I/O is likely to be the biggest bottleneck in a deployment. Deploying with 10Gb+ networking hardware will minimize latency and yield the best results. Never allocate more than 75% of available RAM to Spark. The operating system needs to use it as well, and going higher could cause paging. If a use case is so severely limited by 75% of available RAM it might be time to add more servers to the cluster.
 
-## Advice for Putting Spark into Production
-This is generalized information and ideas on how to successfully take Spark into production to solve business problems. Any particular business can benefit from utilizing Spark to solve problems. With any luck, the information provided here can help you on your own journey to success.
+## Advice and Considerations
+Some others in the industries have been kind enough to contribute a few short segments to include here. These segments are geared to be generalized information and ideas on how to successfully take Spark into production to solve business problems. Any particular business can benefit from utilizing Spark to solve problems. With any luck, the information provided here can help you on your own journey to success.
