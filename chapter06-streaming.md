@@ -10,7 +10,11 @@ Spark's real and sustained advantage over these alternatives is this tight integ
 
 A streaming framework is only as good as its data sources. A strong messaging platform is the best way to ensure solid performance for any streaming system.
 
+<<<<<<< HEAD
+Spark Streaming supports the ingest of data from a wide range of data sources, including live streams from Apache Kafka, Apache Flume, Amazon Kinesis, Twitter, or sensors and other devices connected via TCP sockets. Data can also be streamed out of storage services such as HDFS and AWS S3. Data is processed by Spark Streaming, using a range of algorithms and high-level data processing functions like _map_, _reduce_, _join_ and _window_. Processed data can then be passed to a range of external file systems, or used to populate live dashboards.
+=======
 Spark Streaming supports the ingest of data from a wide range of data sources, including live streams from Apache Kafka, Apache Flume, AWS Kinesis, Twitter, or sensors and other devices connected via TCP sockets. Data can also be streamed out of storage services such as HDFS and AWS S3. Data is processed by Spark Streaming, using a range of algorithms and high-level data processing functions like _map_, _reduce_, _join_ and _window_. Processed data can then be passed to a range of external file systems, or used to populate live dashboards.
+>>>>>>> daa06905e8102e694ad92878ec8cb210a841c11e
 
 ![Figure 6: Spark Streaming divides incoming streams of data into batches which can then be processed.](images/streaming-flow.png)
 
@@ -27,11 +31,15 @@ A basic RDD operation, _flatMap_, can be used to extract individual words from l
 ### The Spark Driver
 ![Figure 9: Components of a Spark cluster](images/streaming-driver.png)
 
+<<<<<<< HEAD
+Activities within a Spark cluster are orchestrated by a driver program using the _SparkContext_. In the case of stream-based applications, the _StreamingContext_ is used. This exploits the cluster management capabilities of an external tool like Mesos or Hadoop's YARN to allocate resources to the Executor processes that actually work with data.
+=======
 Activities within a Spark cluster are orchestrated by a driver program using the _SparkContext_. In the case of stream-based applications the _StreamingContext_ is used. This exploits the cluster management capabilities of an external tool like Mesos or Hadoop's YARN to allocate resources to the Executor processes that actually work with data.
+>>>>>>> daa06905e8102e694ad92878ec8cb210a841c11e
 
-In a distributed and generally fault-tolerant cluster architecture the driver is a potential point-of-failure, and a heavy load on cluster resources.
+In a distributed and generally fault-tolerant cluster architecture, the driver is a potential point of failure, and a heavy load on cluster resources.
 
-Particularly in the case of stream-based applications, there is an expectation and requirement that the cluster will be available and performing at all times. Potential failures in the Spark driver must therefore be mitigated, wherever possible. Spark Streaming introduced the practice of checkpointing, to ensure that data and metadata associated with RDDs containing parts of a stream are routinely replicated to some form of fault-tolerant storage. This makes it feasible to recover data and restart processing in the event of a driver failure.
+Particularly in the case of stream-based applications, there is an expectation and requirement that the cluster will be available and performing at all times. Potential failures in the Spark driver must therefore be mitigated, wherever possible. Spark Streaming introduced the practice of checkpointing to ensure that data and metadata associated with RDDs containing parts of a stream are routinely replicated to some form of fault-tolerant storage. This makes it feasible to recover data and restart processing in the event of a driver failure.
 
 ## Processing Models
 Spark Streaming itself supports commonly understood semantics for the processing of items in a data stream. These semantics ensure that the system is delivering dependable results, even in the event of individual node failures. Items in the stream are understood to be processed in one of the following ways:
@@ -39,10 +47,17 @@ Spark Streaming itself supports commonly understood semantics for the processing
 - _At least once_: Each item will be processed one or more times, increasing the likelihood that data will not be lost but also introducing the possibility that items may be duplicated;
 - _Exactly once_: Each item will be processed exactly once.
 
+<<<<<<< HEAD
+Different input sources to Spark Streaming will offer different guarantees for the manner in which data will be processed. With version 1.3 of Spark, a new API enables _exactly once_ ingest of data from Apache Kafka, improving data quality throughout the workflow. This is discussed in more detail in the [Integration Guide](http://spark.apache.org/docs/latest/streaming-kafka-integration.html).
+
+### Picking a Processing Model
+From a stream processing standpoint, _at most once_ is the easiest to build. This is due to the nature that the stream is "ok" with knowing that some data could be lost. Most people would think there would never be a use case which would tolerate _at most once_. Consider a use case of a media streaming service. Lets say a customer of a movie streaming service is watching a movie and the movie player emits checkpoints every few seconds back to the media streaming service, detailing the current point in the movie. This checkpoint would be used in case the movie player crashes and the user needs to start where he/she left off. With _at most once_ processing, if the checkpoint is missed, the worst case is that the user may have to rewatch a few additional seconds of the movie from the most recent checkpoint that was created. This would have a very minimal impact on a user of the system. The message might look something like:
+=======
 Different input sources to Spark Streaming will offer different guarantees for the manner in which data will be processed. With version 1.3 of Spark, a new API enables _exactly once_ ingest of data from Apache Kafka, improving data quality throughout the workflow. This is discussed in more detail in an [Integration Guide](http://spark.apache.org/docs/latest/streaming-kafka-integration.html).
 
 ### Picking a Processing Model
 From a stream processing stand point _at most once_ is the easiest to build. This is due to the nature that the stream is "ok" with knowing that some data could be lost. Most people would think there would never be a use case which would tolerate _at most once_. Consider a use case of a media streaming service. Lets say a customer of a movie streaming service is watching a movie and the movie player emits checkpoints every couple seconds back to the media streaming service detailing the current point in the movie. This checkpoint would be used in case the movie player crashes and the user needs to start where they left off. With _at most once_ processing, if the checkpoint is missed the worst case is that the user may have to rewatch a few additional seconds of the movie from the most recent checkpoint that was created. This would have a very minimal impact on a user of the system. The message might look something like:
+>>>>>>> daa06905e8102e694ad92878ec8cb210a841c11e
 
 ```javascript
 {
@@ -71,6 +86,16 @@ If _at least once_ was the requirement for this media streaming example, we coul
 
 With that extra piece of information, the function that persists the checkpoint could check to see if usersTime is less than the latest checkpoint. This would prevent overwriting a newer value and would cause the code function to be idempotent.
 
+<<<<<<< HEAD
+Within the world of streaming, it is important to understand these concepts and when they should matter for a streaming implementation.
+
+_Exactly once_ is the most costly model to implement. It requires special write-ahead logs to be implemented to ensure that no datum is lost and that it was acted upon exactly one-time, no-more, no-less. This model has a drastic impact on throughput and performance in a computing system because of the guarantees that it makes. _Exactly once_ sounds nice and even makes people feel all warm and fuzzy because everyone understands what the end result will be. The trade-offs must be weighed before going down this route. If code functions can be made to be idempotent, then there is **_NO VALUE_** in _exactly once_ processing. Generally, implementing _at least once_ with idempotent functions should be the goal of any stream processing system. Functions which cannot be made to be idempotent and still require such a guarantee have little choice but to implement _exactly once_ processing.
+
+## Spark Streaming vs. Others
+Spark streaming operates on the concept of micro-batches. This means that Spark Streaming should not be considered a real-time stream processing engine. This is perhaps the single biggest difference between Spark Streaming and other platforms such as Apache Storm or Apache Flink.
+
+A micro-batch consists of a series of events batched together over a period of time. The batch interval generally ranges from as little as 500ms to about 5,000ms (can be higher). While the batch interval is completely customizable, it is **_important to note_** that it is set upon the creation of the _StreamingContext_. To change this setting would require a restart of the streaming application due to it being a statically configured value.
+=======
 Within the world of streaming it is important to understand these concepts and when they should matter for a streaming implementation.
 
 _Exactly once_ is the most costly model to implement. It requires special write-ahead logs to be implemented to ensure that no datum is lost and that it was acted upon exactly one-time, no-more, no-less. This model has a drastic impact on throughput and performance in a computing system because of the guarantees that it makes. _Exactly once_ sounds nice and even makes people feel all warm and fuzzy because everyone understands what they end result will be. The trade-offs must be weighed before going down this route. If code functions can be made to be idempotent then there is **_NO VALUE_** in _exactly once_ processing. Generally, implementing _at least once_ with idempotent functions should be the goal of any stream processing system. Functions which cannot be made to be idempotent and still require such a guarantee have little choice but to implement _exactly once_ processing.
@@ -79,15 +104,20 @@ _Exactly once_ is the most costly model to implement. It requires special write-
 Spark streaming operates on the concept of micro-batches. This means Spark Streaming should not be considered a real-time stream processing engine. This is perhaps the single biggest difference between Spark Streaming and others like Apache Storm, or Apache Flink.
 
 A micro-batch consists of a series of events batched together over a period of time. The batch interval generally ranges from as little as 500ms to about 5,000ms (can be higher). While the batch interval is completely customizable it is **_important to note_** that it is set upon the creation of the _StreamingContext_. To change this setting would require a restart of the streaming application due to it being a statically configured value.
+>>>>>>> daa06905e8102e694ad92878ec8cb210a841c11e
 
-The shorter time frame (500ms) the closer to real-time and also the more overhead the system will endure. This is due to the need of creating more RDDs for each and every micro-batch. The inverse is also true; the longer the time frame the further from real-time and the less overhead that will occur for processing each micro-batch.
+The shorter the time frame (500ms), the closer to real time, and also the more overhead the system will endure. This is due to the need of creating more RDDs for each and every micro-batch. The inverse is also true; the longer the time frame, the further from real time and the less overhead that will occur for processing each micro-batch.
 
 An argument often made with the concept of a micro-batch in the context of streaming applications is that it lacks the time-series data from each discrete event. This can make it more difficult to know if events arrived out of order. This may or may not be relevant to a business use case.
 
 An application built upon Spark Streaming cannot react to every event as they occur. This is not necessarily a bad thing, but it is instead very important to make sure that everyone, everywhere understands the limitations and capabilities of Spark Streaming.
 
 ### Performance Comparisons
+<<<<<<< HEAD
+Spark Streaming is fast, but to make comparisons between Spark Streaming and other stream processing engines, such as Apache Storm, is a difficult task. The comparisons tend not to be apples-to-apples. Most benchmarks comparisons should be taken very lightly. Because Spark Streaming is micro-batch based, it is going to tend to appear faster than nearly every system that is not micro-batch based, but this trade-off comes at the cost of latency to process the events in a stream. The closer to real-time that an event is processed, the more overhead that occurs in Spark Streaming.
+=======
 Spark Streaming is fast, but to make comparisons between Spark Streaming and other stream processing engines-like Apache Storm-is a difficult task. The comparisons tend not to be apples-to-apples. Most benchmarks comparisons should be taken very lightly. Because Spark Streaming is micro-batch based, it is going to tend to appear faster than nearly every system that is not micro-batch based, but this trade off comes at the cost of latency to process the events in a stream. The closer to real-time that an event is processed the more overhead that occurs in Spark Streaming.
+>>>>>>> daa06905e8102e694ad92878ec8cb210a841c11e
 
 ## Current Limitations
 Two of the biggest complaints about running Spark Streaming in production are back pressure and out-of-order data.
