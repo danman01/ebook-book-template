@@ -1,11 +1,11 @@
-# Making Recommendations with Spark
+## Making Recommendations with Spark
 Recommendation systems help narrow your choices to those that best meet your particular needs, and they are among the most popular applications of big data processing. This use case uses machine learning to perform parallel and iterative processing in Spark and covers:
 - Collaborative filtering for recommendations with Spark
 - Loading and exploring the sample data set with Spark
 - Using Spark MLlib's Alternating Least Squares algorithm to make movie recommendations
 - Testing the results of the recommendations
 
-## Collaborative Filtering with Spark
+### Collaborative Filtering with Spark
 **Collaborative filtering** algorithms recommend items (this is the _filtering_ part) based on preference information from many users (this is the _collaborative_ part). The collaborative filtering approach is based on similarity; the basic idea is people who liked similar items in the past will like similar items in the future. In the example below, Ted likes movies A, B, and C. Carol likes movies B and C. Bob likes movie B. To recommend a movie to Bob, we calculate that users who liked B also liked C, so C is a possible recommendation for Bob. Of course, this is a tiny example. In real situations, we would have much more data to work with.
 
 ![](images/mllib_rec_engine_image004.jpg)
@@ -18,7 +18,7 @@ ALS approximates the sparse user item rating matrix of dimension K as the produc
 
 ALS is an _iterative algorithm_. In each iteration, the algorithm alternatively fixes one factor matrix and solves for the other, and this process continues until it converges. This alternation between which matrix to optimize is where the "alternating" in the name comes from.
 
-## Typical Machine Learning Workflow
+### Typical Machine Learning Workflow
 A typical machine learning workflow is shown below.
 
 ![](images/mllib_rec_engine_image006.jpg)
@@ -31,7 +31,7 @@ This code will perform the following steps:
 5. Make predictions with the training data and observe the results.
 6. Test the model with the test data.
 
-## The Sample Set
+### The Sample Set
 The table below shows the Rating data fields with some sample data:
 
 user id | movie id | rating
@@ -48,7 +48,7 @@ First let's explore the data using Spark Dataframes with questions like:
 - Count the max, min ratings along with the number of users who have rated a movie.
 - Display the title for movies with ratings > 4
 
-## Loading Data into Spark Dataframes
+### Loading Data into Spark Dataframes
 First we will import some packages and instantiate a sqlContext, which is the entry point for working with structured data (rows and columns) in Spark and allows the creation of DataFrame objects.
 
 ```scala
@@ -206,7 +206,7 @@ println(s"Training: $numTraining, test: $numTest.")
 val model = (new ALS().setRank(20).setIterations(10).run(trainingRatingsRDD))
 ```
 
-## Making Predictions with the MatrixFactorizationModel
+### Making Predictions with the MatrixFactorizationModel
 Now we can use the MatrixFactorizationModel to make predictions. First we will get movie predictions for the most active user, 4169, with the recommendProducts() method, which takes as input the userid and the number of products to recommend. Then we print out the recommended movie titles.
 
 ```scala
@@ -218,7 +218,7 @@ val movieTitles=moviesDF.map(array => (array(0), array(1))).collectAsMap()
 topRecsForUser.map(rating => (movieTitles(rating.product), rating.rating)).foreach(println)
 ```
 
-## Evaluating the Model
+### Evaluating the Model
 Next we will compare predictions from the model with **actual** ratings in the _testRatingsRDD_. First we get the user product pairs from the _testRatingsRDD_ to pass to the MatrixFactorizationModel **predict**(user: Int, product: Int) method , which will return predictions as Rating (user, product, rating) objects.
 
 ```scala

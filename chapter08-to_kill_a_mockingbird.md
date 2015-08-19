@@ -1,11 +1,11 @@
-# Unsolved Mystery
+## Unsolved Mystery
 The recent _'discovery'_ and subsequent publication of Harper Lee's earlier novel _Go Set a Watchmen_ has generated renewed scrutiny of the chain of events. Is the newly published book a discarded rough draft that was to become the universally beloved classic, or was it a truly forgotten separate work that deserves to be cast in the literary limelight for analysis? A concise summary of the publishing controversy was written in an [op-ed column](http://www.nytimes.com/2015/07/25/opinion/joe-nocera-the-watchman-fraud.html) by the New York Times.
 
 The new book offers curious readers an opportunity to analyze the two works together with machine learning tools that are ideal for classifying text among a corpus of documents. Apache Spark has a mature set of libraries for text-based analysis that can be leveraged with very few lines of code.
 
 The publisher of _Go Set a Watchman_ is unlikely to make available their best seller even for lofty academic purposes. Luckily, the Wall Street Journal printed the [first chapter](http://www.wsj.com/articles/harper-lees-go-set-a-watchman-read-the-first-chapter-1436500861) on July 10, 2015 for anyone to analyze. In this use case, features will be extracted from the first chapter of each book, and then a model will be built to show the difference between them. Comparing passages from each may provide clues as to the authorship.
 
-## Dissecting a Classic by the Numbers
+### Dissecting a Classic by the Numbers
 The theory behind document classification is that text from the same source will contain similar combinations of words with comparable frequency. Any conclusions based from this type of analysis are only as strong as that assumption.
 
 To build a model to classify documents, text must be translated into numbers. This involves standardizing the text, converting to numbers (via hashing) then adjusting the word importance based on its relative frequency.
@@ -47,7 +47,7 @@ A corpus of many documents is needed to create an IDF dictionary, so in the exam
 
 Having been transformed into TF-IDF vectors, passages from both books are now ready to be classified.
 
-## Building the Classifier
+### Building the Classifier
 The secret to getting value from business problems is not the classification; it is primarily about ranking objects based on the confidence of our decision and then leveraging the value of a good decision minus the cost of a misidentification. Spark has several machine learning algorithms that are appropriate for this task.
 
 During examination of the text it was noted that a few modifications should be made to the novels to make the comparison more "fair". To Kill a Mockingbird was written in the first person and includes many pronouns that would be giveaways (e.g. "I","our","my","we", etc.). These were removed from both books. Due to the inevitability of variable sentence length in novels, passages were created as series of ten consecutive words.
@@ -118,8 +118,8 @@ val modelGB = GradientBoostedTrees.train(train, boostingStrategy)
 ```
 
 The regression model options (estimating vs. classifying) will produce continuous outputs that can be used to find the right threshold. Both of these methods can be configured with tree depth and number of trees– read the Spark documentation for details, but general rules of thumb are the following:
-- Random Forest: trees are built in parallel and overtraining decreases with more trees so setting this number to be large is a great way to leverage a Hadoop environment. The max depth should be larger than GBT.
-- Gradient Boosted Trees: the number of trees is directly related to overtraining and the trees are not built in parallel. This method can produce some extremely high classification rates on the training data, but set the max depth of trees to be smaller than random forest.
+- Random Forest: trees are built in parallel and over training decreases with more trees so setting this number to be large is a great way to leverage a Hadoop environment. The max depth should be larger than GBT.
+- Gradient Boosted Trees: the number of trees is directly related to over training and the trees are not built in parallel. This method can produce some extremely high classification rates on the training data, but set the max depth of trees to be smaller than random forest.
 
 The table below shows the commands to calculate the ROC (Receiver Operating Characteristic) for the Random Forest model--the ROC will tell the real story on the model performance.
 
@@ -175,7 +175,7 @@ In the setting of a business problem, the underlying data of the ROC is used to 
 
 The results cannot be interpreted as conclusive, but there is significant lift displayed on these curves, and that doesn't look good for Harper Lee.
 
-## The Verdict
+### The Verdict
 There are plenty of great tools to build classification models. Apache Spark provides an excellent framework for building solutions to business problems that can extract value from massive, distributed datasets.
 
 Machine learning algorithms cannot answer the great mysteries of life. But they do provide evidence for humans to consider when interpreting results, assuming the right question is asked in the first place.

@@ -51,10 +51,14 @@ Use a Scala _case class_ to define the Auction schema corresponding to the ebay.
 
 ```scala
 //define the schema using a case class
-case class Auction(auctionid: String, bid: Float, bidtime: Float, bidder: String, bidderrate: Integer, openbid: Float, price: Float, item: String, daystolive: Integer)
+case class Auction(auctionid: String, bid: Float, bidtime: Float,
+  bidder: String, bidderrate: Integer, openbid: Float, price: Float,
+  item: String, daystolive: Integer)
 
 // create an RDD of Auction objects
-val ebay = ebayText.map(_.split(",")).map(p => Auction(p(0),p(1).toFloat,p(2).toFloat,p(3),p(4).toInt,p(5).toFloat,p(6).toFloat,p(7),p(8).toInt ))
+val ebay = ebayText.map(_.split(",")).map(p => Auction(p(0),
+  p(1).toFloat,p(2).toFloat,p(3),p(4).toInt,p(5).toFloat,
+  p(6).toFloat,p(7),p(8).toInt))
 ```
 
 Calling _first()_ **action** on the ebay RDD returns the first element in the RDD:
@@ -98,8 +102,10 @@ auction.select("auctionid").distinct.count
 // How many bids per item?
 auction.groupBy("auctionid", "item").count.show
 
-// What's the min number of bids per item? what's the average? what's the max?
-auction.groupBy("item", "auctionid").count.agg(min("count"), avg("count"),max("count")).show
+// What's the min number of bids per item?
+// what's the average? what's the max?
+auction.groupBy("item", "auctionid").count
+  .agg(min("count"), avg("count"),max("count")).show
 
 // Get the auctions with closing price > 100
 val highprice= auction.filter("price > 100")
@@ -115,12 +121,16 @@ A DataFrame can also be registered as a temporary table using a given name, whic
 auction.registerTempTable("auction")
 
 // How many bids per auction?
-val results = sqlContext.sql("SELECT auctionid, item,  count(bid) FROM auction GROUP BY auctionid, item")
+val results = sqlContext.sql(
+  "SELECT auctionid, item,  count(bid) FROM auction GROUP BY auctionid, item"
+  )
 
 // display dataframe in a tabular format
 results.show()
 
-val results = sqlContext.sql("SELECT auctionid, MAX(price) FROM auction GROUP BY item,auctionid")
+val results = sqlContext.sql(
+  "SELECT auctionid, MAX(price) FROM auction GROUP BY item,auctionid"
+  )
 results.show()
 ```
 

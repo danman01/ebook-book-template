@@ -1,11 +1,9 @@
-<section data-type="sect1">
-
-# Computing User Profiles with Spark
+## Computing User Profiles with Spark
 This use case will bring together the core concepts of Spark and use a large dataset to build a simple real-time dashboard giving us insight into customer behaviors.
 
 Spark is an enabling technology in a wide variety of use cases across many industries. Spark is a great candidate anytime results are needed fast and much of the computations can be done in memory. The language used here will be Python, because it does a nice job of reducing the amount of boilerplate code required to illustrate these examples.
 
-## Delivering Music
+### Delivering Music
 Music streaming is a rather pervasive technology which generates massive quantities of data. This type of service is much like people would use every day on a desktop or mobile device, whether as a subscriber or a free listener (perhaps even similar to a Pandora). This will be the foundation of the use case to be explored. Data from such a streaming service will be analyzed.
 
 The basic layout consists of customers whom are logging into this service and listening to music tracks, and they have a variety of parameters:
@@ -15,13 +13,13 @@ The basic layout consists of customers whom are logging into this service and li
 
 Python, PySpark and MLlib will be used to compute some basic statistics for a dashboard, enabling a high-level view of customer behaviors as well as a constantly updated view of the latest information.
 
-### Reading Data from the Distributed File System
-The data will be loaded directly from a CSV file. There are a couple of steps to perform before it can be analyzed. The data will need to be transformed and loaded into a _PairRDD_. This is because the data consists of arrays of (key, value) tuples.
-
-## Looking at the Data
+### Looking at the Data
 This service has users whom are continuously connecting to the service and listening to tracks. Customers listening to music from this streaming service generate events, over time they represent the highest level of detail about a customers behaviors.
 
-### Customer Events - Individual Tracks
+#### Reading Data from the Distributed File System
+The data will be loaded directly from a CSV file. There are a couple of steps to perform before it can be analyzed. The data will need to be transformed and loaded into a _PairRDD_. This is because the data consists of arrays of (key, value) tuples.
+
+#### Customer Events - Individual Tracks
 This dataset ([tracks.csv](data/tracks.csv)) consists of a collection of events, one per line, where each event is a client listening to a track. This size is approximately 1M lines and contains simulated listener events over several months. Because this represents things that are happening at a very low level, this data has the potential to grow very large.
 
 Field Name  | Event ID      | Customer ID   | Track ID      | Datetime            | Mobile        | Listening Zip
@@ -31,7 +29,7 @@ Field Name  | Event ID      | Customer ID   | Track ID      | Datetime          
 
 The event, customer and track IDs show that a customer listened to a specific track. The other fields show associated information, like whether the customer was listening on a mobile device and a geo-location. This will serve as the input into the first Spark job.
 
-### Customer Information
+#### Customer Information
 This dataset ([cust.csv](data/cust.csv)) consists of all statically known details about a user.
 
 Field Name  | Customer ID   | Name              | Gender        | Address              | Zip           | Sign Date    | Status        | Level         | Campaign      | Linked with apps?
@@ -56,7 +54,7 @@ Other datasets that would be available, but will not be used for this use case w
 - Advertisement click history
 - Track details like title, album and artist
 
-## Customer Analysis
+### Customer Analysis
 All the right information is in place and a lot of micro-level detail is available describing what customers listen to when. The quickest way to get this data to a dashboard is by leveraging Spark to create summary information for each customer as well as basic statistics about the entire user base. After the results are generated they can be persisted to a file, which can be easily used for visualization with BI tools such as Tableau, or other dashboarding frameworks like C3.js or D3.js.
 
 Step one in getting started is to initialize a Spark context. Additional parameters could be passed to the _SparkConf_ method to further configure the job, such as setting the master and the directory where the job executes.
@@ -147,9 +145,7 @@ with open('agg_table.csv', 'wb') as csvfile:
 
 After the job completes, a summary is displayed of what was written to the CSV table and the averages for all users.
 
-## The Results
+### The Results
 With just a few lines of code in Spark, a high-level customer behaviour view was created. All computed using a dataset with millions of rows that stays current with the latest information. Nearly any toolset that can utilize a CSV file can now leverage this dataset for visualization.
 
 This use case showcases how easy it is to work with Spark. Spark is a framework for ensuring that new capabilities can be delivered well into the future, as data volumes grow and become more complex.
-
-</section>
