@@ -1,5 +1,3 @@
-<div class="pagebreak-before" />
-
 ### Spark Reliability and Performance Through Monitoring
 As more organizations begin to deploy Spark in their production clusters, the need for fine-grained monitoring tools becomes paramount. Having the ability to view Spark resource consumption, and monitor how Spark applications are interacting with other workloads on your cluster can help you save time and money by:
 - troubleshooting misbehaving applications;
@@ -28,5 +26,3 @@ Even if you are able to see the right metrics via an intuitive dashboard or user
 Spark is only one piece in your environment, so you need to know how it integrates with other aspects of your Hadoop ecosystem. This is a no-brainer from a troubleshooting perspective, but it's also a good practice for general trend analysis. Perhaps certain workloads cause greater impact to Spark performance than others, or vice-a-versa. If you anticipate an increase in Spark usage across your organization, you'll have to plan differently than if you hadn't noticed that fact.
 
 In summary, the reliability and performance of your Spark deployment depends on what's happening on your cluster. Both the execution of individual Spark jobs and how Spark is interacting (and impacting) your broader Hadoop environment. To understand what Spark's doing, you'll need a monitoring tool that can provide deep, granular visibility as well as a wider, macro view of your entire system. These sorts of tools are few and far between, so choose wisely.
-
-</div>

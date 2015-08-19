@@ -18,11 +18,9 @@ Python, PySpark and MLlib will be used to compute some basic statistics for a da
 ### Looking at the Data
 This service has users whom are continuously connecting to the service and listening to tracks. Customers listening to music from this streaming service generate events, over time they represent the highest level of detail about a customers behaviors.
 
-#### Reading Data from the Distributed File System
 The data will be loaded directly from a CSV file. There are a couple of steps to perform before it can be analyzed. The data will need to be transformed and loaded into a _PairRDD_. This is because the data consists of arrays of (key, value) tuples.
 
-#### Customer Events - Individual Tracks
-This dataset ([tracks.csv](data/tracks.csv)) consists of a collection of events, one per line, where each event is a client listening to a track. This size is approximately 1M lines and contains simulated listener events over several months. Because this represents things that are happening at a very low level, this data has the potential to grow very large.
+The customer events-individual tracks dataset ([tracks.csv](data/tracks.csv)) consists of a collection of events, one per line, where each event is a client listening to a track. This size is approximately 1M lines and contains simulated listener events over several months. Because this represents things that are happening at a very low level, this data has the potential to grow very large.
 
 Field Name  | Event ID      | Customer ID   | Track ID      | Datetime            | Mobile        | Listening Zip
 ----------- | ------------- | ------------- | ------------- | ------------------- | ------------- | -------------
@@ -31,8 +29,7 @@ Field Name  | Event ID      | Customer ID   | Track ID      | Datetime          
 
 The event, customer and track IDs show that a customer listened to a specific track. The other fields show associated information, like whether the customer was listening on a mobile device and a geo-location. This will serve as the input into the first Spark job.
 
-#### Customer Information
-This dataset ([cust.csv](data/cust.csv)) consists of all statically known details about a user.
+The customer information dataset ([cust.csv](data/cust.csv)) consists of all statically known details about a user.
 
 Field Name  | Customer ID   | Name              | Gender        | Address              | Zip           | Sign Date    | Status        | Level         | Campaign      | Linked with apps?
 ----------- | ------------- | ----------------- | ------------- | -------------------- | ------------- | ------------ | ------------- | ------------- | ------------- | -----------------
@@ -80,7 +77,8 @@ def make_tracks_kv(str):
     return [l[1], [[int(l[2]), l[3], int(l[4]), l[5]]]]
 
     # make a k,v RDD out of the input data
-    tbycust = trackfile.map(lambda line: make_tracks_kv(line)).reduceByKey(lambda a, b: a + b)
+    tbycust = trackfile.map(lambda line: make_tracks_kv(line))
+      .reduceByKey(lambda a, b: a + b)
 ```
 
 The individual track events are now stored in a _PairRDD_, with the customer ID as the key. A summary profile can now be computed for each user, which will include:
@@ -141,8 +139,9 @@ with open('live_table.csv', 'wb') as csvfile:
 with open('agg_table.csv', 'wb') as csvfile:
         fwriter = csv.writer(csvfile, delimiter=' ',
                quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        fwriter.writerow(aggdata.mean()[0], aggdata.mean()[1], aggdata.mean()[2],
-            aggdata.mean()[3], aggdata.mean()[4], aggdata.mean()[5])
+        fwriter.writerow(aggdata.mean()[0], aggdata.mean()[1],
+            aggdata.mean()[2], aggdata.mean()[3], aggdata.mean()[4],
+            aggdata.mean()[5])
 ```
 
 After the job completes, a summary is displayed of what was written to the CSV table and the averages for all users.

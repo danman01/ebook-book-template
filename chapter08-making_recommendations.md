@@ -61,7 +61,8 @@ import sqlContext.implicits._
 // Import Spark SQL data types
 import org.apache.spark.sql._
 // Import mllib recommendation data types
-import org.apache.spark.mllib.recommendation.{ALS, MatrixFactorizationModel, Rating}
+import org.apache.spark.mllib.recommendation.{ALS,
+  MatrixFactorizationModel, Rating}
 ```
 
 Below we use Scala case classes to define the Movie and User schemas corresponding to the movies.dat, and users.dat files.
@@ -71,7 +72,8 @@ Below we use Scala case classes to define the Movie and User schemas correspondi
 case class Movie(movieId: Int, title: String, genres: Seq[String])
 
 // input format is UserID::Gender::Age::Occupation::Zip-code
-case class User(userId: Int, gender: String, age: Int, occupation: Int, zip: String)
+case class User(userId: Int, gender: String, age: Int,
+  occupation: Int, zip: String)
 ```
 
 The functions below parse a line from the movie.dat, user.dat, and rating.dat files into the corresponding Movie and User classes.
@@ -88,7 +90,8 @@ def parseMovie(str: String): Movie = {
 def parseUser(str: String): User = {
       val fields = str.split("::")
       assert(fields.size == 5)
-      User(fields(0).toInt, fields(1).toString, fields(2).toInt,fields(3).toInt, fields(4).toString)
+      User(fields(0).toInt, fields(1).toString, fields(2).toInt,
+        fields(3).toInt, fields(4).toString)
  }
 ```
 
@@ -110,7 +113,7 @@ Then we use the map **transformation** on _ratingText_, which will apply the _pa
 
 ```scala
 // function to parse input UserID::MovieID::Rating
-//  Into org.apache.spark.mllib.recommendation.Rating class
+// Into org.apache.spark.mllib.recommendation.Rating class
 def parseRating(str: String): Rating= {
       val fields = str.split("::")
       Rating(fields(0).toInt, fields(1).toInt, fields(2).toDouble)
@@ -136,8 +139,10 @@ Below we load the data from the users and movies data files into an RDD, use the
 
 ```scala
 // load the data into DataFrames
-val usersDF = sc.textFile("/user/user01/moviemed/users.dat").map(parseUser).toDF()
-val moviesDF = sc.textFile("/user/user01/moviemed/movies.dat").map(parseMovie).toDF()
+val usersDF = sc.textFile("/user/user01/moviemed/users.dat")
+  .map(parseUser).toDF()
+val moviesDF = sc.textFile("/user/user01/moviemed/movies.dat")
+  .map(parseMovie).toDF()
 
 // create a DataFrame from the ratingsRDD
 val ratingsDF = ratingsRDD.toDF()
@@ -162,7 +167,13 @@ Here are some example queries using Spark SQL with DataFrames on the Movie Lens 
 
 ```scala
 // Get the max, min ratings along with the count of users who have rated a movie.
-val results =sqlContext.sql("select movies.title, movierates.maxr, movierates.minr, movierates.cntu from(SELECT ratings.product, max(ratings.rating) as maxr, min(ratings.rating) as minr,count(distinct user) as cntu FROM ratings group by ratings.product ) movierates join movies on movierates.product=movies.movieId order by movierates.cntu desc ")
+val results = sqlContext.sql(
+  "select movies.title, movierates.maxr, movierates.minr, movierates.cntu from(
+    SELECT ratings.product, max(ratings.rating) as maxr,
+    min(ratings.rating) as minr,count(distinct user) as cntu
+    FROM ratings group by ratings.product ) movierates
+    join movies on movierates.product=movies.movieId
+    order by movierates.cntu desc")
 
 // DataFrame show() displays the top 20 rows in  tabular form
 results.show()
@@ -172,12 +183,17 @@ The query below finds the users who rated the most movies, then finds which movi
 
 ```scala
 // Show the top 10 most-active users and how many times they rated a movie
-val mostActiveUsersSchemaRDD = sqlContext.sql("SELECT ratings.user, count(*) as ct from ratings group by ratings.user order by ct desc limit 10")
+val mostActiveUsersSchemaRDD = sqlContext.sql(
+  "SELECT ratings.user, count(*) as ct from ratings group by
+  ratings.user order by ct desc limit 10")
 
 println(mostActiveUsersSchemaRDD.collect().mkString("\n"))
 
 // Find the movies that user 4169 rated higher than 4
-val results =sqlContext.sql("SELECT ratings.user, ratings.product, ratings.rating, movies.title FROM ratings JOIN movies ON movies.movieId=ratings.product where ratings.user=4169 and ratings.rating > 4")
+val results = sqlContext.sql("SELECT ratings.user, ratings.product,
+  ratings.rating, movies.title FROM ratings JOIN movies
+  ON movies.movieId=ratings.product
+  where ratings.user=4169 and ratings.rating > 4")
 
 results.show
 ```
@@ -214,10 +230,14 @@ Now we can use the MatrixFactorizationModel to make predictions. First we will g
 ```scala
 // Get the top 4 movie predictions for user 4169
 val topRecsForUser = model.recommendProducts(4169, 5)
+
 // get movie titles to show with recommendations
-val movieTitles=moviesDF.map(array => (array(0), array(1))).collectAsMap()
+val movieTitles=moviesDF.map(array => (array(0), array(1)))
+  .collectAsMap()
+
 // print out top recommendations for user 4169 with titles
-topRecsForUser.map(rating => (movieTitles(rating.product), rating.rating)).foreach(println)
+topRecsForUser.map(rating => (movieTitles(rating.product), rating.rating))
+  .foreach(println)
 ```
 
 ### Evaluating the Model
@@ -249,7 +269,8 @@ val testKeyedByUserProductRDD = testRatingsRDD.map{
 }
 
 //Join the  test with  predictions
-val testAndPredictionsJoinedRDD = testKeyedByUserProductRDD.join(predictionsKeyedByUserProductRDD)
+val testAndPredictionsJoinedRDD = testKeyedByUserProductRDD
+  .join(predictionsKeyedByUserProductRDD)
 
 // print the (user, product),( test rating, predicted rating)
 testAndPredictionsJoinedRDD.take(3).mkString("\n")
@@ -258,9 +279,9 @@ testAndPredictionsJoinedRDD.take(3).mkString("\n")
 The example below finds false positives by finding predicted ratings which were >= 4 when the actual test rating was <= 1. There were 557 false positives out of 199,507 test ratings.
 
 ```scala
-val falsePositives =(testAndPredictionsJoinedRDD.filter{
-  case ((user, product), (ratingT, ratingP)) => (ratingT <= 1 && ratingP >=4)
-  })
+val falsePositives = (testAndPredictionsJoinedRDD
+  .filter{case ((user, product), (ratingT, ratingP)) =>
+    (ratingT <= 1 && ratingP >=4)})
 falsePositives.take(2)
 
 falsePositives.count
