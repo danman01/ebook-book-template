@@ -19,15 +19,22 @@ The data will be loaded directly from a CSV file. There are a couple of steps to
 ## Looking at the Data
 This service has users whom are continuously connecting to the service and listening to tracks. Customers listening to music from this streaming service generate events, over time they represent the highest level of detail about a customers behaviors.
 
-### Customer Events - Individual Tracks ([tracks.csv][data/tracks.csv])
+### Customer Events - Individual Tracks ([tracks.csv](data/tracks.csv))
 This dataset consists of a collection of events, one per line, where each event is a client listening to a track. This size is approximately 1M lines and contains simulated listener events over several months. Because this represents things that are happening at a very low level, this data has the potential to grow very large.
 
-![](images/user_profile_table1.png)
+Field Name  | Event ID      | Customer ID   | Track ID      | Datetime            | Mobile        | Listening Zip
+----------- | ------------- | ------------- | ------------- | ------------------- | ------------- | -------------
+**Type**    | **_Integer_** | **_Integer_** | **_Integer_** | **_String_**        | **_Integer_** | **_Integer_**
+**Example** | 9999767       | 2597          | 788           | 2014-12-01 09:54:09 | 0             | 11003
 
 The event, customer and track IDs show that a customer listened to a specific track. The other fields show associated information, like whether the customer was listening on a mobile device and a geo-location. This will serve as the input into the first Spark job.
 
-### Customer Information ([cust.csv][data/cust.csv])
-![](images/user_profile_table2.png)
+### Customer Information ([cust.csv](data/cust.csv))
+
+Field Name  | Customer ID   | Name              | Gender        | Address              | Zip           | Sign Date    | Status        | Level         | Campaign      | Linked with apps?
+----------- | ------------- | ----------------- | ------------- | -------------------- | ------------- | ------------ | ------------- | ------------- | ------------- | -----------------
+**Type**    | **_Integer_** | **_String_**      | **_Integer_** | **_String_**         | **_Integer_** | **_String_** | **_Integer_** | **_Integer_** | **_Integer_** | **_Integer_**
+**Example** | 10            | Joshua Threadgill | 0             | 10084 Easy Gate Bend | 66216         | 01/13/2013   | 0             | 1             | 1             | 1
 
 The fields are defined as follows:
 - **Customer ID**: a unique identifier for that customer
@@ -47,7 +54,7 @@ Other datasets that would be available, but will not be used for this use case w
 - Track details like title, album and artist
 
 ## Customer Analysis
-All the right information is in place and a lot of micro-level detail is available describing what customers listen to when. The quickest way to get this data to a dashboard is by leveraging Spark to create summary information for each customer as well as basic statistics about the entire user base. After the results are generated they can be persisted to a file, which can be easily used for visualization with BI tools such as Tableau, or other dashboarding frameworks like D3.js.
+All the right information is in place and a lot of micro-level detail is available describing what customers listen to when. The quickest way to get this data to a dashboard is by leveraging Spark to create summary information for each customer as well as basic statistics about the entire user base. After the results are generated they can be persisted to a file, which can be easily used for visualization with BI tools such as Tableau, or other dashboarding frameworks like C3.js or D3.js.
 
 Step one in getting started is to initialize a Spark context. Additional parameters could be passed to the _SparkConf_ method to further configure the job, such as setting the master and the directory where the job executes.
 
