@@ -1,6 +1,6 @@
-<section data-type="appendix">
+<div class="pagebreak-before" />
 
-# Spark Programming Cheat Sheet
+## Spark Programming Cheat Sheet
 
 Feature         | spark-defaults.conf      | application properties     | command line
 --------------- | ------------------------ | -------------------------- | ------------------
@@ -10,14 +10,12 @@ Don't be afraid to use .cache() method on RDDs to avoid unnecessary recomputatio
 
 Understanding what's lazy vs. eagerly evaluated.
 
-## RDD Functions
-### Transformations (create new RDD's)
+### RDD Functions
+#### Transformations (create new RDD's)
 Transformations only occur at the point in the code when actions are called.
 
-### Actions (return values)
-## Spark Command Line
-## Types of RDD's
-## Deploying Code??
+#### Actions (return values)
+### Spark Command Line
+### Types of RDD's
+### Deploying Code??
 Date Functions, Mathematical Functions String Functions Collection Functions Aggregation Functions Conditional Functions? Functions for Text Analytics
-
-</section>

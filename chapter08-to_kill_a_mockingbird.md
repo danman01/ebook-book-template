@@ -1,3 +1,5 @@
+<div class="pagebreak-before" />
+
 ## Unsolved Mystery
 The recent _'discovery'_ and subsequent publication of Harper Lee's earlier novel _Go Set a Watchmen_ has generated renewed scrutiny of the chain of events. Is the newly published book a discarded rough draft that was to become the universally beloved classic, or was it a truly forgotten separate work that deserves to be cast in the literary limelight for analysis? A concise summary of the publishing controversy was written in an [op-ed column](http://www.nytimes.com/2015/07/25/opinion/joe-nocera-the-watchman-fraud.html) by the New York Times.
 
@@ -13,10 +15,13 @@ To build a model to classify documents, text must be translated into numbers. Th
 Text standardization was done with Apache Lucene. An example below shows how to perform this with the Spark shell:
 
 ```bash
-./bin/spark-shell --packages "org.apache.lucene:lucene-analyzers-common:5.1.0"
-val line="Flick. A tiny, almost invisible movement, and the house was still."
+./bin/spark-shell --packages \
+   "org.apache.lucene:lucene-analyzers-common:5.1.0"
+val line="Flick. A tiny, almost invisible movement, " +
+  "and the house was still."
 val tokens=Stemmer.tokenize(line)
-# tokens: Seq[String] = ArrayBuffer(flick, tini, almost, invis, movement, hous, still)
+# tokens: Seq[String] = ArrayBuffer(flick, tini, almost,
+#   invis, movement, hous, still)
 ```
 
 The Stemmer object that invokes the Lucene analyzer comes from an article on [classifying documents using Naive Bay on Apache Spark / MLlib](https://chimpler.wordpress.com/2014/06/11/classifiying-documents-using-naive-bayes-on-apache-spark-mllib/). Notice how the line describing the tranquility of the Radley house is affected. The punctuation and capitalization is removed, and words like "house" are stemmed, so tokens with the same root ("housing", "housed", etc.) will be considered equal. Next, we translate those tokens into numbers and count how often they appear in each line. Spark's HashingTF library performs both operations simultaneously.
@@ -40,8 +45,9 @@ val idfModel = new IDF(minDocFreq = 3).fit(trainDocs)
 val idfs = idfModel.transform(hashed)
 ```
 
-The "fit" method of the IDF library examines the entire corpus to tabulate the document count for each word. On the second pass, Spark creates the TF-IDF for each non-zero element (tokeni) as the following: <!--![](images/MockingBird-fig1.png)-->
-<p><span class="math-tex" data-type="tex"><span class="math-tex" data-type="tex">\\(TFIDF_i = {\\sqrt{TF} \*ln(doc\ count + 1/doc\ count_i + 1)}\\)</span></span></p>
+The "fit" method of the IDF library examines the entire corpus to tabulate the document count for each word. On the second pass, Spark creates the TF-IDF for each non-zero element (tokeni) as the following: <!--<p><span class="math-tex" data-type="tex"><span class="math-tex" data-type="tex">\(TFIDF_i = {\sqrt{TF} *ln(doc\ count + 1/doc\ count_i + 1)}\)</span></span></p>-->
+
+![](images/MockingBird-fig1.png)
 
 A corpus of many documents is needed to create an IDF dictionary, so in the example above, excerpts from both novels were fed into the fit method. The transform method was then used to convert individual passages to TF-IDF vectors.
 
@@ -107,7 +113,8 @@ val impurity = "variance"
 val maxDepth = 10
 val maxBins = 32
 val numTrees = 50
-val modelRF = RandomForest.trainRegressor(train, categoricalFeaturesInfo, numTrees, featureSubsetStrategy, impurity, maxDepth, maxBins)
+val modelRF = RandomForest.trainRegressor(train, categoricalFeaturesInfo,
+  numTrees, featureSubsetStrategy, impurity, maxDepth, maxBins)
 
 // GRADIENT BOOSTED TREES REGRESSION
 val boostingStrategy = BoostingStrategy.defaultParams("Regression")

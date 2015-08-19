@@ -1,3 +1,5 @@
+<div class="pagebreak-before" />
+
 ## Making Recommendations with Spark
 Recommendation systems help narrow your choices to those that best meet your particular needs, and they are among the most popular applications of big data processing. This use case uses machine learning to perform parallel and iterative processing in Spark and covers:
 - Collaborative filtering for recommendations with Spark
@@ -127,7 +129,7 @@ val numMovies = ratingsRDD.map(_.product).distinct().count()
 val numUsers = ratingsRDD.map(_.user).distinct().count()
 ```
 
-## Explore and Query the Movie Lens Data with Spark DataFrames
+## Explore and Query with Spark DataFrames
 Spark SQL provides a programming abstraction called DataFrames. A Dataframe is a distributed collection of data organized into named columns. Spark supports automatically converting an RDD containing case classes to a DataFrame with the method toDF, and the case class defines the schema of the table.
 
 Below we load the data from the users and movies data files into an RDD, use the _map()_ **transformation** with the parse functions, and then call _toDF()_ which returns a DataFrame for the RDD. Then we register the Dataframes as temp tables so that we can use the tables in SQL statements.
@@ -180,7 +182,7 @@ val results =sqlContext.sql("SELECT ratings.user, ratings.product, ratings.ratin
 results.show
 ```
 
-## Using ALS to Build a MatrixFactorizationModel with the Movie Ratings data
+## Using ALS with the Movie Ratings Data
 Now we will use the MLlib ALS algorithm to learn the latent factors that can be used to predict missing entries in the user-item association matrix. First we separate the ratings data into training data (80%) and test data (20%). We will get recommendations for the training data, then we will evaluate the predictions with the test data. This process of taking a subset of the data to build the model and then verifying the model with the remaining data is known as cross validation, the goal is to estimate how accurately a predictive model will perform in practice. To improve the model this process is often done multiple times with different subsets, we will only do it once.
 
 ![](images/mllib_rec_engine_image007.png)
@@ -206,7 +208,7 @@ println(s"Training: $numTraining, test: $numTest.")
 val model = (new ALS().setRank(20).setIterations(10).run(trainingRatingsRDD))
 ```
 
-### Making Predictions with the MatrixFactorizationModel
+### Making Predictions
 Now we can use the MatrixFactorizationModel to make predictions. First we will get movie predictions for the most active user, 4169, with the recommendProducts() method, which takes as input the userid and the number of products to recommend. Then we print out the recommended movie titles.
 
 ```scala

@@ -1,4 +1,4 @@
-<div class="partner">
+<div class="pagebreak-before" />
 
 ### Spark Reliability and Performance Through Monitoring
 As more organizations begin to deploy Spark in their production clusters, the need for fine-grained monitoring tools becomes paramount. Having the ability to view Spark resource consumption, and monitor how Spark applications are interacting with other workloads on your cluster can help you save time and money by:
