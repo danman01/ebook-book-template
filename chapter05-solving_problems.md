@@ -1,3 +1,6 @@
-# Solving a Business Problem
+# Applying Spark to Solve Actual Business Problems
+Now that you have learned how to get Spark up and running it is time to put some of this practical knowledge to the test. The use cases described in this chapter are reasonably short and to the point. They are intended to provide enough context on the problem being described with the hopes that they can be leveraged for solving many more problems that which they are being applied for these use cases.
 
-Short recap - now that you have learned how to install, run and configure spark...
+If these use cases leave you feeling a bit empty, don't fret because there are much more in-depth use cases provided at the end of the book. Those use cases get into a significant number of details as well as more capabilities of Spark.
+
+The first use case here is about building user profiles from a music streaming service. User profiles are used in pretty much every industry that exists. Sometimes user profiles are called customer 360's. The concept is to build a dossier about a user. Whether or not the user is a known person or just a number in in a database is usually a minor detail, but one that would fall into areas of privacy concern. User profiles are also at the heart of all a major digital advertising campaigns. One of the most common scenarios found on the internet for leveraging user profiles is to understand how long a user stays on a website. All-in-all building user profiles with Spark is childs play.  
