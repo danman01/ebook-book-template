@@ -122,14 +122,16 @@ auction.registerTempTable("auction")
 
 // How many bids per auction?
 val results = sqlContext.sql(
-  "SELECT auctionid, item,  count(bid) FROM auction GROUP BY auctionid, item"
+  "SELECT auctionid, item,  count(bid) FROM auction
+    GROUP BY auctionid, item"
   )
 
 // display dataframe in a tabular format
 results.show()
 
 val results = sqlContext.sql(
-  "SELECT auctionid, MAX(price) FROM auction GROUP BY item,auctionid"
+  "SELECT auctionid, MAX(price) FROM auction
+    GROUP BY item,auctionid"
   )
 results.show()
 ```
