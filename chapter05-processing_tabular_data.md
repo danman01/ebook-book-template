@@ -1,7 +1,7 @@
-# Processing Tabular Data
+## Processing Tabular Data
 The examples here will help you get started using Apache Spark DataFrames with Scala. The new Spark DataFrames API is designed to make big data processing on tabular data easier. A Spark DataFrame is a distributed collection of data organized into named columns that provides operations to _filter_, _group_, or _compute_ aggregates, and can be used with Spark SQL. DataFrames can be constructed from structured data files, existing RDDs, or external databases.
 
-## Sample Dataset
+### Sample Dataset
 The dataset to be used is from eBay online auctions. The eBay online auction dataset contains the following fields:
 - **auctionid** - unique identifier of an auction
 - **bid** - the proxy bid placed by a bidder
@@ -23,7 +23,7 @@ Using Spark DataFrames we will explore the eBay data with questions like:
 - What's the minimum, maximum, and average number of bids per item?
 - Show the bids with price > 100
 
-## Loading Data into Spark DataFrames
+### Loading Data into Spark DataFrames
 First, we will import some packages and instantiate a sqlContext, which is the entry point for working with structured data (rows and columns) in Spark and allows the creation of DataFrame objects.
 
 ```scala
@@ -74,7 +74,7 @@ A DataFrame is a distributed collection of data organized into named columns. Sp
 val auction = ebay.toDF()
 ```
 
-## Exploring and Querying the eBay Auction Data
+### Exploring and Querying the eBay Auction Data
 DataFrames provide a domain-specific language for structured data manipulation in Scala, Java, and Python; below are some examples with the auction DataFrame. The _show()_ **action** displays the top 20 rows in a tabular form:
 
 ```scala
@@ -124,5 +124,5 @@ val results = sqlContext.sql("SELECT auctionid, MAX(price) FROM auction GROUP BY
 results.show()
 ```
 
-## Summary
+### Summary
 You have now learned how to load data into Spark DataFrames, and explore tabular data with Spark SQL. These code examples can be reused as the foundation to solve any type of business problem.
