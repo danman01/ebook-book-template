@@ -1,3 +1,5 @@
+<section data-type="appendix">
+
 # Spark Programming Cheat Sheet
 
 Feature         | spark-defaults.conf      | application properties     | command line
@@ -17,3 +19,5 @@ Transformations only occur at the point in the code when actions are called.
 ## Types of RDD's
 ## Deploying Code??
 Date Functions, Mathematical Functions String Functions Collection Functions Aggregation Functions Conditional Functions? Functions for Text Analytics
+
+</section>

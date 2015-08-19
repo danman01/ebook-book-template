@@ -19,7 +19,7 @@ val tokens=Stemmer.tokenize(line)
 # tokens: Seq[String] = ArrayBuffer(flick, tini, almost, invis, movement, hous, still)
 ```
 
-The Stemmer object that invokes the Lucene analyzer comes from this Chimpler example. Notice how the line describing the tranquility of the Radley house is affected. The punctuation and capitalization is removed, and words like "house" are stemmed, so tokens with the same root ("housing", "housed", etc.) will be considered equal. Next, we translate those tokens into numbers and count how often they appear in each line. Spark's HashingTF library performs both operations simultaneously.
+The Stemmer object that invokes the Lucene analyzer comes from an article on [classifying documents using Naive Bay on Apache Spark / MLlib](https://chimpler.wordpress.com/2014/06/11/classifiying-documents-using-naive-bayes-on-apache-spark-mllib/). Notice how the line describing the tranquility of the Radley house is affected. The punctuation and capitalization is removed, and words like "house" are stemmed, so tokens with the same root ("housing", "housed", etc.) will be considered equal. Next, we translate those tokens into numbers and count how often they appear in each line. Spark's HashingTF library performs both operations simultaneously.
 
 ```Scala
 import org.apache.spark.mllib.feature.HashingTF
@@ -42,7 +42,7 @@ val idfs = idfModel.transform(hashed)
 
 The "fit" method of the IDF library examines the entire corpus to tabulate the document count for each word. On the second pass, Spark creates the TF-IDF for each non-zero element (tokeni) as the following:
 
-IMG here
+![](images/MockingBird-fig1.png)
 
 A corpus of many documents is needed to create an IDF dictionary, so in the example above, excerpts from both novels were fed into the fit method. The transform method was then used to convert individual passages to TF-IDF vectors.
 
@@ -85,7 +85,7 @@ bayesTest.filter(x => x._1 == x._2).count() / bayesTest.count().toDouble)
 
 Applying the Naïve Bayes algorithm in Spark gives a classification from which accuracy and a confusion matrix can be derived. The method makes the correct classification on 90.5% of the train records and 70.7% of the test records (performance on the training is almost always better than the test). The confusion matrix on the test data appears below:
 
-IMG here
+![](images/MockingBird-fig2.png)
 
 The diagonal elements of the confusion matrix represent correct classifications and the off-diagonal counts are classification errors. It is informative to look at a confusion matrix (especially when there are more than two classes). The better the classification rate on the test set, the more separable the populations. However, when data scientists are looking to apply classification to a business problem, they prefer to examine how well the algorithm rank-orders the results.
 
@@ -164,11 +164,11 @@ Results are binned according to score (highest to lowest).
 2. Starting with the highest bin, generate a data point containing the cumulative percent of the total Mockingbird and Watchman passages that have occurred.
 3. Graphing those points for the Random Forest and Gradient Boosted Trees yields the following curves:
 
-IMG here
+![](images/MockingBird-fig3.png)
 
 The diagonal "baseline" is the performance one could expect from random guessing (i.e. selecting 50% of the passages, you would expect to find half of each book's examples). Any performance better than that is considered the "lift" delivered by the model. It should be intuitive from examining the graph that steeper, higher curves provide greater lift. The table below quantifies the area under the ROC, which is a standard metric used by data scientists to evaluate the performance of many models simultaneously.
 
-IMG here
+![](images/MockingBird-fig4.png)
 
 The Gradient Boosted Tree model achieved an essentially perfect 1.0 area under the curve. This implies that the model scored all Mockingbird passages higher than all Watchman passages. However, the Random Forest model has higher performance on the test set (0.884 vs 0.867) so it is assumed to generalize better.
 

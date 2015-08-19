@@ -1,5 +1,5 @@
 # Making Recommendations with Spark
-Recommendation systems help narrow your choices to those that best meet your particular needs, and they are among the most popular applications of big data processing. This use case exercise using machine learning to perform parallel and iterative processing in Spark and covers:
+Recommendation systems help narrow your choices to those that best meet your particular needs, and they are among the most popular applications of big data processing. This use case uses machine learning to perform parallel and iterative processing in Spark and covers:
 - Collaborative filtering for recommendations with Spark
 - Loading and exploring the sample data set with Spark
 - Using Spark MLlib's Alternating Least Squares algorithm to make movie recommendations
@@ -90,7 +90,7 @@ def parseUser(str: String): User = {
  }
 ```
 
-Below we load the data from the ratings.dat file into a Resilient Distributed Dataset (RDD). RDDs can have transformations and actions.
+Below we load the data from the ratings.dat file into a Resilient Distributed Dataset (RDD). RDDs can have **transformations** and **actions**.
 
 ```Scala
  // load the data into a  RDD
@@ -100,11 +100,11 @@ val ratingText = sc.textFile("/user/user01/moviemed/ratings.dat")
 ratingText.first()
 ```
 
-The first() action returns the first element in the RDD, which is the String **"1::1193::5::978300760"**.
+The _first()_ **action** returns the first element in the RDD, which is the String **"1::1193::5::978300760"**.
 
 We use the org.apache.spark.mllib.recommendation.Rating class for parsing the ratings.dat file. Later we will use the Rating class as input for the ALS run method.
 
-Then we use the map transformation on ratingText, which will apply the parseRating function to each element in ratingText and return a new RDD of Rating objects. We cache the ratings data, since we will use this data to build the matrix model. Then we get the counts for the number of ratings, movies and users.
+Then we use the map **transformation** on _ratingText_, which will apply the _parseRating_ function to each element in _ratingText_ and return a new RDD of Rating objects. We cache the ratings data, since we will use this data to build the matrix model. Then we get the counts for the number of ratings, movies and users.
 
 ```Scala
 // function to parse input UserID::MovieID::Rating
@@ -130,7 +130,7 @@ val numUsers = ratingsRDD.map(_.user).distinct().count()
 ## Explore and Query the Movie Lens Data with Spark DataFrames
 Spark SQL provides a programming abstraction called DataFrames. A Dataframe is a distributed collection of data organized into named columns. Spark supports automatically converting an RDD containing case classes to a DataFrame with the method toDF, and the case class defines the schema of the table.
 
-Below we load the data from the users and movies data files into an RDD, use the map transformation with the parse functions, and then call toDF() which returns a DataFrame for the RDD. Then we register the Dataframes as temp tables so that we can use the tables in SQL statements.
+Below we load the data from the users and movies data files into an RDD, use the _map()_ **transformation** with the parse functions, and then call _toDF()_ which returns a DataFrame for the RDD. Then we register the Dataframes as temp tables so that we can use the tables in SQL statements.
 
 ```Scala
 // load the data into DataFrames
