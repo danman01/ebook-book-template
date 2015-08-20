@@ -17,7 +17,7 @@ Visit the [Spark downloads page](https://spark.apache.org/downloads.html), selec
 ## Testing Spark
 Open a text console, and navigate to the newly created directory. Start Spark's interactive shell:
 
-```
+```bash
 ./bin/spark-shell
 ```
 
@@ -27,20 +27,20 @@ A series of messages will scroll past as Spark and Hadoop are configured. Once t
 
 At this prompt, let's create some data; a simple sequence of numbers from 1 to 50,000.
 
-```
-scala> val data = 1 to 50000
+```scala
+val data = 1 to 50000
 ```
 
 Now, let's place these 50,000 numbers into a Resilient Distributed Dataset (RDD) which we'll call sparkSample. It is this RDD upon which Spark can perform analysis.
 
-```
-scala> val sparkSample = sc.parallelize(data)
+```scala
+val sparkSample = sc.parallelize(data)
 ```
 
 Now we can filter the data in the RDD to find any values of less than 10.
 
-```
-scala> sparkSample.filter(_ < 10).collect()
+```scala
+sparkSample.filter(_ < 10).collect()
 ```
 
 <img src="images/console-result.png" alt="Figure 3: Values less than 10, selected from a set of 50,000 numbers" width="640px" /> <!--![Figure 3: Values less than 10, selected from a set of 50,000 numbers](images/console-result.png)-->

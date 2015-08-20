@@ -126,15 +126,9 @@ boostingStrategy.treeStrategy.categoricalFeaturesInfo = Map[Int, Int]()
 val modelGB = GradientBoostedTrees.train(train, boostingStrategy)
 ```
 
-<<<<<<< HEAD
 The regression model options (estimating vs. classifying) will produce continuous outputs that can be used to find the right threshold. Both of these methods can be configured with tree depth and number of trees. Read the Spark documentation for details, but the general rules of thumb are the following:
 - Random Forest: trees are built in parallel and overtraining decreases with more trees, so setting this number to be large is a great way to leverage a Hadoop environment. The max depth should be larger than GBT.
 - Gradient Boosted Trees: the number of trees is directly related to overtraining, and the trees are not built in parallel. This method can produce some extremely high classification rates on the training data, but set the max depth of trees to be smaller than random forest.
-=======
-The regression model options (estimating vs. classifying) will produce continuous outputs that can be used to find the right threshold. Both of these methods can be configured with tree depth and number of trees– read the Spark documentation for details, but general rules of thumb are the following:
-- Random Forest: trees are built in parallel and over training decreases with more trees so setting this number to be large is a great way to leverage a Hadoop environment. The max depth should be larger than GBT.
-- Gradient Boosted Trees: the number of trees is directly related to over training and the trees are not built in parallel. This method can produce some extremely high classification rates on the training data, but set the max depth of trees to be smaller than random forest.
->>>>>>> daa06905e8102e694ad92878ec8cb210a841c11e
 
 The table below shows the commands to calculate the ROC (Receiver Operating Characteristic) for the Random Forest model--the ROC will tell the real story on the model performance.
 

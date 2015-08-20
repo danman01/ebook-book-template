@@ -3,7 +3,7 @@
 
 This analogy came from a conversation I had with someone at Strata London in 2015. Let's break down this quote to see the value it serves in discussing Spark, and explain why this analogy may or may not be accurate.
 
-## Analogy Breakdown
+## Breaking it Down
 ### Spark and Fighter Jet's
 Fighter jets are a phenomenal feat of engineering, but how is this relevant to Spark? Well, building scalable applications can be difficult. Putting them into production is even more difficult. Spark scales out of the box nearly as simply as it is to install. A lot of work has gone into the thoughts and concepts of Spark as a scalable platform.
 
@@ -12,7 +12,9 @@ Spark is powerful, not only in the terms of scalability, but in ease of building
 However, just because Spark can scale easily doesn't mean everything written to run in Spark can scale as easily.
 
 ### Learning to Fly
-While the API is similar or nearly identical between languages, this doesn't solve the problem of understanding the programming language of choice. While a novice programmer may be able to write Java code with minimal effort, it doesn't mean they understand the proper constructs in the language to optimize for a use case. Let's consider analytics in Python on Spark. While a user may understand Python analytics, they may have no experience with concepts like predicate movement, column pruning or filter scans. These features could have significant impact when running queries at scale. Here are a few other topic areas where people may overestimate how Spark works by drawing on experiences with other technologies:
+While the API is similar or nearly identical between languages, this doesn't solve the problem of understanding the programming language of choice. While a novice programmer may be able to write Java code with minimal effort, it doesn't mean they understand the proper constructs in the language to optimize for a use case.
+
+Let's consider analytics in Python on Spark. While a user may understand Python analytics, they may have no experience with concepts like predicate movement, column pruning or filter scans. These features could have significant impact when running queries at scale. Here are a few other topic areas where people may overestimate how Spark works by drawing on experiences with other technologies:
 - Spark supports MapReduce, but people with a lot of experience with Hadoop MapReduce might try to transfer over ideas that don't necessarily translate over to Spark, such as functional programming constructs, type safety, or lazy evaluation;
 - Someone with database administration experience with any popular RDBMS system may not be thinking of partitioning and serialization in the same terms that would be useful in Spark;
 
@@ -28,10 +30,5 @@ As discussed earlier, Spark can run on its own. It is more commonly deployed as 
 
 Spark should always run as close to the cluster's storage nodes as possible. Much like configuring Hadoop, network I/O is likely to be the biggest bottleneck in a deployment. Deploying with 10Gb+ networking hardware will minimize latency and yield the best results. Never allocate more than 75% of available RAM to Spark. The operating system needs to use it as well, and going higher could cause paging. If a use case is so severely limited by 75% of available RAM, it might be time to add more servers to the cluster.
 
-<<<<<<< HEAD
-## Advice for Putting Spark into Production
-This chapter contains generalized information and ideas on how to successfully take Spark into production to solve business problems. The information provided here is intended to help you on your own journey to success.
-=======
 ## Advice and Considerations
 Some others in the industries have been kind enough to contribute a few short segments to include here. These segments are geared to be generalized information and ideas on how to successfully take Spark into production to solve business problems. Any particular business can benefit from utilizing Spark to solve problems. With any luck, the information provided here can help you on your own journey to success.
->>>>>>> daa06905e8102e694ad92878ec8cb210a841c11e
