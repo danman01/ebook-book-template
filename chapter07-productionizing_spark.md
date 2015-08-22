@@ -4,7 +4,7 @@
 This analogy came from a conversation I had with someone at Strata London in 2015. Let's break down this quote to see the value it serves in discussing Spark, and explain why this analogy may or may not be accurate.
 
 ## Breaking it Down
-### Spark and Fighter Jet's
+### Spark and Fighter Jets
 Fighter jets are a phenomenal feat of engineering, but how is this relevant to Spark? Well, building scalable applications can be difficult. Putting them into production is even more difficult. Spark scales out of the box nearly as simply as it is to install. A lot of work has gone into the thoughts and concepts of Spark as a scalable platform.
 
 Spark is powerful, not only in the terms of scalability, but in ease of building applications. Spark has an API that is available in multiple languages and allows nearly any business application to be built on top of it.
