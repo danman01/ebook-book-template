@@ -17,7 +17,7 @@ auctionid  | bid | bidtime  | bidder   | bidderrate | openbid | price | item | d
 ---------- | --- | -------- | -------- | ---------- | ------- | ----- | ---- | ----------
 8213034705 | 95  | 2.927373 | jake7870 | 0          | 95      | 117.5 | xbox | 3
 
-Using Spark DataFrames we will explore the eBay data with questions like:
+Using Spark DataFrames, we will explore the eBay data with questions like:
 - How many auctions were held?
 - How many bids were made per item?
 - What's the minimum, maximum, and average number of bids per item?
