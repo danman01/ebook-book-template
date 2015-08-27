@@ -5,7 +5,6 @@
     "titlepage.html",
     "copyright.html",
     "toc.html",
-    "preface.html",
     "chapter01-introduction.md",
     "chapter02-getting_started_spark.md",
     "chapter03-more_details.md",
@@ -22,7 +21,7 @@
     "chapter08-to_kill_a_mockingbird.md",
     "appendix.html",
     "appendix01-spark_cheat_sheet.md",
-    "ix.html"
+    "author.md"
   ],
   "formats": {
     "pdf": {
