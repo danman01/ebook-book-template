@@ -27,7 +27,7 @@
     "pdf": {
       "version": "web",
       "toc": true,
-      "index": true,
+      "index": false,
       "syntaxhighlighting": true,
       "show_comments": false,
       "colors": false,
@@ -35,20 +35,20 @@
     },
     "epub": {
       "toc": true,
-      "index": true,
+      "index": false,
       "syntaxhighlighting": true,
       "epubcheck": true,
       "show_comments": false
     },
     "mobi": {
       "toc": true,
-      "index": true,
+      "index": false,
       "syntaxhighlighting": true,
       "show_comments": false
     },
     "html": {
       "toc": true,
-      "index": true,
+      "index": false,
       "syntaxhighlighting": false,
       "show_comments": false,
       "consolidated": false
