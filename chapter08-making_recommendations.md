@@ -7,21 +7,18 @@ Recommendation systems help narrow your choices to those that best meet your par
 
 ### Collaborative Filtering with Spark
 Collaborative filtering algorithms recommend items (this is the _filtering_ part) based on preference information from many users (this is the _collaborative_ part). The collaborative filtering approach is based on similarity; the basic idea is people who liked similar items in the past will like similar items in the future. In the example below, Ted likes movies A, B, and C. Carol likes movies B and C. Bob likes movie B. To recommend a movie to Bob, we calculate that users who liked B also liked C, so C is a possible recommendation for Bob. Of course, this is a tiny example. In real situations, we would have much more data to work with.
-
-![](images/mllib_rec_engine_image004.jpg)
+<figure><img alt="Rating Matrix" src="images/mllib_rec_engine_image004.jpg" /><figcaption><span class="label">Figure 8-1: </span>Ratings Matrix</figcaption></figure>
 
 Spark MLlib implements a collaborative filtering algorithm called [Alternating Least Squares (ALS)](https://spark.apache.org/docs/latest/mllib-collaborative-filtering.html).
 
 ALS approximates the sparse user item rating matrix of dimension K as the product of two dense matrices--User and Item factor matrices of size U×K and I×K (see picture below). The factor matrices are also called latent feature models. The factor matrices represent hidden features which the algorithm tries to discover. One matrix tries to describe the latent or hidden features of each user, and one tries to describe latent properties of each movie.
-
-![](images/mllib_rec_engine_image005.jpg)
+<figure><img alt="Recommendation Matrix" src="images/mllib_rec_engine_image005.jpg" /><figcaption><span class="label">Figure 8-2: </span>Calculation of a recomendation</figcaption></figure>
 
 ALS is an _iterative algorithm_. In each iteration, the algorithm alternatively fixes one factor matrix and solves for the other, and this process continues until it converges. This alternation between which matrix to optimize is where the "alternating" in the name comes from.
 
 ### Typical Machine Learning Workflow
 A typical machine learning workflow is shown below.
-
-![](images/mllib_rec_engine_image006.jpg)
+<figure><img alt="Machine Learning Workflow" src="images/mllib_rec_engine_image006.jpg" /><figcaption><span class="label">Figure 8-3: </span>Maching Learning Workflow</figcaption></figure>
 
 This code will perform the following steps:
 1. Load the sample data.
@@ -201,8 +198,7 @@ results.show
 
 ### Using ALS with the Movie Ratings Data
 Now we will use the MLlib ALS algorithm to learn the latent factors that can be used to predict missing entries in the user-item association matrix. First we separate the ratings data into training data (80%) and test data (20%). We will get recommendations for the training data, and then we will evaluate the predictions with the test data. This process of taking a subset of the data to build the model and then verifying the model with the remaining data is known as cross validation; the goal is to estimate how accurately a predictive model will perform in practice. To improve the model, this process is often done multiple times with different subsets; we will only do it once.
-
-![](images/mllib_rec_engine_image007.png)
+<figure><img alt="Training Loop" src="images/mllib_rec_engine_image007.png" /><figcaption><span class="label">Figure 8-4: </span>Training Loop</figcaption></figure>
 
 We run ALS on the input trainingRDD of Rating(user, product, rating) objects with the rank and Iterations parameters:
 - rank is the number of latent factors in the model.

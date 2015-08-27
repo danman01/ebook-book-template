@@ -1,2 +1,4 @@
+<div class="pagebreak-before" />
+
 ## About the Author
 Jim has held positions running Operations, Engineering, Architecture and QA teams. Jim is the cofounder of the Chicago Hadoop Users Group (CHUG), where he has coordinated the Chicago Hadoop community for the past 5 years. Jim has worked in the Consumer Packaged Goods, Digital Advertising, Digital Mapping, Chemical and Pharmaceutical industries. Jim has built systems that handle more than 50 billion transactions per day. Jim's work with high-throughput computing at Dow Chemical was a precursor to more standardized big data concepts like Hadoop.

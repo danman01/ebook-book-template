@@ -11,8 +11,7 @@ A [Quick Start](https://spark.apache.org/docs/1.4.1/quick-start.html) guide, opt
 Follow these simple steps to download Java, Spark, and Hadoop and get them running on a laptop (in this case, one running Mac OS X). If you do not currently have the [Java JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (version 7 or higher) installed, download it and follow the steps to install it for your operating system.
 
 Visit the [Spark downloads page](https://spark.apache.org/downloads.html), select a pre-built package, and download Spark. Double-click the archive file to expand its contents ready for use.
-
-<img src="images/download-spark.png" alt="Figure 1: Apache Spark download page, with a pre-built package selected for download" width="640px" /> <!--![Figure 1: Apache Spark download page, with a pre-built package selected for download](images/download-spark.png)-->
+<figure><img alt="Download Spark" src="images/download-spark.png" /><figcaption><span class="label">Figure 2-1: </span>Apache Spark download page, with a pre-built package</figcaption></figure>
 
 ## Testing Spark
 Open a text console, and navigate to the newly created directory. Start Spark's interactive shell:
@@ -22,8 +21,7 @@ Open a text console, and navigate to the newly created directory. Start Spark's 
 ```
 
 A series of messages will scroll past as Spark and Hadoop are configured. Once the scrolling stops, you will see a simple prompt.
-
-<img src="images/console-messages.png" alt="Figure 2: A Terminal window, once Spark starts running for the first time" width="640px" /> <!--![Figure 2: A Terminal window, once Spark starts running for the first time](images/console-messages.png)-->
+<figure><img alt="Console Messages" src="images/console-messages.png" /><figcaption><span class="label">Figure 2-2: </span>Terminal window after spark starts running</figcaption></figure>
 
 At this prompt, let's create some data; a simple sequence of numbers from 1 to 50,000.
 
@@ -43,7 +41,7 @@ Now we can filter the data in the RDD to find any values of less than 10.
 sparkSample.filter(_ < 10).collect()
 ```
 
-<img src="images/console-result.png" alt="Figure 3: Values less than 10, selected from a set of 50,000 numbers" width="640px" /> <!--![Figure 3: Values less than 10, selected from a set of 50,000 numbers](images/console-result.png)-->
+<figure><img alt="Console Results" src="images/console-result.png" /><figcaption><span class="label">Figure 2-3: </span>Values less than 10, from a set of 50,000 numbers</figcaption></figure>
 
 Spark should report the result, with an array containing any values less than 10. Richer and more complex examples are available in resources mentioned elsewhere in this guide.
 
