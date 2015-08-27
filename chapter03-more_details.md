@@ -40,7 +40,7 @@ Although often linked with the Hadoop Distributed File System (HDFS), Spark can 
 Developers are most likely to choose the data storage system they are already using elsewhere in their workflow.
 
 ## The Spark Stack
-<figure><img alt="Spark Stack Architecture Diagram" src="images/spark-stack-diagram.png" /><figcaption><span class="label">Figure 3-1: </span>Spark Stack Diagram</figcaption></figure>
+<figure><img alt="Spark Stack Architecture Diagram" src="images/spark-stack-diagram.png" /><figcaption>Spark Stack Diagram</figcaption></figure>
 
 The Spark project stack currently is comprised of Spark Core and four libraries that are optimized to address the requirements of four different use cases. Individual applications will typically require Spark Core and at least one of these libraries. Spark's flexibility and power become most apparent in applications that require the combination of two or more of these libraries on top of Spark Core.
 - **Spark Core**: This is the heart of Spark, and is responsible for management functions such as task scheduling. Spark Core implements and depends upon a programming abstraction known as Resilient Distributed Datasets (RDDs), which are discussed in more detail below.

@@ -44,7 +44,7 @@ val idfs = idfModel.transform(hashed)
 ```
 
 The "fit" method of the IDF library examines the entire corpus to tabulate the document count for each word. On the second pass, Spark creates the TF-IDF for each non-zero element (tokeni) as the following: <!--<p><span class="math-tex" data-type="tex"><span class="math-tex" data-type="tex">\(TFIDF_i = {\sqrt{TF} *ln(doc\ count + 1/doc\ count_i + 1)}\)</span></span></p>-->
-<figure><img alt="The fit method" src="images/MockingBird-fig1.png" /><figcaption><span class="label">Figure 8-5: </span>The "fit" method equation</figcaption></figure>
+<figure><img alt="The fit method" src="images/MockingBird-fig1.png" /><figcaption>The "fit" method equation</figcaption></figure>
 
 A corpus of many documents is needed to create an IDF dictionary, so in the example above, excerpts from both novels were fed into the fit method. The transform method was then used to convert individual passages to TF-IDF vectors.
 
@@ -89,7 +89,7 @@ println("Mean Naive Bayes performance")
 ```
 
 Applying the Naïve Bayes algorithm in Spark gives a classification from which accuracy and a confusion matrix can be derived. The method makes the correct classification on 90.5% of the train records and 70.7% of the test records (performance on the training is almost always better than the test). The confusion matrix on the test data appears below:
-<figure><img alt="Confusion Matrix" src="images/MockingBird-fig2.png" /><figcaption><span class="label">Figure 8-6: </span>Naive Bayes Confusion Matrix on test data</figcaption></figure>
+<figure><img alt="Confusion Matrix" src="images/MockingBird-fig2.png" /><figcaption>Naive Bayes Confusion Matrix on test data</figcaption></figure>
 
 The diagonal elements of the confusion matrix represent correct classifications and the off-diagonal counts are classification errors. It is informative to look at a confusion matrix (especially when there are more than two classes). The better the classification rate on the test set, the more separable the populations. However, when data scientists are looking to apply classification to a business problem, they prefer to examine how well the algorithm rank-orders the results.
 
@@ -170,10 +170,10 @@ Results are binned according to score (highest to lowest).
 2. Starting with the highest bin, generate a data point containing the cumulative percent of the total Mockingbird and Watchman passages that have occurred.
 3. Graphing those points for the Random Forest and Gradient Boosted Trees yields the following curves:
 
-<nobr/><figure><img alt="Passages above threshold" src="images/MockingBird-fig3.png" /><figcaption><span class="label">Figure 8-7: </span>ROC for test data by algorithm</figcaption></figure>
+<nobr/><figure><img alt="Passages above threshold" src="images/MockingBird-fig3.png" /><figcaption>ROC for test data by algorithm</figcaption></figure>
 
 The diagonal "baseline" is the performance one could expect from random guessing (i.e., selecting 50% of the passages, you would expect to find half of each book's examples). Any performance better than that is considered the "lift" delivered by the model. It should be intuitive from examining the graph that steeper, higher curves provide greater lift. The table below quantifies the area under the ROC, which is a standard metric used by data scientists to evaluate the performance of many models simultaneously.
-<figure><img alt="Trainig Data vs Test Data" src="images/MockingBird-fig4.png" /><figcaption><span class="label">Figure 8-8: </span>Area under the ROC by algorithm</figcaption></figure>
+<figure><img alt="Trainig Data vs Test Data" src="images/MockingBird-fig4.png" /><figcaption>Area under the ROC by algorithm</figcaption></figure>
 
 The Gradient Boosted Tree model achieved an essentially perfect 1.0 area under the curve. This implies that the model scored all Mockingbird passages higher than all Watchman passages. However, the Random Forest model has higher performance on the test set (0.884 vs 0.867), so it is assumed to generalize better.
 

@@ -5,23 +5,23 @@ Other stream processing solutions exist, including projects like Apache Storm an
 
 ## The Details of Spark Streaming
 Spark's real and sustained advantage over these alternatives is this tight integration between its stream and batch processing capabilities. Running in a production environment, Spark Streaming will normally rely upon capabilities from external projects like ZooKeeper and HDFS to deliver resilient scalability. In real-world application scenarios, where observation of historical trends often augments stream-based analysis of current events, this capability is of great value in streamlining the development process. For workloads in which streamed data must be combined with data from other sources, Spark remains a strong and credible option.
-<figure><img alt="Spark Streaming Input and Output Options" src="images/streaming-options.png" /><figcaption><span class="label">Figure 6-1: </span>Data from a variety of sources to various storage systems</figcaption></figure>
+<figure><img alt="Spark Streaming Input and Output Options" src="images/streaming-options.png" /><figcaption>Data from a variety of sources to various storage systems</figcaption></figure>
 
 A streaming framework is only as good as its data sources. A strong messaging platform is the best way to ensure solid performance for any streaming system.
 
 Spark Streaming supports the ingest of data from a wide range of data sources, including live streams from Apache Kafka, Apache Flume, Amazon Kinesis, Twitter, or sensors and other devices connected via TCP sockets. Data can also be streamed out of storage services such as HDFS and AWS S3. Data is processed by Spark Streaming, using a range of algorithms and high-level data processing functions like _map_, _reduce_, _join_ and _window_. Processed data can then be passed to a range of external file systems, or used to populate live dashboards.
-<figure><img alt="Spark Streaming Data Flow" src="images/streaming-flow.png" /><figcaption><span class="label">Figure 6-2: </span>Incoming streams of data divided into batches</figcaption></figure>
+<figure><img alt="Spark Streaming Data Flow" src="images/streaming-flow.png" /><figcaption>Incoming streams of data divided into batches</figcaption></figure>
 
 Logically, Spark Streaming represents a continuous stream of input data as a discretized stream, or DStream. Internally, Spark actually stores and processes this DStream as a sequence of RDDs. Each of these RDDs is a snapshot of all data ingested during a specified time period, which allows Spark's existing batch processing capabilities to operate on the data.
-<figure><img alt="DStream lines into words" src="images/streaming-dstream.png" /><figcaption><span class="label">Figure 6-3: </span>Input data stream divided into discrete chunks of data</figcaption></figure>
+<figure><img alt="DStream lines into words" src="images/streaming-dstream.png" /><figcaption>Input data stream divided into discrete chunks of data</figcaption></figure>
 
 The data processing capabilities in Spark Core and Spark's other modules are applied to each of the RDDs in a DStream in exactly the same manner as they would be applied to any other RDD: Spark modules other than Spark Streaming have no awareness that they are processing a data stream, and no need to know.
 
 A basic RDD operation, _flatMap_, can be used to extract individual words from lines of text in an input source. When that input source is a data stream, _flatMap_ simply works as it normally would, as shown below.
-<figure><img alt="DStream Layout" src="images/streaming-dstream2.png" /><figcaption><span class="label">Figure 6-4: </span>Extracting words from an InputStream comprising lines of text</figcaption></figure>
+<figure><img alt="DStream Layout" src="images/streaming-dstream2.png" /><figcaption>Extracting words from an InputStream comprising lines of text</figcaption></figure>
 
 ### The Spark Driver
-<figure><img alt="Spark Driver Interaction" src="images/streaming-driver.png" /><figcaption><span class="label">Figure 6-5: </span>Components of a Spark cluster</figcaption></figure>
+<figure><img alt="Spark Driver Interaction" src="images/streaming-driver.png" /><figcaption>Components of a Spark cluster</figcaption></figure>
 
 Activities within a Spark cluster are orchestrated by a driver program using the _SparkContext_. In the case of stream-based applications, the _StreamingContext_ is used. This exploits the cluster management capabilities of an external tool like Mesos or Hadoop's YARN to allocate resources to the Executor processes that actually work with data.
 
