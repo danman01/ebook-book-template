@@ -7,7 +7,7 @@ Recommendation systems help narrow your choices to those that best meet your par
 
 ### Collaborative Filtering with Spark
 Collaborative filtering algorithms recommend items (this is the _filtering_ part) based on preference information from many users (this is the _collaborative_ part). The collaborative filtering approach is based on similarity; the basic idea is people who liked similar items in the past will like similar items in the future. In the example below, Ted likes movies A, B, and C. Carol likes movies B and C. Bob likes movie B. To recommend a movie to Bob, we calculate that users who liked B also liked C, so C is a possible recommendation for Bob. Of course, this is a tiny example. In real situations, we would have much more data to work with.
-<figure><img alt="Rating Matrix" src="images/mllib_rec_engine_image004.jpg" /><figcaption>Ratings Matrix</figcaption></figure>
+<figure><img alt="Rating Matrix" src="images/mllib_rec_engine_image004.png" /><figcaption>Ratings Matrix</figcaption></figure>
 
 Spark MLlib implements a collaborative filtering algorithm called [Alternating Least Squares (ALS)](https://spark.apache.org/docs/latest/mllib-collaborative-filtering.html).
 
@@ -18,7 +18,7 @@ ALS is an _iterative algorithm_. In each iteration, the algorithm alternatively 
 
 ### Typical Machine Learning Workflow
 A typical machine learning workflow is shown below.
-<figure><img alt="Machine Learning Workflow" src="images/mllib_rec_engine_image006.jpg" /><figcaption>Maching Learning Workflow</figcaption></figure>
+<figure><img alt="Machine Learning Workflow" src="images/mllib_rec_engine_image006.png" /><figcaption>Maching Learning Workflow</figcaption></figure>
 
 This code will perform the following steps:
 1. Load the sample data.
