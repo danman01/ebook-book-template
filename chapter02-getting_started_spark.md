@@ -21,7 +21,7 @@ Open a text console, and navigate to the newly created directory. Start Spark's 
 ```
 
 A series of messages will scroll past as Spark and Hadoop are configured. Once the scrolling stops, you will see a simple prompt.
-<figure><img alt="Console Messages" src="images/console-messages.png" /><figcaption>Terminal window after spark starts running</figcaption></figure>
+<figure><img alt="Console Messages" src="images/console-messages.png" /><figcaption>Terminal window after Spark starts running</figcaption></figure>
 
 At this prompt, let's create some data; a simple sequence of numbers from 1 to 50,000.
 
