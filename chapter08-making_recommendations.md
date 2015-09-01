@@ -12,7 +12,7 @@ Collaborative filtering algorithms recommend items (this is the _filtering_ part
 Spark MLlib implements a collaborative filtering algorithm called [Alternating Least Squares (ALS)](https://spark.apache.org/docs/latest/mllib-collaborative-filtering.html).
 
 ALS approximates the sparse user item rating matrix of dimension K as the product of two dense matrices--User and Item factor matrices of size U×K and I×K (see picture below). The factor matrices are also called latent feature models. The factor matrices represent hidden features which the algorithm tries to discover. One matrix tries to describe the latent or hidden features of each user, and one tries to describe latent properties of each movie.
-<figure><img alt="Recommendation Matrix" src="images/mllib_rec_engine_image005.png" /><figcaption>Calculation of a recomendation</figcaption></figure>
+<figure><img alt="Recommendation Matrix" src="images/mllib_rec_engine_image005.png" /><figcaption>Calculation of a recommendation</figcaption></figure>
 
 ALS is an _iterative algorithm_. In each iteration, the algorithm alternatively fixes one factor matrix and solves for the other, and this process continues until it converges. This alternation between which matrix to optimize is where the "alternating" in the name comes from.
 
