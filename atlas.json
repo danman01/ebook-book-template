@@ -5,6 +5,7 @@
     "titlepage.html",
     "copyright.html",
     "toc.html",
+    "index.html",
     "chapter01-introduction.md",
     "chapter02-getting_started_spark.md",
     "chapter03-more_details.md",
