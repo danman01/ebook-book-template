@@ -161,14 +161,11 @@ testroc.saveAsTextFile("/ROC/rftest")
 metricsTest.areaUnderROC()
 ```
 
-These are the test results.
-
 To calculate an ROC, the following steps are performed:
-
-Results are binned according to score (highest to lowest).
-1. In each bin, the number of each class is tabulated (Mockingbird vs. Watchman passages).
-2. Starting with the highest bin, generate a data point containing the cumulative percent of the total Mockingbird and Watchman passages that have occurred.
-3. Graphing those points for the Random Forest and Gradient Boosted Trees yields the following curves:
+1. Results are binned according to score (highest to lowest).
+2. In each bin, the number of each class is tabulated (Mockingbird vs. Watchman passages).
+3. Starting with the highest bin, generate a data point containing the cumulative percent of the total Mockingbird and Watchman passages that have occurred.
+4. Graphing those points for the Random Forest and Gradient Boosted Trees yields the following curves:
 
 <nobr/><figure><img alt="Passages above threshold" src="images/MockingBird-fig3.png" /><figcaption>ROC for test data by algorithm</figcaption></figure>
 
