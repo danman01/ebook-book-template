@@ -31,7 +31,8 @@
       "syntaxhighlighting": true,
       "show_comments": false,
       "colors": false,
-      "trim_size": "6inx9in"
+      "trim_size": "6inx9in",
+      "color_count": false
     },
     "epub": {
       "toc": true,
@@ -54,7 +55,7 @@
       "consolidated": false
     }
   },
-  "theme": "hrisp/the-book-to-rule-them-all",
+  "theme": "kingmesal/spark-book-theme",
   "title": "Getting Started with Spark",
   "print_isbn13": "",
   "lang": "en"
