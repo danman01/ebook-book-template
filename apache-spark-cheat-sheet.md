@@ -1,3 +1,5 @@
+<section data-type="appendix">
+
 # Apache Spark Cheat Sheet
 ## Transformations (return new RDD's – Lazy)
 
@@ -144,3 +146,5 @@ Topic                                                                           
 - [SQL and DataFrames Programming Guide](http://spark.apache.org/docs/latest/sql-programming-guide.html)
 - [GraphX Programming Guide](http://spark.apache.org/docs/latest/graphx-programming-guide.html)
 - [SparkR Programming Guide](http://spark.apache.org/docs/latest/sparkr.html)
+
+</section>
