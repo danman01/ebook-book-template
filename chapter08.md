@@ -636,6 +636,8 @@ Readers are encouraged to check out these books themselves and reach their own c
 
 All of the data and code to train the models and make your own conclusions using Apache Spark are located in [github](https://github.com/joebluems/Mockingbird).
 
+<nobr/><div class="pagebreak-before" />
+
 ## Now What?
 We have covered a lot of ground in this book. This is by no means everything to be experienced with Spark. Spark is constantly growing and adding new great functionality to make programming with it easier. Projects integrating with Spark seem to pop up almost daily. The [Apache Mahout](http://mahout.apache.org/) project has done some integration to bring more machine learning libraries to Spark. Projects [Jupyter](https://jupyter.org/) and [Apache Zeppelin](http://zeppelin-project.org/) bring Spark to web notebooks.
 
