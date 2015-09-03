@@ -1,8 +1,0 @@
-# Applying Spark to Solve Actual Business Problems
-Now that you have learned how to get Spark up and running, it's time to put some of this practical knowledge to use. The use cases and code examples described in this chapter are reasonably short and to the point. They are intended to provide enough context on the problem being described so they can be leveraged for solving many more problems.
-
-If these use cases are not complicated enough for your liking, don't fret, as there are more in-depth use cases provided at the end of the book. Those use cases are much more involved, and get into more details and capabilities of Spark.
-
-The first use case walks through loading and querying tabular data. This example is a foundational construct of loading data in Spark. This will enable you to understand how Spark gets data from disk, as well as how to inspect the data and run queries of varying complexity.
-
-The second use case here is about building user profiles from a music streaming service. User profiles are used across almost all industries. The concept of a customer 360 is based on a user profile. The premise behind a user profile is to build a dossier about a user. Whether or not the user is a known person or just a number in a database is usually a minor detail, but one that would fall into areas of privacy concern. User profiles are also at the heart of all major digital advertising campaigns. One of the most common Internet-based scenarios for leveraging user profiles is to understand how long a user stays on a particular website. All-in-all, building user profiles with Spark is child's play.  

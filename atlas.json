@@ -7,14 +7,14 @@
     "toc.html",
     "index.html",
     "chapter01-introduction.md",
-    "chapter02-getting_started_spark.md",
-    "chapter03-more_details.md",
-    "chapter04-hadoop_and_spark.md",
+    "chapter02-getting-started_spark.md",
+    "chapter03-more-details.md",
+    "chapter04-hadoop-and-spark.md",
     "chapter05.md",
     "chapter06-streaming.md",
     "chapter07.md",
     "chapter08.md",
-    "apache_spark_cheat_sheet.md",
+    "apache-spark-cheat-sheet.md",
     "author.md"
   ],
   "formats": {
