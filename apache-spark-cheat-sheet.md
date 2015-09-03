@@ -91,10 +91,10 @@ Storage Level                                                                   
 [Broadcast Variables](http://spark.apache.org/docs/latest/api/java/org/apache/spark/SparkContext.html#broadcast%28T, scala.reflect.ClassTag%29) Broadcast variables allow the programmer to keep a read-only variable cached on each machine rather than shipping a copy of it with tasks.
 
 Language | Create, Evaluate
--------- | ------------------------------------------------------------------
+-------- | ------------------------------------------------------------------------
 Scala    | val broadcastVar = sc.broadcast(Array(1, 2, 3))
          | broadcastVar.value
-Java     | Broadcast<int[]> broadcastVar = sc.broadcast(new int[] {1, 2, 3});
+Java     | Broadcast&lt;int[]&gt; broadcastVar = sc.broadcast(new int[] {1, 2, 3});
          | broadcastVar.value();
 Python   | broadcastVar = sc.broadcast([1, 2, 3])
          | broadcastVar.value
@@ -106,7 +106,7 @@ Language | Create, Add, Evaluate
 Scala    | val accum = sc.accumulator(0, My Accumulator)
          | sc.parallelize(Array(1, 2, 3, 4)).foreach(x => accum += x)
          | accum.value
-Java     | Accumulator<Integer> accum = sc.accumulator(0);
+Java     | Accumulator&lt;Integer&gt; accum = sc.accumulator(0);
          | sc.parallelize(Arrays.asList(1, 2, 3, 4)).foreach(x -> accum.add(x))
          | accum.value();
 Python   | accum = sc.accumulator(0)
