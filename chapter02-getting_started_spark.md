@@ -5,7 +5,9 @@ Apache Spark is open source software, and can be freely [downloaded](https://spa
 
 [Build options](http://spark.apache.org/docs/latest/building-spark.html), including optional links to data storage systems such as Hadoop's HDFS or Hive, are discussed in more detail in Spark's online documentation.
 
-A [Quick Start](https://spark.apache.org/docs/1.4.1/quick-start.html) guide, optimized for developers familiar with either Python or Scala, is an accessible introduction to working with Spark. MapR also provides a [tutorial](https://www.mapr.com/products/mapr-sandbox-hadoop/tutorials/spark-tutorial) linked to their simplified deployment of Hadoop, the [MapR Sandbox](https://www.mapr.com/products/mapr-sandbox-hadoop).
+A [Quick Start](https://spark.apache.org/docs/1.4.1/quick-start.html) guide, optimized for developers familiar with either Python or Scala, is an accessible introduction to working with Spark.
+
+One of the simplest ways to get up and running with Spark is to use the [MapR Sandbox](https://www.mapr.com/products/mapr-sandbox-hadoop) which includes Spark. MapR provides a [tutorial](https://www.mapr.com/products/mapr-sandbox-hadoop/tutorials/spark-tutorial) linked to their simplified deployment of Hadoop.
 
 ## A Very Simple Spark Installation
 Follow these simple steps to download Java, Spark, and Hadoop and get them running on a laptop (in this case, one running Mac OS X). If you do not currently have the [Java JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (version 7 or higher) installed, download it and follow the steps to install it for your operating system.
