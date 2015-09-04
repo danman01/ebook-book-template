@@ -297,6 +297,3 @@ val meanAbsoluteError = testAndPredictionsJoinedRDD.map {
     Math.abs(err)
 }.mean()
 ```
-
-## Introduction to Unsupervised Anomaly Detection
-{% include 'teradata.html' %}
