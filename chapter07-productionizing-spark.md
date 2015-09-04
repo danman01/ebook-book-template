@@ -32,3 +32,5 @@ Spark should always run as close to the cluster's storage nodes as possible. Muc
 
 ## Advice and Considerations
 Nearly any business out there can benefit from utilizing Spark to solve problems. Thinking through taking Spark into production is usually the tough part. Some others in the industry have been kind enough to share some ideas on how to successfully take Spark into production to solve business problems. With any luck, the information provided here will help you be more successful on your own journey to success.
+
+{% include 'pepperdata.html' %}

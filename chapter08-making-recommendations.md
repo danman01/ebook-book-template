@@ -297,3 +297,5 @@ val meanAbsoluteError = testAndPredictionsJoinedRDD.map {
     Math.abs(err)
 }.mean()
 ```
+
+{% include 'teradata.html' %}
