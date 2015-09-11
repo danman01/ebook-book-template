@@ -1,4 +1,4 @@
-# Hadoop and Spark
+# Benefits of Hadoop and Spark
 Spark is a general-purpose data processing engine, suitable for use in a wide range of circumstances. In its current form, however, Spark is not designed to deal with the data management and cluster administration tasks associated with running data processing and analysis workloads at scale.
 
 Rather than investing effort in building these capabilities into Spark, the project currently leverages the strengths of other open source projects, relying upon them for everything from cluster management and data persistence to disaster recovery and compliance.

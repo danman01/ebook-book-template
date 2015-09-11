@@ -1,4 +1,4 @@
-# Diving into Spark
+# Apache Spark Architectural Overview
 Spark is a top-level project of the Apache Software Foundation, designed to be used with a range of programming languages and on a variety of architectures. Spark's speed, simplicity, and broad support for existing development environments and storage systems make it increasingly popular with a wide range of developers, and relatively accessible to those learning to work with it for the first time. The project supporting Spark's ongoing development is one of Apache's largest and most vibrant, with over 500 contributors from more than 200 organizations responsible for code in the current software release.
 
 ## Development Language Support

@@ -1,4 +1,4 @@
-# In-Depth Use Cases
+# Spark In-Depth Use Cases
 In a similar way to Chapter 5, we will be looking into new and exciting ways to use Spark to solve real business problems. Instead of touching on simpler examples, it is time to get into the details. These are complicated problems that are not easily solved without today's current big data technologies. It's a good thing Spark is such a capable tool set.
 
 The first use case will show you how to build a recommendation engine. While the use case focuses on movies, recommendation engines are used all across the Internet, from applying customized labels to email, to providing a great book suggestion, to building a customized advertising engine against custom-built user profiles. Since movies are fun to watch and to talk about and are ingrained into pop culture, it only makes sense to talk about building a movie recommendation engine with Spark.

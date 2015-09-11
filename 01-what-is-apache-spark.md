@@ -1,4 +1,4 @@
-# Introduction
+# What is Apache Spark
 A new name has entered many of the conversations around big data recently. Some see the popular newcomer Apache Spark™ as a more accessible and more powerful replacement for Hadoop, big data's original technology of choice. Others recognize Spark as a powerful complement to Hadoop and other more established technologies, with its own set of strengths, quirks and limitations.
 
 **_Spark, like other big data tools, is powerful, capable, and well-suited to tackling a range of data challenges. Spark, like other big data technologies, is not necessarily the best choice for every data processing task._**

@@ -1,4 +1,4 @@
-## Making Recommendations with Spark
+## Building a Recommendation Engine with Spark
 Recommendation systems help narrow your choices to those that best meet your particular needs, and they are among the most popular applications of big data processing. This use case uses machine learning to perform parallel and iterative processing in Spark and covers:
 - Collaborative filtering for recommendations with Spark
 - Loading and exploring the sample data set with Spark

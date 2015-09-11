@@ -1,4 +1,4 @@
-# Applying Spark to Solve Actual Business Problems
+# Processing Tabular Data with Spark SQL
 Now that you have learned how to get Spark up and running, it's time to put some of this practical knowledge to use. The use cases and code examples described in this chapter are reasonably short and to the point. They are intended to provide enough context on the problem being described so they can be leveraged for solving many more problems.
 
 If these use cases are not complicated enough for your liking, don't fret, as there are more in-depth use cases provided at the end of the book. Those use cases are much more involved, and get into more details and capabilities of Spark.

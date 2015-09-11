@@ -1,4 +1,4 @@
-# Now What?
+# Getting Started with Apache Spark Conclusion
 We have covered a lot of ground in this book. This is by no means everything to be experienced with Spark. Spark is constantly growing and adding new great functionality to make programming with it easier. Projects integrating with Spark seem to pop up almost daily. The [Apache Mahout](http://mahout.apache.org/) project has done some integration to bring more machine learning libraries to Spark. Projects [Jupyter](https://jupyter.org/) and [Apache Zeppelin](http://zeppelin-project.org/) bring Spark to web notebooks.
 
 This book will continue to evolve as things change or important new content is created within Spark. Bookmark things that you feel are important to you. If you didn't work through all the examples, come back and reference them later when you are ready.

@@ -1,4 +1,4 @@
-# Apache Spark Cheat Sheet
+# Apache Spark Developer Cheat Sheet
 ## Transformations (return new RDDs – Lazy)
 
 Where                                                                                                               | Function                                                                                                                                                                                                                         | DStream API                                                                                                                                                                                       | Description
