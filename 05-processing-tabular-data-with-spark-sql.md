@@ -1,4 +1,4 @@
-## Processing Tabular Data
+## Processing Tabular Data with Spark SQL
 The examples here will help you get started using Apache Spark DataFrames with Scala. The new Spark DataFrames API is designed to make big data processing on tabular data easier. A Spark DataFrame is a distributed collection of data organized into named columns that provides operations to _filter_, _group_, or _compute_ aggregates, and can be used with Spark SQL. DataFrames can be constructed from structured data files, existing RDDs, or external databases.
 
 ### Sample Dataset
