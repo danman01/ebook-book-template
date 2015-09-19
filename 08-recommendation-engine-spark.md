@@ -265,8 +265,9 @@ testAndPredictionsJoinedRDD.take(3).mkString("\n")
 The example below finds false positives by finding predicted ratings which were >= 4 when the actual test rating was <= 1. There were 557 false positives out of 199,507 test ratings.
 <pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
 val falsePositives = (testAndPredictionsJoinedRDD
-  .filter{case ((user, product), (ratingT, ratingP)) =>
-    (ratingT <= 1 && ratingP >=4)})
+  .filter{
+    case ((user, product), (ratingT, ratingP)) => (ratingT <= 1 && ratingP >=4)
+  })
 falsePositives.take(2)
 
 falsePositives.count
