@@ -25,8 +25,7 @@ Using Spark DataFrames, we will explore the eBay data with questions like:
 
 ### Loading Data into Spark DataFrames
 First, we will import some packages and instantiate a sqlContext, which is the entry point for working with structured data (rows and columns) in Spark and allows the creation of DataFrame objects.
-
-```scala
+<pre data-code-language="scala" data-executable="true" data-type="programlisting">
 //  SQLContext entry point for working with structured data
 val sqlContext = new org.apache.spark.sql.SQLContext(sc)
 
@@ -35,21 +34,19 @@ import sqlContext.implicits._
 
 // Import Spark SQL data types and Row.
 import org.apache.spark.sql._
-```
+</pre>
 
 Start by loading the data from the ebay.csv file into a Resilient Distributed Dataset (RDD). RDDs have **transformations** and **actions**; the _first()_ **action** returns the first element in the RDD:
-
-```scala
+<pre data-code-language="scala" data-executable="true" data-type="programlisting">
 // load the data into a  new RDD
 val ebayText = sc.textFile("ebay.csv")
 
 // Return the first element in this RDD
 ebayText.first()
-```
+</pre>
 
 Use a Scala _case class_ to define the Auction schema corresponding to the ebay.csv file. Then a _map()_ **transformation** is applied to each element of _ebayText_ to create the ebay RDD of Auction objects.
-
-```scala
+<pre data-code-language="scala" data-executable="true" data-type="programlisting">
 //define the schema using a case class
 case class Auction(auctionid: String, bid: Float, bidtime: Float,
   bidder: String, bidderrate: Integer, openbid: Float, price: Float,
@@ -59,43 +56,38 @@ case class Auction(auctionid: String, bid: Float, bidtime: Float,
 val ebay = ebayText.map(_.split(",")).map(p => Auction(p(0),
   p(1).toFloat,p(2).toFloat,p(3),p(4).toInt,p(5).toFloat,
   p(6).toFloat,p(7),p(8).toInt))
-```
+  </pre>
 
 Calling _first()_ **action** on the ebay RDD returns the first element in the RDD:
-
-```scala
+<pre data-code-language="scala" data-executable="true" data-type="programlisting">
 // Return the first element in this RDD
 ebay.first()
 
 // Return the number of elements in the RDD
 ebay.count()
-```
+</pre>
 
 A DataFrame is a distributed collection of data organized into named columns. Spark SQL supports automatically converting an RDD containing case classes to a DataFrame with the method toDF():
-
-```scala
+<pre data-code-language="scala" data-executable="true" data-type="programlisting">
 // change ebay RDD of Auction objects to a DataFrame
 val auction = ebay.toDF()
-```
+</pre>
 
 ### Exploring and Querying the eBay Auction Data
 DataFrames provide a domain-specific language for structured data manipulation in Scala, Java, and Python; below are some examples with the auction DataFrame. The _show()_ **action** displays the top 20 rows in a tabular form:
-
-```scala
+<pre data-code-language="scala" data-executable="true" data-type="programlisting">
 // Display the top 20 rows of DataFrame
 auction.show()
-```
+</pre>
 
 DataFrame _printSchema()_ displays the schema in a tree format:
-
-```scala
+<pre data-code-language="scala" data-executable="true" data-type="programlisting">
 // Return the schema of this DataFrame
 auction.printSchema()
-```
+</pre>
 
 After a DataFrame is instantiated it can be queried. Here are some example using the Scala DataFrame API:
-
-```scala
+<pre data-code-language="scala" data-executable="true" data-type="programlisting">
 // How many auctions were held?
 auction.select("auctionid").distinct.count
 
@@ -112,11 +104,10 @@ val highprice= auction.filter("price > 100")
 
 // display dataframe in a tabular format
 highprice.show()
-```
+</pre>
 
 A DataFrame can also be registered as a temporary table using a given name, which can then have SQL statements run against it using the methods provided by sqlContext. Here are some example queries using sqlContext:
-
-```scala
+<pre data-code-language="scala" data-executable="true" data-type="programlisting">
 // register the DataFrame as a temp table
 auction.registerTempTable("auction")
 
@@ -134,7 +125,9 @@ val results = sqlContext.sql(
     GROUP BY item,auctionid"
   )
 results.show()
-```
+</pre>
 
 ### Summary
 You have now learned how to load data into Spark DataFrames, and explore tabular data with Spark SQL. These code examples can be reused as the foundation to solve any type of business problem.
+
+{{ thebe_code }}

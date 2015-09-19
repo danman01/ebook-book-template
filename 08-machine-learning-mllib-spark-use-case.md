@@ -11,8 +11,7 @@ The theory behind document classification is that text from the same source will
 To build a model to classify documents, text must be translated into numbers. This involves standardizing the text, converting to numbers (via hashing), and then adjusting the word importance based on its relative frequency.
 
 Text standardization was done with Apache Lucene. An example below shows how to perform this with the Spark shell:
-
-```bash
+<pre data-code-language="bash" data-not-executable="true" data-type="programlisting">
 ./bin/spark-shell --packages \
    "org.apache.lucene:lucene-analyzers-common:5.1.0"
 val line="Flick. A tiny, almost invisible movement, " +
@@ -20,28 +19,26 @@ val line="Flick. A tiny, almost invisible movement, " +
 val tokens=Stemmer.tokenize(line)
 # tokens: Seq[String] = ArrayBuffer(flick, tini, almost,
 #   invis, movement, hous, still)
-```
+</pre>
 
 The Stemmer object that invokes the Lucene analyzer comes from an article on [classifying documents using Naive Bayes on Apache Spark / MLlib](https://chimpler.wordpress.com/2014/06/11/classifiying-documents-using-naive-bayes-on-apache-spark-mllib/). Notice how the line describing the tranquility of the Radley house is affected. The punctuation and capitalization is removed, and words like "house" are stemmed, so tokens with the same root ("housing", "housed", etc.) will be considered equal. Next, we translate those tokens into numbers and count how often they appear in each line. Spark's HashingTF library performs both operations simultaneously.
-
-```scala
+<pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
 import org.apache.spark.mllib.feature.HashingTF
 val tf = new HashingTF(10)
 
 val hashed = tf.transform(tokens)
-```
+</pre>
 
 A "hash" is a one-way translation from text to an integer (i.e. once it's translated, there's no way to go back). Initializing the hash with HashingTF(10) notifies Spark that we want every string mapped to the integers 0-9. The transform method performs the hash on each word, and then provides the frequency count for each. This is an impractical illustration, and would result in a huge number of "collisions" (different strings assigned the same number).
 
 The default size of the resulting vector of token frequencies is 1,000,000. The size and number of collisions are inversely related. But a large hash also requires more memory. If your corpus contains millions of documents, this is an important factor to consider. For this analysis, a hash size of 10,000 was used.
 
 The last step in the text preparation process is to account for the rareness of words--we want to reward uncommon words such as "chifferobe" with more importance than frequent words such as "house" or "brother". This is referred to as TF-IDF transformation and is available as an (almost) one-liner in Spark.
-
-```scala
+<pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
 import org.apache.spark.mllib.feature.IDF
 val idfModel = new IDF(minDocFreq = 3).fit(trainDocs)
 val idfs = idfModel.transform(hashed)
-```
+</pre>
 
 The "fit" method of the IDF library examines the entire corpus to tabulate the document count for each word. On the second pass, Spark creates the TF-IDF for each non-zero element (tokeni) as the following: <!--<p><span class="math-tex" data-type="tex"><span class="math-tex" data-type="tex">\(TFIDF_i = {\sqrt{TF} *ln(doc\ count + 1/doc\ count_i + 1)}\)</span></span></p>-->
 <figure><img alt="The fit method" src="images/MockingBird-fig1.png" /><figcaption>The "fit" method equation</figcaption></figure>
@@ -56,8 +53,7 @@ The secret to getting value from business problems is not the classification; it
 During examination of the text, it was noted that a few modifications should be made to the novels to make the comparison more "fair." _To Kill a Mockingbird_ was written in the first person and includes many pronouns that would be giveaways (e.g., "I", "our", "my", "we", etc.). These were removed from both books. Due to the inevitability of variable sentence length in novels, passages were created as a series of ten consecutive words.
 
 The parsed passages were combined, split into training and testing sets, and then transformed with the idfModel built on the training data using the code below:
-
-```scala
+<pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
 val data = mockData.union(watchData)
 val splits = data.randomSplit(Array(0.7, 0.3))
 val trainDocs = splits(0).map{ x=>x.features}
@@ -69,13 +65,12 @@ val test = splits(1).map{
   point=>LabeledPoint(point.label,idfModel.transform(point.features))
 }
 train.cache()
-```
+</pre>
 
 Using randomly split data files for training and testing a model is standard procedure for insuring performance is not a result of over-training (i.e., memorizing the specific examples instead of abstracting the true patterns). It is critical that the idfModel is built only on the training data. Failure to do so may result in overstating your performance on the test data.
 
 The data are prepared for machine learning algorithms in Spark. Naive Bayes is a reasonable first choice for document classification. The code below shows the training and evaluation of a Naive Bayes model on the passages.
-
-```scala
+<pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
 import org.apache.spark.mllib.classification.{NaiveBayes,
   NaiveBayesModel}
 val nbmodel = NaiveBayes.train(train, lambda = 1.0)
@@ -86,7 +81,7 @@ println("Mean Naive Bayes performance")
   bayesTrain.count().toDouble,
   bayesTest.filter(x => x._1 == x._2).count() /
   bayesTest.count().toDouble)
-```
+</pre>
 
 Applying the Naive Bayes algorithm in Spark gives a classification from which accuracy and a confusion matrix can be derived. The method makes the correct classification on 90.5% of the train records and 70.7% of the test records (performance on the training is almost always better than the test). The confusion matrix on the test data appears below:
 <figure><img alt="Confusion Matrix" src="images/MockingBird-fig2.png" /><figcaption>Naive Bayes Confusion Matrix on test data</figcaption></figure>
@@ -96,8 +91,7 @@ The diagonal elements of the confusion matrix represent correct classifications 
 Currently, Spark does not support a user-supplied threshold for Naive Bayes. Only the best classification rate in the training data is reported. But in real business problems, there is an overhead associated with a misclassification so that the "best" rate may not be the optimal rate. It is of keen interest to the business to find the point at which maximum value of correct classifications is realized when accounting for incorrect answers. To do this via Spark, we need to use methods that allow for analysis of the threshold.
 
 Given the number of features (a TF-IDF vector of size 10,000) and the nature of the data, Spark's tree-based ensemble methods are appropriate. Both Random Forest and Gradient Boosted Trees are available.
-
-```scala
+<pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
 import org.apache.spark.mllib.tree.RandomForest
 import org.apache.spark.mllib.tree.model.RandomForestModel
 import org.apache.spark.mllib.tree.GradientBoostedTrees
@@ -122,15 +116,14 @@ boostingStrategy.numIterations = 50
 boostingStrategy.treeStrategy.maxDepth = 5
 boostingStrategy.treeStrategy.categoricalFeaturesInfo = Map[Int, Int]()
 val modelGB = GradientBoostedTrees.train(train, boostingStrategy)
-```
+</pre>
 
 The regression model options (estimating vs. classifying) will produce continuous outputs that can be used to find the right threshold. Both of these methods can be configured with tree depth and number of trees. Read the Spark documentation for details, but the general rules of thumb are the following:
 - Random Forest: trees are built in parallel and overtraining decreases with more trees, so setting this number to be large is a great way to leverage a Hadoop environment. The max depth should be larger than GBT.
 - Gradient Boosted Trees: the number of trees is directly related to overtraining, and the trees are not built in parallel. This method can produce some extremely high classification rates on the training data, but set the max depth of trees to be smaller than random forest.
 
 The table below shows the commands to calculate the ROC (Receiver Operating Characteristic) for the Random Forest model--the ROC will tell the real story on the model performance.
-
-```scala
+<pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
 //// Random forest model metrics on training data
 val trainScores = train.map { point =>
   val prediction = modelRF.predict(point.features)
@@ -145,11 +138,10 @@ val metricsTrain = new BinaryClassificationMetrics(trainScores,100)
 val trainroc= metricsTrain.roc()
 trainroc.saveAsTextFile("/ROC/rftrain")
 metricsTrain.areaUnderROC()
-```
+</pre>
 
 These are the training results.
-
-```scala
+<pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
 //// Random forest model metrics on test data
 val testScores = test.map { point =>
   val prediction = modelRF.predict(point.features)
@@ -159,7 +151,7 @@ val metricsTest = new BinaryClassificationMetrics(testScores,100)
 val testroc= metricsTest.roc()
 testroc.saveAsTextFile("/ROC/rftest")
 metricsTest.areaUnderROC()
-```
+</pre>
 
 To calculate an ROC, the following steps are performed:
 1. Results are binned according to score (highest to lowest).

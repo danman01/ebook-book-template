@@ -52,9 +52,17 @@
       "index": false,
       "syntaxhighlighting": false,
       "show_comments": false,
-      "consolidated": false
+      "consolidated": false,
+      "stylesheets": [
+        "theme/html/mapr.ebook.codemirror.css"
+      ]
+      "javascripts": [
+        "https://code.jquery.com/jquery-2.1.4.min.js",
+        "https://d3ansictanv2wj.cloudfront.net/main-built-cf7117da6f2abdd1670674ef8990d41b.js"
+      ]
     }
   },
+  "GTM_ID": "GTM-MF4DQ9",
   "theme": "kingmesal/spark-book-theme",
   "title": "Getting Started with Apache Spark",
   "print_isbn13": "",

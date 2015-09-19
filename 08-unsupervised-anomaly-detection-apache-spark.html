@@ -15,7 +15,7 @@
 
 <p>Using the KDD'99 data set, we will filter out a number of columns for two reasons: ease of example and removal of labeled data, as this use case only demonstrates unsupervised approaches.</p>
 
-<pre data-code-language="python" data-type="programlisting">
+<pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 import numpy as np
 INPUT = "hdfs://localhost/data/kdd"
 
@@ -30,7 +30,7 @@ df = sc.textFile(INPUT).map(parse_line)
 
 <p>To begin, we want to get summary statistics for columns in our data. The <em>stats()</em> function provides these summaries. We can then use the results to get all records where the first column lies more than two standard deviations from the mean:</p>
 
-<pre data-code-language="python" data-type="programlisting">
+<pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 stats = df.map(lambda e: e[0]).stats()
 mean, stdev = stats.mean(), stats.stdev()
 outliers = df.filter(lambda e: not (mean - 2 * stdev &gt; e[0] &gt; mean + 2 * stdev))
@@ -43,7 +43,7 @@ outliers.collect()
 
 <p>Clustering refers to an unsupervised approach whereby data points close to one another are grouped together. A common approach called k-means will produce k clusters where the distance between points is calculated using Euclidean distance. This approach can be quickly run in Spark via MLlib:</p>
 
-<pre data-code-language="python" data-type="programlisting">
+<pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 from pyspark.mllib.clustering import KMeans
 clusters = KMeans.train(df, 5, maxIterations=10,
     runs=1, initializationMode="random")
@@ -51,7 +51,7 @@ clusters = KMeans.train(df, 5, maxIterations=10,
 
 <p>There are now five clusters created. We can see the size of each cluster by labeling each point and counting. However, note that determining the optimal number of clusters requires iteratively building a model, omitted here because we move to an alternative approach in the next section.</p>
 
-<pre data-code-language="python" data-type="programlisting">
+<pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 cluster_sizes = df.map(lambda e: clusters.predict(e)).countByValue()
 </pre>
 
@@ -59,7 +59,7 @@ cluster_sizes = df.map(lambda e: clusters.predict(e)).countByValue()
 
 <p>However, because we have a small number of clusters (and probably too few), we may find anomalous data within non-anomalous clusters. A first inspection should look at the distribution of distances of data points from cluster centers:</p>
 
-<pre data-code-language="python" data-type="programlisting">
+<pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 def get_distance(clusters):
   def get_distance_map(record):
     cluster = clusters.predict(record)
@@ -88,7 +88,7 @@ hist = data_distance.keys().histogram(10)
 
 <p>To create an unsupervised model from a supervised one, we create a new dataset of "dummy" data. We create dummy data by sampling from within columns of the original data and joining those columns. This creates a dataset whose column values are non-anomalous, but whose relationships between columns are. The unisample function provides an example:</p>
 
-<pre data-code-language="python" data-type="programlisting">
+<pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 def unisample(df, fraction=1.0):
   columns = df.first()
   new_df = None
@@ -107,7 +107,7 @@ def unisample(df, fraction=1.0):
 
 <p>Next we label the dummy data 0 (for "not real") and original data 1 (for "real"). The <em>supervised2unsupervised</em> function shows how to create such a dataset. It also takes a supervised model and returns an unsupervised model, which we will do next:</p>
 
-<pre data-code-language="python" data-type="programlisting">
+<pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 def supervised2unsupervised(model):
   def run(df, *args, **kwargs):
     unisampled_df = unisample(df)
@@ -120,7 +120,7 @@ def supervised2unsupervised(model):
 
 <p>Now we can create and fit an unsupervised random forest using the RandomForest function provided by MLlib:</p>
 
-<pre data-code-language="python" data-type="programlisting">
+<pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 from pyspark.mllib.regression import LabeledPoint
 from pyspark.mllib.tree import RandomForest
 

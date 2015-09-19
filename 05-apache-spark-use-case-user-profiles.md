@@ -55,19 +55,17 @@ Other datasets that would be available, but will not be used for this use case, 
 All the right information is in place and a lot of micro-level detail is available that describes what customers listen to and when. The quickest way to get this data to a dashboard is by leveraging Spark to create summary information for each customer as well as basic statistics about the entire user base. After the results are generated, they can be persisted to a file which can be easily used for visualization with BI tools such as Tableau, or other dashboarding frameworks like C3.js or D3.js.
 
 Step one in getting started is to initialize a Spark context. Additional parameters could be passed to the _SparkConf_ method to further configure the job, such as setting the master and the directory where the job executes.
-
-```python
+<pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 from pyspark import SparkContext, SparkConf
 from pyspark.mllib.stat import Statistics
 import csv
 
 conf = SparkConf().setAppName('ListenerSummarizer')
 sc = SparkContext(conf=conf)
-```
+</pre>
 
 The next step will be to read the CSV records with the individual track events, and make a _PairRDD_ out of all of the rows. To convert each line of data into an array, the _map()_ function will be used, and then _reduceByKey()_ is called to consolidate all of the arrays.
-
-```python
+<pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 trackfile = sc.textFile('/tmp/data/tracks.csv')
 
 def make_tracks_kv(str):
@@ -77,7 +75,7 @@ def make_tracks_kv(str):
     # make a k,v RDD out of the input data
     tbycust = trackfile.map(lambda line: make_tracks_kv(line))
       .reduceByKey(lambda a, b: a + b)
-```
+</pre>
 
 The individual track events are now stored in a _PairRDD_, with the customer ID as the key. A summary profile can now be computed for each user, which will include:
 - Average number of tracks during each period of the day (time ranges are arbitrarily defined in the code)
@@ -85,8 +83,7 @@ The individual track events are now stored in a _PairRDD_, with the customer ID 
 - Total mobile tracks, i.e., tracks played when the mobile flag was set
 
 By passing a function to _mapValues_, a high-level profile can be computed from the components. The summary data is now readily available to compute basic statistics that can be used for display, using the _colStats_ function from _pyspark.mllib.stat_.
-
-```python
+<pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 def compute_stats_byuser(tracks):
     mcount = morn = aft = eve = night = 0
  tracklist = []
@@ -114,15 +111,14 @@ custdata = tbycust.mapValues(lambda a: compute_stats_byuser(a))
 
 # compute aggregate stats for entire track history
 aggdata = Statistics.colStats(custdata.map(lambda x: x[1]))
-```
+</pre>
 
 The last line provides meaningful statistics like the mean and variance for each of the fields in the per-user RDDs that were created in _custdata_.
 
 Calling _collect()_ on this RDD will persist the results back to a file. The results could be stored in a database such as MapR-DB, HBase or an RDBMS (using a Python package like _happybase_ or _dbset_). For the sake of simplicity for this example, using CSV is the optimal choice. There are two files to output:
 - _live_table.csv_ containing the latest calculations
 - _agg_table.csv_ containing the aggregated data about all customers computed with _Statistics.colStats_
-
-```python
+<pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 for k, v in custdata.collect():
     unique, morn, aft, eve, night, mobile = v
     tot = morn + aft + eve + night
@@ -140,7 +136,7 @@ with open('agg_table.csv', 'wb') as csvfile:
         fwriter.writerow(aggdata.mean()[0], aggdata.mean()[1],
             aggdata.mean()[2], aggdata.mean()[3], aggdata.mean()[4],
             aggdata.mean()[5])
-```
+</pre>
 
 After the job completes, a summary is displayed of what was written to the CSV table and the averages for all users.
 
