@@ -263,7 +263,8 @@ testAndPredictionsJoinedRDD.take(3).mkString("\n")
 </pre>
 
 The example below finds false positives by finding predicted ratings which were >= 4 when the actual test rating was <= 1. There were 557 false positives out of 199,507 test ratings.
-<pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
+
+```scala
 val falsePositives = (testAndPredictionsJoinedRDD
   .filter{
     case ((user, product), (ratingT, ratingP)) => (ratingT <= 1 && ratingP >=4)
@@ -271,7 +272,7 @@ val falsePositives = (testAndPredictionsJoinedRDD
 falsePositives.take(2)
 
 falsePositives.count
-</pre>
+```
 
 Next we evaluate the model using Mean Absolute Error (MAE). MAE is the absolute differences between the predicted and actual targets.
 <pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
