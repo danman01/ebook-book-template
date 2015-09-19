@@ -118,6 +118,8 @@ The last line provides meaningful statistics like the mean and variance for each
 Calling _collect()_ on this RDD will persist the results back to a file. The results could be stored in a database such as MapR-DB, HBase or an RDBMS (using a Python package like _happybase_ or _dbset_). For the sake of simplicity for this example, using CSV is the optimal choice. There are two files to output:
 - _live_table.csv_ containing the latest calculations
 - _agg_table.csv_ containing the aggregated data about all customers computed with _Statistics.colStats_
+
+<nobr/>
 <pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 for k, v in custdata.collect():
   unique, morn, aft, eve, night, mobile = v
