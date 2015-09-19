@@ -90,7 +90,7 @@ def parseUser(str: String): User = {
 
 Below we load the data from the ratings.dat file into a Resilient Distributed Dataset (RDD). RDDs can have **transformations** and **actions**.
 <pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
- // load the data into a RDD
+// load the data into a RDD
 val ratingText = sc.textFile("/user/user01/moviemed/ratings.dat")
 
 // Return the first element in this RDD
@@ -266,6 +266,8 @@ testAndPredictionsJoinedRDD.take(3).mkString("\n")
 </pre>
 
 The example below finds false positives by finding predicted ratings which were >= 4 when the actual test rating was <= 1. There were 557 false positives out of 199,507 test ratings.
+
+```scala
 <pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
 val falsePositives = (testAndPredictionsJoinedRDD
   .filter{case ((user, product), (ratingT, ratingP)) =>
@@ -274,6 +276,7 @@ falsePositives.take(2)
 
 falsePositives.count
 </pre>
+```
 
 Next we evaluate the model using Mean Absolute Error (MAE). MAE is the absolute differences between the predicted and actual targets.
 <pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
