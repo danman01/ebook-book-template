@@ -130,4 +130,4 @@ results.show()
 ### Summary
 You have now learned how to load data into Spark DataFrames, and explore tabular data with Spark SQL. These code examples can be reused as the foundation to solve any type of business problem.
 
-{{ thebe_code }}
+{% include "thebe.js" %}
