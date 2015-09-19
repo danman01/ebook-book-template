@@ -288,3 +288,5 @@ val meanAbsoluteError = testAndPredictionsJoinedRDD.map {
     Math.abs(err)
 }.mean()
 </pre>
+
+{% include "thebe.js" %}

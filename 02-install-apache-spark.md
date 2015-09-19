@@ -17,34 +17,32 @@ Visit the [Spark downloads page](https://spark.apache.org/downloads.html), selec
 
 ## Testing Spark
 Open a text console, and navigate to the newly created directory. Start Spark's interactive shell:
-
-```bash
+<pre data-code-language="bash" data-not-executable="true" data-type="programlisting">
 ./bin/spark-shell
-```
+</pre>
 
 A series of messages will scroll past as Spark and Hadoop are configured. Once the scrolling stops, you will see a simple prompt.
 <figure><img alt="Console Messages" src="images/console-messages.png" /><figcaption>Terminal window after Spark starts running</figcaption></figure>
 
 At this prompt, let's create some data; a simple sequence of numbers from 1 to 50,000.
-
-```scala
+<pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
 val data = 1 to 50000
-```
+</pre>
 
 Now, let's place these 50,000 numbers into a Resilient Distributed Dataset (RDD) which we'll call sparkSample. It is this RDD upon which Spark can perform analysis.
-
-```scala
+<pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
 val sparkSample = sc.parallelize(data)
-```
+</pre>
 
 Now we can filter the data in the RDD to find any values of less than 10.
-
-```scala
+<pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
 sparkSample.filter(_ < 10).collect()
-```
+</pre>
 
 <figure><img alt="Console Results" src="images/console-result.png" /><figcaption>Values less than 10, from a set of 50,000 numbers</figcaption></figure>
 
 Spark should report the result, with an array containing any values less than 10. Richer and more complex examples are available in resources mentioned elsewhere in this guide.
 
 Spark has a very low entry barrier to get started, which eases the burden of learning a new toolset. Barrier to entry should always be a consideration for any new technology a company evaluates for enterprise use.
+
+{% include "thebe.js" %}

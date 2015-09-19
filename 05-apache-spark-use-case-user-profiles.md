@@ -120,22 +120,22 @@ Calling _collect()_ on this RDD will persist the results back to a file. The res
 - _agg_table.csv_ containing the aggregated data about all customers computed with _Statistics.colStats_
 <pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 for k, v in custdata.collect():
-    unique, morn, aft, eve, night, mobile = v
-    tot = morn + aft + eve + night
+  unique, morn, aft, eve, night, mobile = v
+  tot = morn + aft + eve + night
 
-    # persist the data, in this case write to a file
+  # persist the data, in this case write to a file
 with open('live_table.csv', 'wb') as csvfile:
-        fwriter = csv.writer(csvfile, delimiter=' ',
-               quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        fwriter.writerow(unique, morn, aft, eve, night, mobile)
+      fwriter = csv.writer(csvfile, delimiter=' ',
+             quotechar='|', quoting=csv.QUOTE_MINIMAL)
+      fwriter.writerow(unique, morn, aft, eve, night, mobile)
 
-        # do the same with the summary data
+      # do the same with the summary data
 with open('agg_table.csv', 'wb') as csvfile:
-        fwriter = csv.writer(csvfile, delimiter=' ',
-               quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        fwriter.writerow(aggdata.mean()[0], aggdata.mean()[1],
-            aggdata.mean()[2], aggdata.mean()[3], aggdata.mean()[4],
-            aggdata.mean()[5])
+      fwriter = csv.writer(csvfile, delimiter=' ',
+             quotechar='|', quoting=csv.QUOTE_MINIMAL)
+      fwriter.writerow(aggdata.mean()[0], aggdata.mean()[1],
+          aggdata.mean()[2], aggdata.mean()[3], aggdata.mean()[4],
+          aggdata.mean()[5])
 </pre>
 
 After the job completes, a summary is displayed of what was written to the CSV table and the averages for all users.
@@ -144,3 +144,5 @@ After the job completes, a summary is displayed of what was written to the CSV t
 With just a few lines of code in Spark, a high-level customer behavior view was created, all computed using a dataset with millions of rows that stays current with the latest information. Nearly any toolset that can utilize a CSV file can now leverage this dataset for visualization.
 
 This use case showcases how easy it is to work with Spark. Spark is a framework for ensuring that new capabilities can be delivered well into the future, as data volumes grow and become more complex.
+
+{% include "thebe.js" %}
