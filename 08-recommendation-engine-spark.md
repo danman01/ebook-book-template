@@ -169,6 +169,8 @@ results.show()
 </pre>
 
 The query below finds the users who rated the most movies, then finds which movies the most active user rated higher than 4. We will get recommendations for this user later.
+
+```scala
 <pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
 // Show the top 10 most-active users and how many times they rated
 // a movie
@@ -186,6 +188,7 @@ val results = sqlContext.sql("SELECT ratings.user, ratings.product,
 
 results.show
 </pre>
+```
 
 ### Using ALS with the Movie Ratings Data
 Now we will use the MLlib ALS algorithm to learn the latent factors that can be used to predict missing entries in the user-item association matrix. First we separate the ratings data into training data (80%) and test data (20%). We will get recommendations for the training data, and then we will evaluate the predictions with the test data. This process of taking a subset of the data to build the model and then verifying the model with the remaining data is known as cross validation; the goal is to estimate how accurately a predictive model will perform in practice. To improve the model, this process is often done multiple times with different subsets; we will only do it once.
