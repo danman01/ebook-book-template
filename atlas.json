@@ -55,7 +55,7 @@
       "consolidated": false,
       "stylesheets": [
         "theme/html/mapr.ebook.codemirror.css"
-      ]
+      ],
       "javascripts": [
         "https://code.jquery.com/jquery-2.1.4.min.js",
         "https://d3ansictanv2wj.cloudfront.net/main-built-cf7117da6f2abdd1670674ef8990d41b.js"
