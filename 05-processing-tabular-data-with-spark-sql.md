@@ -38,7 +38,7 @@ import org.apache.spark.sql._
 
 Start by loading the data from the ebay.csv file into a Resilient Distributed Dataset (RDD). RDDs have **transformations** and **actions**; the _first()_ **action** returns the first element in the RDD:
 <pre data-code-language="scala" data-executable="true" data-type="programlisting">
-// load the data into a  new RDD
+// load the data into a new RDD
 val ebayText = sc.textFile("ebay.csv")
 
 // Return the first element in this RDD

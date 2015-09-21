@@ -173,7 +173,7 @@ The query below finds the users who rated the most movies, then finds which movi
 // Show the top 10 most-active users and how many times they rated
 // a movie
 val mostActiveUsersSchemaRDD = sqlContext.sql(
-  "SELECT ratings.user, count(*) as ct from ratings group by
+  "SELECT ratings.user, count(****) as ct from ratings group by
   ratings.user order by ct desc limit 10")
 
 println(mostActiveUsersSchemaRDD.collect().mkString("\n"))
@@ -263,16 +263,15 @@ testAndPredictionsJoinedRDD.take(3).mkString("\n")
 </pre>
 
 The example below finds false positives by finding predicted ratings which were >= 4 when the actual test rating was <= 1. There were 557 false positives out of 199,507 test ratings.
-
-```scala
-val falsePositives = (testAndPredictionsJoinedRDD
-  .filter{
+<pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
+val falsePositives = (
+  testAndPredictionsJoinedRDD.filter{
     case ((user, product), (ratingT, ratingP)) => (ratingT <= 1 && ratingP >=4)
   })
 falsePositives.take(2)
 
 falsePositives.count
-```
+</pre>
 
 Next we evaluate the model using Mean Absolute Error (MAE). MAE is the absolute differences between the predicted and actual targets.
 <pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
