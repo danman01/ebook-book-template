@@ -110,11 +110,11 @@ def unisample(df, fraction=1.0):
 <pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 def supervised2unsupervised(model):
     def run(df, *args, **kwargs):
-      unisampled_df = unisample(df)
-      unisampled_df = unisample(df)
-      labeled_data = df.map(lambda e: LabeledPoint(1, e))
-          .union(unisampled_df.map(lambda e: LabeledPoint(0, e)))
-      return model(labeled_data, *args, **kwargs)
+        unisampled_df = unisample(df)
+        unisampled_df = unisample(df)
+        labeled_data = df.map(lambda e: LabeledPoint(1, e))
+            .union(unisampled_df.map(lambda e: LabeledPoint(0, e)))
+        return model(labeled_data, *args, **kwargs)
     return run
 </pre>
 
