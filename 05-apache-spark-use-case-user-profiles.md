@@ -86,7 +86,7 @@ By passing a function to _mapValues_, a high-level profile can be computed from 
 <pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 def compute_stats_byuser(tracks):
     mcount = morn = aft = eve = night = 0
- tracklist = []
+    tracklist = []
     for t in tracks:
         trackid, dtime, mobile, zip = t
         if trackid not in tracklist:
@@ -122,22 +122,22 @@ Calling _collect()_ on this RDD will persist the results back to a file. The res
 <nobr/>
 <pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 for k, v in custdata.collect():
-  unique, morn, aft, eve, night, mobile = v
-  tot = morn + aft + eve + night
+    unique, morn, aft, eve, night, mobile = v
+    tot = morn + aft + eve + night
 
-  # persist the data, in this case write to a file
-with open('live_table.csv', 'wb') as csvfile:
-      fwriter = csv.writer(csvfile, delimiter=' ',
-             quotechar='|', quoting=csv.QUOTE_MINIMAL)
-      fwriter.writerow(unique, morn, aft, eve, night, mobile)
+    # persist the data, in this case write to a file
+    with open('live_table.csv', 'wb') as csvfile:
+        fwriter = csv.writer(csvfile, delimiter=' ',
+            quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        fwriter.writerow(unique, morn, aft, eve, night, mobile)
 
-      # do the same with the summary data
-with open('agg_table.csv', 'wb') as csvfile:
-      fwriter = csv.writer(csvfile, delimiter=' ',
-             quotechar='|', quoting=csv.QUOTE_MINIMAL)
-      fwriter.writerow(aggdata.mean()[0], aggdata.mean()[1],
-          aggdata.mean()[2], aggdata.mean()[3], aggdata.mean()[4],
-          aggdata.mean()[5])
+    # do the same with the summary data
+    with open('agg_table.csv', 'wb') as csvfile:
+        fwriter = csv.writer(csvfile, delimiter=' ',
+            quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        fwriter.writerow(aggdata.mean()[0], aggdata.mean()[1],
+            aggdata.mean()[2], aggdata.mean()[3], aggdata.mean()[4],
+            aggdata.mean()[5])
 </pre>
 
 After the job completes, a summary is displayed of what was written to the CSV table and the averages for all users.
