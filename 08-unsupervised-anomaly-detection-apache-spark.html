@@ -20,8 +20,8 @@ import numpy as np
 INPUT = "hdfs://localhost/data/kdd"
 
 def parse_line(line):
-  bits = line.split(",")
-  return np.array([float(e) for e in bits[4:12]])
+    bits = line.split(",")
+    return np.array([float(e) for e in bits[4:12]])
 
 df = sc.textFile(INPUT).map(parse_line)
 </pre>
@@ -61,12 +61,12 @@ cluster_sizes = df.map(lambda e: clusters.predict(e)).countByValue()
 
 <pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 def get_distance(clusters):
-  def get_distance_map(record):
-    cluster = clusters.predict(record)
-    centroid = clusters.centers[cluster]
-    dist = np.linalg.norm(record - centroid)
-    return (dist, record)
-  return get_distance_map
+    def get_distance_map(record):
+        cluster = clusters.predict(record)
+        centroid = clusters.centers[cluster]
+        dist = np.linalg.norm(record - centroid)
+        return (dist, record)
+    return get_distance_map
 
 data_distance = df.map(get_distance(clusters))
 hist = data_distance.keys().histogram(10)
@@ -90,32 +90,32 @@ hist = data_distance.keys().histogram(10)
 
 <pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 def unisample(df, fraction=1.0):
-  columns = df.first()
-  new_df = None
-  for i in range(0, len(columns)):
-    column = df.sample(withReplacement=True, fraction=fraction)
-        .map(lambda row: row[i])
-        .zipWithIndex()
-        .map(lambda e: (e[1], [e[0]]))
-    if new_df is None:
-      new_df = column
-    else:
-      new_df = new_df.join(column)
-      new_df = new_df.map(lambda e: (e[0], e[1][0] + e[1][1]))
-  return new_df.map(lambda e: e[1])
+    columns = df.first()
+    new_df = None
+    for i in range(0, len(columns)):
+        column = df.sample(withReplacement=True, fraction=fraction)
+            .map(lambda row: row[i])
+            .zipWithIndex()
+            .map(lambda e: (e[1], [e[0]]))
+        if new_df is None:
+            new_df = column
+        else:
+            new_df = new_df.join(column)
+            new_df = new_df.map(lambda e: (e[0], e[1][0] + e[1][1]))
+    return new_df.map(lambda e: e[1])
 </pre>
 
 <p>Next we label the dummy data 0 (for "not real") and original data 1 (for "real"). The <em>supervised2unsupervised</em> function shows how to create such a dataset. It also takes a supervised model and returns an unsupervised model, which we will do next:</p>
 
 <pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 def supervised2unsupervised(model):
-  def run(df, *args, **kwargs):
-    unisampled_df = unisample(df)
-    unisampled_df = unisample(df)
-    labeled_data = df.map(lambda e: LabeledPoint(1, e))
-        .union(unisampled_df.map(lambda e: LabeledPoint(0, e)))
-    return model(labeled_data, *args, **kwargs)
-  return run
+    def run(df, *args, **kwargs):
+      unisampled_df = unisample(df)
+      unisampled_df = unisample(df)
+      labeled_data = df.map(lambda e: LabeledPoint(1, e))
+          .union(unisampled_df.map(lambda e: LabeledPoint(0, e)))
+      return model(labeled_data, *args, **kwargs)
+    return run
 </pre>
 
 <p>Now we can create and fit an unsupervised random forest using the RandomForest function provided by MLlib:</p>
