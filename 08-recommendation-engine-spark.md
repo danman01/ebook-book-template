@@ -173,8 +173,7 @@ The query below finds the users who rated the most movies, then finds which movi
 // Show the top 10 most-active users and how many times they rated
 // a movie
 val mostActiveUsersSchemaRDD = sqlContext.sql(
-  "SELECT ratings.user, count(&#42;) as ct from ratings group by
-  ratings.user order by ct desc limit 10")
+  "SELECT ratings.user, count(&#42;) as ct from ratings group by ratings.user order by ct desc limit 10")
 
 println(mostActiveUsersSchemaRDD.collect().mkString("\n"))
 
