@@ -39,7 +39,7 @@ import org.apache.spark.sql._
 Start by loading the data from the ebay.csv file into a Resilient Distributed Dataset (RDD). RDDs have **transformations** and **actions**; the _first()_ **action** returns the first element in the RDD:
 <pre data-code-language="scala" data-executable="true" data-type="programlisting">
 // load the data into a new RDD
-val ebayText = sc.textFile("ebay.csv")
+val ebayText = sc.textFile("/home/jovyan/datasets/spark-ebook/ebay.csv")
 
 // Return the first element in this RDD
 ebayText.first()
@@ -53,10 +53,10 @@ case class Auction(auctionid: String, bid: Float, bidtime: Float,
   item: String, daystolive: Integer)
 
 // create an RDD of Auction objects
-val ebay = ebayText.map(_.split(",")).map(p => Auction(p(0),
+val ebay = ebayText.map(&#95;.split(",")).map(p => Auction(p(0),
   p(1).toFloat,p(2).toFloat,p(3),p(4).toInt,p(5).toFloat,
   p(6).toFloat,p(7),p(8).toInt))
-  </pre>
+</pre>
 
 Calling _first()_ **action** on the ebay RDD returns the first element in the RDD:
 <pre data-code-language="scala" data-executable="true" data-type="programlisting">
