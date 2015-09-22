@@ -157,12 +157,12 @@ Here are some example queries using Spark SQL with DataFrames on the Movie Lens 
 // Get the max, min ratings along with the count of users who have
 // rated a movie.
 val results = sqlContext.sql(
-  "select movies.title, movierates.maxr, movierates.minr, movierates.cntu
+  """select movies.title, movierates.maxr, movierates.minr, movierates.cntu
     from(SELECT ratings.product, max(ratings.rating) as maxr,
     min(ratings.rating) as minr,count(distinct user) as cntu
     FROM ratings group by ratings.product ) movierates
     join movies on movierates.product=movies.movieId
-    order by movierates.cntu desc")
+    order by movierates.cntu desc""")
 
 // DataFrame show() displays the top 20 rows in  tabular form
 results.show()
@@ -173,15 +173,16 @@ The query below finds the users who rated the most movies, then finds which movi
 // Show the top 10 most-active users and how many times they rated
 // a movie
 val mostActiveUsersSchemaRDD = sqlContext.sql(
-  "SELECT ratings.user, count(&#42;) as ct from ratings group by ratings.user order by ct desc limit 10")
+  """SELECT ratings.user, count(&#42;) as ct from ratings
+  group by ratings.user order by ct desc limit 10""")
 
 println(mostActiveUsersSchemaRDD.collect().mkString("\n"))
 
 // Find the movies that user 4169 rated higher than 4
-val results = sqlContext.sql("SELECT ratings.user, ratings.product,
+val results = sqlContext.sql("""SELECT ratings.user, ratings.product,
   ratings.rating, movies.title FROM ratings JOIN movies
   ON movies.movieId=ratings.product
-  where ratings.user=4169 and ratings.rating > 4")
+  where ratings.user=4169 and ratings.rating > 4""")
 
 results.show
 </pre>
