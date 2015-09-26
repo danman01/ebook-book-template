@@ -39,7 +39,7 @@ import org.apache.spark.sql._
 Start by loading the data from the ebay.csv file into a Resilient Distributed Dataset (RDD). RDDs have **transformations** and **actions**; the _first()_ **action** returns the first element in the RDD:
 <pre data-code-language="scala" data-executable="true" data-type="programlisting">
 // load the data into a new RDD
-val ebayText = sc.textFile("/home/jovyan/datasets/spark-ebook/ebay.csv")
+val ebayText = sc.textFile("/home/jovyan/work/datasets/spark-ebook/ebay.csv")
 
 // Return the first element in this RDD
 ebayText.first()
@@ -62,7 +62,10 @@ Calling _first()_ **action** on the ebay RDD returns the first element in the RD
 <pre data-code-language="scala" data-executable="true" data-type="programlisting">
 // Return the first element in this RDD
 ebay.first()
+</pre>
 
+Calling _count()_ **action** on the ebay RDD returns the number of elements in the RDD:
+<pre data-code-language="scala" data-executable="true" data-type="programlisting">
 // Return the number of elements in the RDD
 ebay.count()
 </pre>
@@ -86,21 +89,26 @@ DataFrame _printSchema()_ displays the schema in a tree format:
 auction.printSchema()
 </pre>
 
-After a DataFrame is instantiated it can be queried. Here are some example using the Scala DataFrame API:
+After a DataFrame is instantiated it can be queried. Here are some examples using the Scala DataFrame API:
 <pre data-code-language="scala" data-executable="true" data-type="programlisting">
 // How many auctions were held?
 auction.select("auctionid").distinct.count
+</pre>
 
+<pre data-code-language="scala" data-executable="true" data-type="programlisting">
 // How many bids per item?
 auction.groupBy("auctionid", "item").count.show
-
+</pre>
+<!--
+<pre data-code-language="scala" data-executable="true" data-type="programlisting">
 // What's the min number of bids per item?
 // what's the average? what's the max?
-auction.groupBy("item", "auctionid").count
-  .agg(min("count"), avg("count"),max("count")).show
-
+auction.groupBy("item", "auctionid").count.agg(min("count"), avg("count"), max("count")).show
+</pre>
+-->
+<pre data-code-language="scala" data-executable="true" data-type="programlisting">
 // Get the auctions with closing price > 100
-val highprice= auction.filter("price > 100")
+val highprice = auction.filter("price > 100")
 
 // display dataframe in a tabular format
 highprice.show()
