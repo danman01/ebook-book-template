@@ -66,7 +66,7 @@ sc = SparkContext(conf=conf)
 
 The next step will be to read the CSV records with the individual track events, and make a _PairRDD_ out of all of the rows. To convert each line of data into an array, the _map()_ function will be used, and then _reduceByKey()_ is called to consolidate all of the arrays.
 <pre data-code-language="python" data-not-executable="true" data-type="programlisting">
-trackfile = sc.textFile('/tmp/data/tracks.csv')
+trackfile = sc.textFile('/home/jovyan/work/datasets/spark-ebook/tracks.csv')
 
 def make_tracks_kv(str):
     l = str.split(",")

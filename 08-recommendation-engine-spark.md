@@ -91,7 +91,7 @@ def parseUser(str: String): User = {
 Below we load the data from the ratings.dat file into a Resilient Distributed Dataset (RDD). RDDs can have **transformations** and **actions**.
 <pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
 // load the data into a RDD
-val ratingText = sc.textFile("/user/user01/moviemed/ratings.dat")
+val ratingText = sc.textFile("/home/jovyan/work/datasets/spark-ebook/ratings.dat")
 
 // Return the first element in this RDD
 ratingText.first()
@@ -129,9 +129,9 @@ Spark SQL provides a programming abstraction called DataFrames. A DataFrame is a
 Below we load the data from the users and movies data files into an RDD, use the _map()_ **transformation** with the parse functions, and then call _toDF()_ which returns a DataFrame for the RDD. Then we register the DataFrames as temp tables so that we can use the tables in SQL statements.
 <pre data-code-language="scala" data-not-executable="true" data-type="programlisting">
 // load the data into DataFrames
-val usersDF = sc.textFile("/user/user01/moviemed/users.dat")
+val usersDF = sc.textFile("/home/jovyan/work/datasets/spark-ebook/users.dat")
   .map(parseUser).toDF()
-val moviesDF = sc.textFile("/user/user01/moviemed/movies.dat")
+val moviesDF = sc.textFile("/home/jovyan/work/datasets/spark-ebook/movies.dat")
   .map(parseMovie).toDF()
 
 // create a DataFrame from the ratingsRDD
