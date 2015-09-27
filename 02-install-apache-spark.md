@@ -45,4 +45,4 @@ Spark should report the result, with an array containing any values less than 10
 
 Spark has a very low entry barrier to get started, which eases the burden of learning a new toolset. Barrier to entry should always be a consideration for any new technology a company evaluates for enterprise use.
 
-{% include "thebe.js" %}
+{% include "thebe_scala.js" %}
