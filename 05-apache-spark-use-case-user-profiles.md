@@ -147,4 +147,4 @@ With just a few lines of code in Spark, a high-level customer behavior view was 
 
 This use case showcases how easy it is to work with Spark. Spark is a framework for ensuring that new capabilities can be delivered well into the future, as data volumes grow and become more complex.
 
-{% include "thebe.js" %}
+{% include "thebe_py.js" %}

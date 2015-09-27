@@ -179,4 +179,4 @@ Readers are encouraged to check out these books themselves and reach their own c
 
 All of the data and code to train the models and make your own conclusions using Apache Spark are located in [github](https://github.com/joebluems/Mockingbird).
 
-{% include "thebe.js" %}
+{% include "thebe_scala.js" %}
