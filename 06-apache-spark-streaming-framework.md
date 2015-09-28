@@ -42,7 +42,7 @@ From a stream processing standpoint, _at most once_ is the easiest to build. Thi
 
 Consider a use case of a media streaming service. Lets say a customer of a movie streaming service is watching a movie and the movie player emits checkpoints every few seconds back to the media streaming service, detailing the current point in the movie. This checkpoint would be used in case the movie player crashes and the user needs to start where he/she left off. With _at most once_ processing, if the checkpoint is missed, the worst case is that the user may have to rewatch a few additional seconds of the movie from the most recent checkpoint that was created. This would have a very minimal impact on a user of the system. The message might look something like:
 
-```javascript
+<pre data-code-language="javascript" data-not-executable="true" data-type="programlisting">
 {
   "checkpoint": {
     "user": "xyz123",
@@ -50,22 +50,22 @@ Consider a use case of a media streaming service. Lets say a customer of a movie
     "time": "1:23:50"
   }
 }
-```
+</pre>
 
 _At least once_ will guarantee that none of those checkpoints will be lost. The same case with _at least once_ processing would change in that the same checkpoint could potentially be replayed multiple times. If the stream processor handling a checkpoint saved the checkpoint, then crashed before it could be acknowledged, the checkpoint would be replayed when the server comes back online.
 
 This brings up an important note about replaying the same request multiple times. _At least once_ guarantees every request will be processed one or more times, so there should be special considerations for creating code functions that are idempotent. This means that an action can be repeated multiple times and never produce a different result.
 
-```javascript
+<pre data-code-language="javascript" data-not-executable="true" data-type="programlisting">
 x = 4 // This is idempotent
 x++ // This is NOT idempotent
-```
+</pre>
 
 If _at least once_ was the requirement for this media streaming example, we could add a field to the checkpoint to enable a different way of acting upon the checkpoint:
 
-```javascript
+<pre data-code-language="javascript" data-not-executable="true" data-type="programlisting">
 "usersTime": "20150519T13:15:14"
-```
+</pre>
 
 With that extra piece of information, the function that persists the checkpoint could check to see if usersTime is less than the latest checkpoint. This would prevent overwriting a newer value and would cause the code function to be idempotent.
 
@@ -93,3 +93,5 @@ Two of the biggest complaints about running Spark Streaming in production are ba
 Back pressure occurs when the volume of events coming across a stream is more than the stream processing engine can handle. There are changes that will show up in version 1.5 of Spark to enable more dynamic ingestion rate capabilities to make back pressure be less of an issue.
 
 More work is being performed to enable user-defined time extraction functions. This will enable developers to check event time against events already processed. Work in this area is expected in a future release of Spark.
+
+{% include "thebe_scala.js" %}
