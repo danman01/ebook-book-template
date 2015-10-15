@@ -113,14 +113,13 @@ def parseRating(str: String): Rating= {
 // create an RDD of Ratings objects
 val ratingsRDD = ratingText.map(parseRating).cache()
 
-// count number of total ratings
-val numRatings = ratingsRDD.count()
+println("Total number of ratings: " + ratingsRDD.count())
 
-// count number of movies rated
-val numMovies = ratingsRDD.map(_.product).distinct().count()
+println("Total number of movies rated: " +
+  ratingsRDD.map(_.product).distinct().count())
 
-// count number of users who rated a movie
-val numUsers = ratingsRDD.map(_.user).distinct().count()
+println("Total number of users who rated movies: " +
+  ratingsRDD.map(_.user).distinct().count())
 </pre>
 
 ### Explore and Query with Spark DataFrames
@@ -129,10 +128,10 @@ Spark SQL provides a programming abstraction called DataFrames. A DataFrame is a
 Below we load the data from the users and movies data files into an RDD, use the _map()_ **transformation** with the parse functions, and then call _toDF()_ which returns a DataFrame for the RDD. Then we register the DataFrames as temp tables so that we can use the tables in SQL statements.
 <pre data-code-language="scala" data-executable="true" data-type="programlisting">
 // load the data into DataFrames
-val usersDF = sc.textFile("/home/jovyan/work/datasets/spark-ebook/users.dat")
-  .map(parseUser).toDF()
-val moviesDF = sc.textFile("/home/jovyan/work/datasets/spark-ebook/movies.dat")
-  .map(parseMovie).toDF()
+val usersDF = sc.textFile("/home/jovyan/work/datasets/spark-ebook/users.dat").
+  map(parseUser).toDF()
+val moviesDF = sc.textFile("/home/jovyan/work/datasets/spark-ebook/movies.dat").
+  map(parseMovie).toDF()
 
 // create a DataFrame from the ratingsRDD
 val ratingsDF = ratingsRDD.toDF()
@@ -173,7 +172,7 @@ The query below finds the users who rated the most movies, then finds which movi
 // Show the top 10 most-active users and how many times they rated
 // a movie
 val mostActiveUsersSchemaRDD = sqlContext.sql(
-  """SELECT ratings.user, count(&#42;) as ct from ratings
+  """SELECT ratings.user, count(\*) as ct from ratings
   group by ratings.user order by ct desc limit 10""")
 
 println(mostActiveUsersSchemaRDD.collect().mkString("\n"))
@@ -220,8 +219,8 @@ Now we can use the MatrixFactorizationModel to make predictions. First, we will 
 val topRecsForUser = model.recommendProducts(4169, 5)
 
 // get movie titles to show with recommendations
-val movieTitles=moviesDF.map(array => (array(0), array(1)))
-  .collectAsMap()
+val movieTitles=moviesDF.map(array => (array(0), array(1))).
+  collectAsMap()
 
 // print out top recommendations for user 4169 with titles
 topRecsForUser.map(rating => (movieTitles(
@@ -255,8 +254,8 @@ val testKeyedByUserProductRDD = testRatingsRDD.map{
 }
 
 //Join the test with predictions
-val testAndPredictionsJoinedRDD = testKeyedByUserProductRDD
-  .join(predictionsKeyedByUserProductRDD)
+val testAndPredictionsJoinedRDD = testKeyedByUserProductRDD.
+  join(predictionsKeyedByUserProductRDD)
 
 // print the (user, product),( test rating, predicted rating)
 testAndPredictionsJoinedRDD.take(3).mkString("\n")
@@ -270,7 +269,7 @@ val falsePositives = (
   })
 falsePositives.take(2)
 
-falsePositives.count
+falsePositives.count()
 </pre>
 
 Next we evaluate the model using Mean Absolute Error (MAE). MAE is the absolute differences between the predicted and actual targets.
@@ -282,6 +281,7 @@ val meanAbsoluteError = testAndPredictionsJoinedRDD.map {
     val err = (testRating - predRating)
     Math.abs(err)
 }.mean()
+println(meanAbsoluteError)
 </pre>
 
 {% include "thebe_scala.js" %}
