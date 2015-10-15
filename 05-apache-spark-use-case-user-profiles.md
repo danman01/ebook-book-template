@@ -55,7 +55,7 @@ Other datasets that would be available, but will not be used for this use case, 
 All the right information is in place and a lot of micro-level detail is available that describes what customers listen to and when. The quickest way to get this data to a dashboard is by leveraging Spark to create summary information for each customer as well as basic statistics about the entire user base. After the results are generated, they can be persisted to a file which can be easily used for visualization with BI tools such as Tableau, or other dashboarding frameworks like C3.js or D3.js.
 
 Step one in getting started is to initialize a Spark context. Additional parameters could be passed to the _SparkConf_ method to further configure the job, such as setting the master and the directory where the job executes.
-<pre data-code-language="python" data-executable="true" data-type="programlisting">
+<pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 from pyspark import SparkContext, SparkConf
 from pyspark.mllib.stat import Statistics
 import csv
@@ -65,7 +65,7 @@ sc = SparkContext(conf=conf)
 </pre>
 
 The next step will be to read the CSV records with the individual track events, and make a _PairRDD_ out of all of the rows. To convert each line of data into an array, the _map()_ function will be used, and then _reduceByKey()_ is called to consolidate all of the arrays.
-<pre data-code-language="python" data-executable="true" data-type="programlisting">
+<pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 trackfile = sc.textFile('/home/jovyan/work/datasets/spark-ebook/tracks.csv')
 
 def make_tracks_kv(str):
@@ -83,7 +83,7 @@ The individual track events are now stored in a _PairRDD_, with the customer ID 
 - Total mobile tracks, i.e., tracks played when the mobile flag was set
 
 By passing a function to _mapValues_, a high-level profile can be computed from the components. The summary data is now readily available to compute basic statistics that can be used for display, using the _colStats_ function from _pyspark.mllib.stat_.
-<pre data-code-language="python" data-executable="true" data-type="programlisting">
+<pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 def compute_stats_byuser(tracks):
     mcount = morn = aft = eve = night = 0
     tracklist = []
@@ -120,7 +120,7 @@ Calling _collect()_ on this RDD will persist the results back to a file. The res
 - _agg_table.csv_ containing the aggregated data about all customers computed with _Statistics.colStats_
 
 <nobr/>
-<pre data-code-language="python" data-executable="true" data-type="programlisting">
+<pre data-code-language="python" data-not-executable="true" data-type="programlisting">
 for k, v in custdata.collect():
     unique, morn, aft, eve, night, mobile = v
     tot = morn + aft + eve + night
