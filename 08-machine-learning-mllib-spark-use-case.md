@@ -77,9 +77,9 @@ val nbmodel = NaiveBayes.train(train, lambda = 1.0)
 val bayesTrain = train.map(p => (nbmodel.predict(p.features), p.label))
 val bayesTest = test.map(p => (nbmodel.predict(p.features), p.label))
 println("Mean Naive Bayes performance")
-(bayesTrain.filter(x => x._1 == x._2).count() /
+(bayesTrain.filter(x => x.&#95;1 == x.&#95;2).count() /
   bayesTrain.count().toDouble,
-  bayesTest.filter(x => x._1 == x._2).count() /
+  bayesTest.filter(x => x.&#95;1 == x.&#95;2).count() /
   bayesTest.count().toDouble)
 </pre>
 
