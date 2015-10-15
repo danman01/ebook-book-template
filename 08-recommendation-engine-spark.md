@@ -76,7 +76,7 @@ The functions below parse a line from the movie.dat, user.dat, and rating.dat fi
 def parseMovie(str: String): Movie = {
       val fields = str.split("::")
       assert(fields.size == 3)
-      Movie(fields(0).toInt, fields(1))
+      Movie(fields(0).toInt, fields(1), Seq(fields(2)))
  }
 
 // function to parse input into User class
