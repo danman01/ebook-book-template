@@ -70,7 +70,7 @@ case class User(userId: Int, gender: String, age: Int,
   occupation: Int, zip: String)
 </pre>
 
-The functions below parse a line from the movie.dat, user.dat, and rating.dat files into the corresponding Movie and User classes.
+The functions below parse a line from the movie.dat and user.dat files into the corresponding Movie and User classes.
 <pre data-code-language="scala" data-executable="true" data-type="programlisting">
 // function to parse input into Movie class
 def parseMovie(str: String): Movie = {
